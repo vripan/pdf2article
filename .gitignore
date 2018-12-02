@@ -1,0 +1,5 @@
+pdf_files/
+training_data/
+.idea/
+__pycache__/
+*.egg-info
