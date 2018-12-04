@@ -19,11 +19,15 @@ pip install flask
 | FLASK_APP | doc_annotator |
 | FLASK_ENV | development |
 
-4. Go to *src* folder and run the command 
+4. Execute the following command in *src* folder as administrator
+```
+pip install -e .
+```
+5. Go to *src* folder and run the command 
 ```
 flask run
 ```
-5. You should get an output similiar to this
+6. You should get an output similiar to this
 ```
 FLASK_APP = doc_annotator
 FLASK_ENV = development
