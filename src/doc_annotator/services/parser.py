@@ -1,5 +1,6 @@
 from werkzeug.utils import secure_filename
 from doc_annotator import app
+from flask import Flask, request, send_from_directory
 import os
 
 
@@ -29,3 +30,7 @@ def upload_pdf(request):
     response["status"] = True
     response["hash"] = filename
     return response
+
+
+def get_file(hash):
+    return send_from_directory(os.path.abspath(app.config['UPLOAD_FOLDER']), hash)
