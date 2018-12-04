@@ -1,0 +1,1 @@
+# o baza de date tinuta in memorie momentan, un dictionar ar fi cel mai bun

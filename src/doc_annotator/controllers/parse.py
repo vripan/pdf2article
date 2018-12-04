@@ -1,29 +1,24 @@
 import time
 from doc_annotator import app
+from doc_annotator.services.parser import parse_file
 
 
 @app.route("/parse/<string:hash>", methods=['GET'])
-def parse_page(hash: str):
+def parse(hash: str):
     time.sleep(5)
+    return parse_file(hash)
     # vezi statusul si daca nu e parsat pune-l in coada pentru parsat
-    # returneaza mereu True
-    return "Nu stiu inca"
+    # poate da eroare daca coada e plina
 
 
-@app.route("/check_status/<string:hash>", methods=['GET'])
-def check_status(hash: str):
-    return "True"
-    # returneaza true daca a fost parsat sau false daca nu
-
-
-@app.route("/get_results/<string:hash>", methods=['GET'])
+@app.route("/parse/results/<string:hash>", methods=['GET'])
 def get_results(hash: str):
-    return "result"
+    return "True"
     # returneaza un obiect cu statusl false sau true daca a fost sau nu parsat
     # si lista de chenare dupa format deja discutat
 
 
-@app.route("/upload", methods=['POST'])
+@app.route("/parse/upload", methods=['POST'])
 def upload_pdf():
     """
     PDF upload endpoint. It returns a dict with the following format: {status:True, hash:"DW57SH83D"}. In
@@ -40,9 +35,10 @@ def upload_pdf():
     # verifica daca fiesierul este chiar un pdf valid
     # daca nu este atunci sterge-l si returneaza false
     # daca da returneaza true
+    # se foloseste un serviciu
 
 
-@app.route("/get_file/<string:hash>", methods=['GET'])
+@app.route("/parse/download/<string:hash>", methods=['GET'])
 def get_file(hash):
-    #returneaza fisierul cu hasul specificat sau eroare daca nu exista
+    # returneaza fisierul cu hasul specificat sau eroare daca nu exista
     return "laksjdkl"
