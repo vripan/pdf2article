@@ -1,6 +1,10 @@
 import time
 from doc_annotator import app
-from doc_annotator.services.parser import parse_file
+from doc_annotator.services.parser import parse_file, upload_pdf as upload_pdf_service
+from flask import flash, request, redirect, url_for
+import json
+from werkzeug.utils import secure_filename
+import os
 
 
 @app.route("/parse/<string:hash>", methods=['GET'])
@@ -21,21 +25,9 @@ def get_results(hash: str):
 @app.route("/parse/upload", methods=['POST'])
 def upload_pdf():
     """
-    PDF upload endpoint. It returns a dict with the following format: {status:True, hash:"DW57SH83D"}. In
-    case of success the status is True and the hash is a valid string and in case
-    of failure the status is False and the hash is the empty string
+    PDF upload endpoint
     """
-    return_value = {"status": False, "hash": ""}
-    file_buffer = None
-    return return_value
-    # descarca fisierul
-    # genereaza hash-ul pentru fisier
-    # salveaza fisierul in folderul pdf_files cu hashul ca si nume fara extensie
-    # ar fi o idee si de un UUID
-    # verifica daca fiesierul este chiar un pdf valid
-    # daca nu este atunci sterge-l si returneaza false
-    # daca da returneaza true
-    # se foloseste un serviciu
+    return json.dumps(upload_pdf_service(request))
 
 
 @app.route("/parse/download/<string:hash>", methods=['GET'])
