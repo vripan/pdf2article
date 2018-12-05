@@ -96,19 +96,20 @@ export class AnnotatorCanvasComponent implements AfterViewInit {
 
     switch(annotation.tag) {
       case AnnotationType.Article:
-        this.ctx.strokeStyle = 'red';
+        this.ctx.strokeStyle = '#b71c1c';
         break;
       case AnnotationType.Title:
-        this.ctx.strokeStyle = 'blue';
+        this.ctx.strokeStyle = '#e65100';
         break;
       case AnnotationType.Author:
-        this.ctx.strokeStyle = 'green';
+        this.ctx.strokeStyle = '#0d47a1';
         break;
       case AnnotationType.Content:
-        this.ctx.strokeStyle = 'yellow';
+        this.ctx.strokeStyle = '#1b5e20';
         break;
     }
 
+    this.ctx.lineWidth = 2;
     this.ctx.stroke();
     this.ctx.closePath();
   }
