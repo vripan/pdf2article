@@ -52,6 +52,13 @@ export class AnnotatorService {
     return this.annotationType;
   }
 
+  /**
+   * Return the annotations to match the server response
+   */
+  public flushAnnotations() {
+
+  }
+
   public async render(documentUrl: string){
     try {
       this.pdf = await pdflib.getDocument(documentUrl);

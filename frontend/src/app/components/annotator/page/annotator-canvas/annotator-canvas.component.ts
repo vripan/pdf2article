@@ -37,11 +37,12 @@ export class AnnotatorCanvasComponent implements AfterViewInit {
 
   @HostListener('mousedown', ['$event'])
   public onMouseDown($event) {
-    console.log(event);
+    const tag = this.annotatorService.getAnnotationType();
+    if (!tag) return;
+
     this.currentAnnotation.x = $event.offsetX;
     this.currentAnnotation.y = $event.offsetY;
-    this.currentAnnotation.tag = this.annotatorService.getAnnotationType();
-    console.log(this.annotatorService.getAnnotationType());
+    this.currentAnnotation.tag = tag;
     this.draw = true;
   }
 
@@ -58,9 +59,10 @@ export class AnnotatorCanvasComponent implements AfterViewInit {
 
   @HostListener('mouseup', ['$event'])
   public onMouseUp($event) {
-    if (this.draw) {
+    if (this.draw && this.currentAnnotation.xEnd !== 0 && this.currentAnnotation.yEnd !== 0) {
       this.currentAnnotation.page = this.pageIndex;
       this.annotatorService.setAnnotation(this.currentAnnotation);
+      this.resetAnnotation();
     }
 
     this.draw = false;
@@ -91,8 +93,7 @@ export class AnnotatorCanvasComponent implements AfterViewInit {
     const { x, y, xEnd, yEnd } = annotation;
     this.ctx.beginPath();
     this.ctx.rect(x, y, xEnd, yEnd);
-    this.ctx.stroke();
-    console.log(annotation);
+
     switch(annotation.tag) {
       case AnnotationType.Article:
         this.ctx.strokeStyle = 'red';
@@ -107,6 +108,8 @@ export class AnnotatorCanvasComponent implements AfterViewInit {
         this.ctx.strokeStyle = 'yellow';
         break;
     }
+
+    this.ctx.stroke();
     this.ctx.closePath();
   }
 
