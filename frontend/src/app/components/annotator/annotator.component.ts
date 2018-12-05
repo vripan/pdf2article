@@ -9,7 +9,7 @@ import { PdfReaderService } from './pdf-reader.service';
 })
 export class AnnotatorComponent implements AfterViewInit {
 
-  private pages: any[] = [];
+  public pages: any[] = [];
 
   constructor(
     private pdfReaderService: PdfReaderService,

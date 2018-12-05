@@ -8,6 +8,8 @@ import { HomeComponent } from './components/home/home.component';
 import { Error404Component } from './components/shared/error404/error404.component';
 import { AnnotatorComponent } from './components/annotator/annotator.component';
 import { PageComponent } from './components/annotator/page/page.component';
+import { PdfCanvasComponent } from './components/annotator/page/pdf-canvas/pdf-canvas.component';
+import { AnnotatorCanvasComponent } from './components/annotator/page/annotator-canvas/annotator-canvas.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +17,9 @@ import { PageComponent } from './components/annotator/page/page.component';
     HomeComponent,
     Error404Component,
     AnnotatorComponent,
-    PageComponent
+    PageComponent,
+    PdfCanvasComponent,
+    AnnotatorCanvasComponent
   ],
   imports: [
     BrowserModule,
