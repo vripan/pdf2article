@@ -1,6 +1,6 @@
 import { Component, AfterViewInit, ElementRef, Input, HostListener } from '@angular/core';
 
-import { AnnotatorService, Annotation } from '../../annotator.service';
+import { AnnotatorService, Annotation, AnnotationType } from '../../annotator.service';
 
 @Component({
   selector: 'annotator-canvas',
@@ -40,6 +40,8 @@ export class AnnotatorCanvasComponent implements AfterViewInit {
     console.log(event);
     this.currentAnnotation.x = $event.offsetX;
     this.currentAnnotation.y = $event.offsetY;
+    this.currentAnnotation.tag = this.annotatorService.getAnnotationType();
+    console.log(this.annotatorService.getAnnotationType());
     this.draw = true;
   }
 
@@ -48,8 +50,8 @@ export class AnnotatorCanvasComponent implements AfterViewInit {
     if (!this.draw) return;
 
     const { offsetX, offsetY } = $event;
-    this.currentAnnotation.width = offsetX - this.currentAnnotation.x;
-    this.currentAnnotation.height = offsetY - this.currentAnnotation.y;
+    this.currentAnnotation.xEnd = offsetX - this.currentAnnotation.x;
+    this.currentAnnotation.yEnd = offsetY - this.currentAnnotation.y;
     this.drawAnnotations();
     this.drawAnnotation(this.currentAnnotation);
   }
@@ -68,8 +70,8 @@ export class AnnotatorCanvasComponent implements AfterViewInit {
     this.currentAnnotation = {
       x: 0,
       y: 0,
-      width: 0,
-      height: 0,
+      xEnd: 0,
+      yEnd: 0,
       page: 0
     }
   }
@@ -86,10 +88,25 @@ export class AnnotatorCanvasComponent implements AfterViewInit {
   }
 
   private drawAnnotation(annotation: Annotation): void {
-    const { x, y, width, height } = annotation;
+    const { x, y, xEnd, yEnd } = annotation;
     this.ctx.beginPath();
-    this.ctx.rect(x, y, width, height);
+    this.ctx.rect(x, y, xEnd, yEnd);
     this.ctx.stroke();
+    console.log(annotation);
+    switch(annotation.tag) {
+      case AnnotationType.Article:
+        this.ctx.strokeStyle = 'red';
+        break;
+      case AnnotationType.Title:
+        this.ctx.strokeStyle = 'blue';
+        break;
+      case AnnotationType.Author:
+        this.ctx.strokeStyle = 'green';
+        break;
+      case AnnotationType.Content:
+        this.ctx.strokeStyle = 'yellow';
+        break;
+    }
     this.ctx.closePath();
   }
 

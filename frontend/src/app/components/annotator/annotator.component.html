@@ -1,2 +1,11 @@
-<page class="pdf-canvas" *ngFor="let page of pages" [page]="page"></page>
-
+<header>
+  <div class="tool-bar">
+    <button class="button button--primary-faded" (click)="setAnnotation(AnnotationType.Article)">Article</button>
+    <button class="button button--primary-faded" (click)="setAnnotation(AnnotationType.Title)">Title</button>
+    <button class="button button--primary-faded" (click)="setAnnotation(AnnotationType.Author)">Author</button>
+    <button class="button button--primary-faded" (click)="setAnnotation(AnnotationType.Content)">Content</button>
+  </div>
+</header>
+<div class="pdf-wrapper">
+  <page class="pdf-canvas" *ngFor="let page of pages" [page]="page"></page>
+</div>

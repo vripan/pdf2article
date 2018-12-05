@@ -15,7 +15,7 @@ export class PageComponent implements OnInit {
 
   public index: number;
 
-  private scale: number = 2;
+  private scale: number = 1;
 
   constructor() { }
 

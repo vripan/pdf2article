@@ -1,16 +1,23 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
 import * as PDFJS from 'pdfjs-dist';
+import { Subject } from 'rxjs';
 
 const pdflib = PDFJS as any;
+
+export enum AnnotationType {
+  Article = 'article',
+  Author = 'author',
+  Title = 'title',
+  Content = 'content'
+}
 
 export interface Annotation {
   x: number;
   y: number;
-  width: number;
-  height: number;
+  xEnd: number;
+  yEnd: number;
   page: number;
-  label?: string;
+  tag?: string;
 }
 
 @Injectable({
@@ -22,9 +29,9 @@ export class AnnotatorService {
 
   private pages: HTMLElement[] = [];
 
-  private scale: number = 2;
-
   private annotations: Annotation[] = [];
+
+  private annotationType: AnnotationType;
 
   constructor() {}
 
@@ -35,6 +42,14 @@ export class AnnotatorService {
   public getAnnotations(page: number) {
     return this.annotations.filter(annotation => annotation.page === page)
       .map(annotation => Object.assign({}, annotation));
+  }
+
+  public setAnnotationType(type: AnnotationType): void {
+    this.annotationType = type;
+  }
+
+  public getAnnotationType(): AnnotationType {
+    return this.annotationType;
   }
 
   public async render(documentUrl: string){
@@ -48,7 +63,7 @@ export class AnnotatorService {
 
       return this.pages;
     } catch(error) {
-      console.log(error);
+      return error;
     }
   }
 }
