@@ -2,3 +2,37 @@
   display: block;
   background: #ccc;
 }
+
+.toolbar {
+  .btn {
+    margin-left: 10px;
+    color: white;
+    height: 32px;
+    padding: 0 8px;
+    justify-content: center;
+    align-items: center;
+    display: inline-flex;
+    font-weight: bold;
+    text-transform: uppercase;
+
+    &.active {
+      background: white;
+    }
+
+    &.article {
+      color: #b71c1c;
+    }
+
+    &.author {
+      color: #0d47a1;
+    }
+
+    &.content {
+      color: #1b5e20;
+    }
+
+    &.title {
+      color: #e65100;
+    }
+  }
+}

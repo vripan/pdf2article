@@ -1,9 +1,9 @@
 <header>
-  <div class="tool-bar">
-    <button class="button button--primary-faded" (click)="setAnnotation(AnnotationType.Article)">Article</button>
-    <button class="button button--primary-faded" (click)="setAnnotation(AnnotationType.Title)">Title</button>
-    <button class="button button--primary-faded" (click)="setAnnotation(AnnotationType.Author)">Author</button>
-    <button class="button button--primary-faded" (click)="setAnnotation(AnnotationType.Content)">Content</button>
+  <div class="toolbar">
+    <button [ngClass]="{active: activeAnnotationType === AnnotationType.Article}" class="btn article" (click)="setAnnotation(AnnotationType.Article)">Article</button>
+    <button [ngClass]="{active: activeAnnotationType === AnnotationType.Title}" class="btn title" (click)="setAnnotation(AnnotationType.Title)">Title</button>
+    <button [ngClass]="{active: activeAnnotationType === AnnotationType.Author}" class="btn author" (click)="setAnnotation(AnnotationType.Author)">Author</button>
+    <button [ngClass]="{active: activeAnnotationType === AnnotationType.Content}" class="btn content" (click)="setAnnotation(AnnotationType.Content)">Content</button>
   </div>
 </header>
 <div class="pdf-wrapper">

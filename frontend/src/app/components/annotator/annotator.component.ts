@@ -13,6 +13,8 @@ export class AnnotatorComponent implements AfterViewInit {
 
   public AnnotationType = AnnotationType;
 
+  public activeAnnotationType: AnnotationType;
+
   constructor(
     private pdfReaderService: AnnotatorService,
   ) { }
@@ -22,6 +24,7 @@ export class AnnotatorComponent implements AfterViewInit {
   }
 
   public setAnnotation(type: AnnotationType) {
+    this.activeAnnotationType = type;
     this.pdfReaderService.setAnnotationType(type);
   }
 
