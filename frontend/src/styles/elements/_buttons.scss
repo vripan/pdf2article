@@ -1,0 +1,9 @@
+button, *[type=button] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: none;
+    border: none;
+    user-select: none;
+    &:focus { outline: none; }
+    &:hover { cursor: pointer !important; }
+}

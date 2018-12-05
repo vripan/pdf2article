@@ -1,0 +1,21 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizelegibility;
+    transition: $transition-general;
+}
+
+body { position: relative; }
+
+a { text-decoration: none; }
+
+ul, li { list-style: none; }
+
+.btn {
+    &:active,
+    &:focus { box-shadow: none !important; }
+}
+
+:focus { outline: none; }

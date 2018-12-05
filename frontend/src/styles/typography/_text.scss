@@ -1,0 +1,28 @@
+html, body {
+    font: normal 16px/1.5 $font-primary;
+    color: $color-text;
+}
+
+h1, h2, h3, h4, h5, p {
+    margin: 0;
+    font-weight: normal;
+    text-align: left;
+    color: $color-text;
+}
+
+h1 { font-size: $s36px; }
+
+h2 { font-size: $s28px; }
+
+h3 { font-size: $s24px; }
+
+h4 { font-size: $s20px; }
+
+h5 { font-size: $s18px; }
+
+p { font-size: $s14px; }
+
+a:hover {
+    text-decoration: none;
+    cursor: pointer;
+}
