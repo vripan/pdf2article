@@ -1,5 +1,6 @@
 import os
 
+from PyPDF2 import PdfFileReader
 from doc_annotator import app
 from flask import send_from_directory
 from werkzeug.utils import secure_filename
@@ -30,6 +31,7 @@ def upload_pdf(request):
 
     try:
         pdfFileObj = open(os.path.join(app.config['UPLOAD_FOLDER'], filename), 'rb')
+        mypdf = PdfFileReader(pdfFileObj)
     except:
         pdfFileObj.close()
         response["message"] = request.files['file'].filename + " not a pdf file"
