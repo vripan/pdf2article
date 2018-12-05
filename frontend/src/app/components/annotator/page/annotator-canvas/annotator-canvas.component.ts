@@ -1,19 +1,6 @@
 import { Component, AfterViewInit, ElementRef, Input, HostListener } from '@angular/core';
 
-interface Coords {
-  x: number;
-  y: number;
-}
-
-interface Rect {
-  width: number;
-  height: number;
-}
-
-interface Annotation {
-  coords: Coords;
-  rect: Rect;
-}
+import { AnnotatorService, Annotation } from '../../annotator.service';
 
 @Component({
   selector: 'annotator-canvas',
@@ -25,39 +12,33 @@ export class AnnotatorCanvasComponent implements AfterViewInit {
   @Input()
   public viewport: any;
 
+  @Input()
+  public pageIndex: number;
+
   private ctx: CanvasRenderingContext2D;
 
   private draw: boolean = false;
 
-  private annotations: Annotation[] = [];
-
   private currentAnnotation: Annotation;
 
   constructor(
-    private element: ElementRef
+    private element: ElementRef,
+    private annotatorService: AnnotatorService
   ) {
-    this.currentAnnotation = {
-      coords: {
-        x: 0,
-        y: 0
-      },
-      rect: {
-        width: 0,
-        height: 0
-      }
-    }
+    this.resetAnnotation();
   }
 
   public ngAfterViewInit(): void {
     const $canvas = this.createAnnotationCanvas(this.viewport);
     this.ctx = $canvas.getContext('2d');
     this.element.nativeElement.appendChild($canvas);
+    this.drawAnnotations();
   }
 
   @HostListener('mousedown', ['$event'])
   public onMouseDown($event) {
-    this.currentAnnotation.coords.x = $event.x;
-    this.currentAnnotation.coords.y = $event.y;
+    this.currentAnnotation.x = $event.x;
+    this.currentAnnotation.y = $event.y;
     this.draw = true;
   }
 
@@ -66,16 +47,30 @@ export class AnnotatorCanvasComponent implements AfterViewInit {
     if (!this.draw) return;
 
     const { x, y } = $event;
-    const { coords } = this.currentAnnotation;
-    this.currentAnnotation.rect.width = x - coords.x;
-    this.currentAnnotation.rect.height =  y - coords.y;
-
+    this.currentAnnotation.width = x - this.currentAnnotation.x;
+    this.currentAnnotation.height = y - this.currentAnnotation.y;
+    this.drawAnnotations();
     this.drawAnnotation(this.currentAnnotation);
   }
 
   @HostListener('mouseup', ['$event'])
   public onMouseUp($event) {
+    if (this.draw) {
+      this.currentAnnotation.page = this.pageIndex;
+      this.annotatorService.setAnnotation(this.currentAnnotation);
+    }
+
     this.draw = false;
+  }
+
+  private resetAnnotation() {
+    this.currentAnnotation = {
+      x: 0,
+      y: 0,
+      width: 0,
+      height: 0,
+      page: 0
+    }
   }
 
   private createAnnotationCanvas(viewport): HTMLCanvasElement {
@@ -90,13 +85,18 @@ export class AnnotatorCanvasComponent implements AfterViewInit {
   }
 
   private drawAnnotation(annotation: Annotation): void {
-    const { x, y } = annotation.coords;
-    const { width, height } = annotation.rect;
-
-    this.ctx.clearRect(0, 0, this.viewport.width, this.viewport.height);
+    const { x, y, width, height } = annotation;
     this.ctx.beginPath();
     this.ctx.rect(x, y, width, height);
     this.ctx.stroke();
+    this.ctx.closePath();
+  }
+
+  drawAnnotations() {
+    this.ctx.clearRect(0, 0, this.viewport.width, this.viewport.height);
+    const annotations: Annotation[] = this.annotatorService.getAnnotations(this.pageIndex);
+    console.log(annotations);
+    annotations.forEach(annotation => this.drawAnnotation(annotation));
   }
 
 }

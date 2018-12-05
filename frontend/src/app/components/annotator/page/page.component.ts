@@ -13,11 +13,14 @@ export class PageComponent implements OnInit {
   @Input()
   public viewport: any;
 
+  public index: number;
+
   private scale: number = 2;
 
   constructor() { }
 
   public ngOnInit(): void {
+    this.index = this.page.pageIndex;
     this.viewport = this.page.getViewport(this.scale);
   }
 

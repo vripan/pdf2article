@@ -1,6 +1,6 @@
 import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 
-import { PdfReaderService } from './pdf-reader.service';
+import { AnnotatorService } from './annotator.service';
 
 @Component({
   selector: 'app-annotator',
@@ -12,7 +12,7 @@ export class AnnotatorComponent implements AfterViewInit {
   public pages: any[] = [];
 
   constructor(
-    private pdfReaderService: PdfReaderService,
+    private pdfReaderService: AnnotatorService,
     private element: ElementRef
   ) { }
 

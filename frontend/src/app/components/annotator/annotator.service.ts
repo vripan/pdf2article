@@ -4,18 +4,38 @@ import * as PDFJS from 'pdfjs-dist';
 
 const pdflib = PDFJS as any;
 
+export interface Annotation {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  page: number;
+  label?: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
-export class PdfReaderService {
+export class AnnotatorService {
 
   private pdf: any;
 
   private pages: HTMLElement[] = [];
 
-  private scale: BehaviorSubject<number> = new BehaviorSubject<number>(2);
+  private scale: number = 2;
+
+  private annotations: Annotation[] = [];
 
   constructor() {}
+
+  public setAnnotation(annotation: Annotation): void {
+    this.annotations.push(Object.assign({}, annotation));
+  }
+
+  public getAnnotations(page: number) {
+    return this.annotations.filter(annotation => annotation.page === page)
+      .map(annotation => Object.assign({}, annotation));
+  }
 
   public async render(documentUrl: string){
     try {
