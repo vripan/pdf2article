@@ -1,7 +1,8 @@
-from werkzeug.utils import secure_filename
-from doc_annotator import app
-from flask import Flask, request, send_from_directory
 import os
+
+from doc_annotator import app
+from flask import send_from_directory
+from werkzeug.utils import secure_filename
 
 
 def parse_file(hash):
@@ -26,6 +27,14 @@ def upload_pdf(request):
 
     filename = secure_filename(file.filename)
     file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+    try:
+        pdfFileObj = open(os.path.join(app.config['UPLOAD_FOLDER'], filename), 'rb')
+    except:
+        pdfFileObj.close()
+        response["message"] = request.files['file'].filename + " not a pdf file"
+        os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        return response
 
     response["status"] = True
     response["hash"] = filename
