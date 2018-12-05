@@ -4,7 +4,7 @@ from PyPDF2 import PdfFileReader
 from doc_annotator import app
 from flask import send_from_directory
 from werkzeug.utils import secure_filename
-
+import uuid
 
 def parse_file(hash):
     return "dunno"
@@ -26,7 +26,7 @@ def upload_pdf(request):
         response["message"] = "Invalid file"
         return response
 
-    filename = secure_filename(file.filename)
+    filename = str(uuid.uuid1())
     file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
     try:
