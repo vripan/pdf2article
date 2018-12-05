@@ -1,6 +1,6 @@
 import time
 from doc_annotator import app
-from doc_annotator.services.parser import parse_file, upload_pdf as upload_pdf_service
+from doc_annotator.services.parser import parse_file, upload_pdf as upload_pdf_service, get_file as get_file_service
 from flask import flash, request, redirect, url_for
 import json
 from werkzeug.utils import secure_filename
@@ -32,5 +32,7 @@ def upload_pdf():
 
 @app.route("/parse/download/<string:hash>", methods=['GET'])
 def get_file(hash):
-    # returneaza fisierul cu hasul specificat sau eroare daca nu exista
-    return "laksjdkl"
+    """
+        PDF download endpoint
+    """
+    return get_file_service(hash)
