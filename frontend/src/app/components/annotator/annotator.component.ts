@@ -9,6 +9,8 @@ import { PdfReaderService } from './pdf-reader.service';
 })
 export class AnnotatorComponent implements AfterViewInit {
 
+  private pages: any[] = [];
+
   constructor(
     private pdfReaderService: PdfReaderService,
     private element: ElementRef
@@ -19,13 +21,15 @@ export class AnnotatorComponent implements AfterViewInit {
   }
 
   public ngAfterViewInit(): void {
+    this.renderPDF('./assets/dummy-data/example.pdf');
+  }
+
+  private renderPDF(url: string): void {
     const $container = this.element.nativeElement.querySelector('.pdf-canvas');
-    console.log($container);
-    console.log($container);
-    this.pdfReaderService.render('./assets/dummy-data/example.pdf')
+
+    this.pdfReaderService.render(url)
       .then(pages =>  {
-        $container.innerHTML = '';
-        pages.forEach($page => $container.appendChild($page));
+        this.pages = pages;
       });
   }
 
