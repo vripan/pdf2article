@@ -37,8 +37,9 @@ export class AnnotatorCanvasComponent implements AfterViewInit {
 
   @HostListener('mousedown', ['$event'])
   public onMouseDown($event) {
-    this.currentAnnotation.x = $event.x;
-    this.currentAnnotation.y = $event.y;
+    console.log(event);
+    this.currentAnnotation.x = $event.offsetX;
+    this.currentAnnotation.y = $event.offsetY;
     this.draw = true;
   }
 
@@ -46,9 +47,9 @@ export class AnnotatorCanvasComponent implements AfterViewInit {
   public onMouseMove($event) {
     if (!this.draw) return;
 
-    const { x, y } = $event;
-    this.currentAnnotation.width = x - this.currentAnnotation.x;
-    this.currentAnnotation.height = y - this.currentAnnotation.y;
+    const { offsetX, offsetY } = $event;
+    this.currentAnnotation.width = offsetX - this.currentAnnotation.x;
+    this.currentAnnotation.height = offsetY - this.currentAnnotation.y;
     this.drawAnnotations();
     this.drawAnnotation(this.currentAnnotation);
   }
@@ -95,7 +96,6 @@ export class AnnotatorCanvasComponent implements AfterViewInit {
   drawAnnotations() {
     this.ctx.clearRect(0, 0, this.viewport.width, this.viewport.height);
     const annotations: Annotation[] = this.annotatorService.getAnnotations(this.pageIndex);
-    console.log(annotations);
     annotations.forEach(annotation => this.drawAnnotation(annotation));
   }
 
