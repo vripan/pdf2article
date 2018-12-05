@@ -6,12 +6,14 @@ import { AppComponent } from './app.component';
 
 import { HomeComponent } from './components/home/home.component';
 import { Error404Component } from './components/shared/error404/error404.component';
+import { AnnotatorComponent } from './components/annotator/annotator.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    Error404Component
+    Error404Component,
+    AnnotatorComponent
   ],
   imports: [
     BrowserModule,
