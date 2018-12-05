@@ -1,7 +1,7 @@
 from doc_annotator import app
 import time
 import threading
-
+from flask import Flask, send_from_directory
 
 @app.errorhandler(404)
 def page_not_found(error):
@@ -11,7 +11,7 @@ def page_not_found(error):
 
 @app.route("/", methods=['GET'])
 def hello():
-    return "Hello World!"
+    return send_from_directory('../../docs', 'index.html')
 
 
 list = []
