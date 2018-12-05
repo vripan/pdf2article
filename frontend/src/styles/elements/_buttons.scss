@@ -7,3 +7,109 @@ button, *[type=button] {
     &:focus { outline: none; }
     &:hover { cursor: pointer !important; }
 }
+
+.button
+{
+  &--primary,
+  &--primary-faded
+  {
+    font-size: $s14px;
+    line-height: 18px;
+    font-weight: bold;
+    border-radius: $border-container;
+    padding: 12px 28px;
+    text-align: center;
+    color: $color-white;
+    background-color: $color-green;
+  }
+
+  &--primary-faded
+  {
+    color: $color-green;
+    background-color: $color-green-faded;
+  }
+}
+
+ul,
+li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tg-list {
+  text-align: center;
+  display: flex;
+  align-items: center;
+}
+
+.tg-list-item {
+  margin: 0 2em;
+}
+
+.tgl {
+  display: none;
+
+  // add default box-sizing for this scope
+  &,
+  &:after,
+  &:before,
+  & *,
+  & *:after,
+  & *:before,
+  & + .tgl-btn {
+    box-sizing: border-box;
+    &::selection {
+      background: none;
+    }
+  }
+
+  + .tgl-btn {
+    outline: 0;
+    display: block;
+    width: 50px;
+    height: 25px;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    &:after,
+    &:before {
+      position: relative;
+      display: block;
+      content: "";
+      width: 50%;
+      height: 100%;
+    }
+
+    &:after {
+      left: 0;
+    }
+
+    &:before {
+      display: none;
+    }
+  }
+
+  &:checked + .tgl-btn:after {
+    left: 50%;
+  }
+}
+
+// themes
+.tgl-light {
+  + .tgl-btn {
+    background: #f0f0f0;
+    border-radius: 2em;
+    padding: 2px;
+    transition: all .4s ease;
+    &:after {
+      border-radius: 50%;
+      background: #fff;
+      transition: all .2s ease;
+    }
+  }
+
+  &:checked + .tgl-btn {
+    background: $color-green;
+  }
+}

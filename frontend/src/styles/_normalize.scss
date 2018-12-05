@@ -7,7 +7,8 @@
     transition: $transition-general;
 }
 
-body { position: relative; }
+body { position: relative;
+min-height: 100vh}
 
 a { text-decoration: none; }
 
