@@ -1,4 +1,7 @@
+import os
+
 from doc_annotator import app
+from flask import send_from_directory
 
 
 @app.route("/training/<file_name>", methods=['GET'])
@@ -6,15 +9,14 @@ def get_training_file(file_name):
     """
     Returns the file with name 'file_name' in binary format
     """
-    return "01001101011000101"
-
+    return send_from_directory(os.path.abspath(app.config['TRAINING_FOLDER']), file_name)
 
 @app.route("/training", methods=['GET'])
 def get_training_files():
     """
     Returns a list with all training files.
     """
-    return ["alecart.pdf", "solar.pdf"]
+    return str([file for file in os.listdir(os.path.abspath(app.config['TRAINING_FOLDER']))])
 
 
 @app.route("/training/metadata/<file_name>", methods=['GET'])
