@@ -1,6 +1,6 @@
 import os
 from flask import send_from_directory, request
-from doc_annotator import app
+from doc_annotator import app, training_metadata_repository
 import json
 
 
@@ -18,18 +18,14 @@ def update_metadata(file_name, request):
     The body of the request can be both form-data and application/json
     """
     
-    if (not os.path.exists(os.path.join(app.config['TRAINING_FOLDER'], file_name))):
-        return {"status":"false", "message":"File " + file_name + " does not exist"}
-
-    newFileName = file_name.replace(".pdf","")
-    metadataFileObj = open(os.path.join(app.config['TRAINING_FOLDER'], newFileName), 'wb')
-
     if (len(request.form) > 0):
-        metadataFileObj.write(json.dumps(request.form).encode())
+        training_metadata_repository.save_metadata(file_name, request.form)
         return {"status":"true", "message":"Metadata updated"}
     elif (len(request.data) > 0):
-        metadataFileObj.write(request.data)
-        return {"status":"true", "message":"Metadata updated"}
+        try:
+            training_metadata_repository.save_metadata(file_name, json.loads(request.data))
+            return {"status":"true", "message":"Metadata updated"}
+        except:
+            return {"status":"false", "message": "Invalid metadata"}
     else:
         return {"status":"false", "message":"No metadata sent"}
-
