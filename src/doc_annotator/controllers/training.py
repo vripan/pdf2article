@@ -1,7 +1,7 @@
 import os
-
+import json
 from doc_annotator import app
-from flask import send_from_directory
+import doc_annotator.services.training
 
 
 @app.route("/training/<file_name>", methods=['GET'])
@@ -9,14 +9,15 @@ def get_training_file(file_name):
     """
     Returns the file with name 'file_name' in binary format
     """
-    return send_from_directory(os.path.abspath(app.config['TRAINING_FOLDER']), file_name)
+    return doc_annotator.services.training.get_training_file(file_name)
+
 
 @app.route("/training", methods=['GET'])
 def get_training_files():
     """
     Returns a list with all training files.
     """
-    return str([file for file in os.listdir(os.path.abspath(app.config['TRAINING_FOLDER']))])
+    return doc_annotator.services.training.get_training_files()
 
 
 @app.route("/training/metadata/<file_name>", methods=['GET'])

@@ -1,6 +1,7 @@
 import time
 from doc_annotator import app
-from doc_annotator.services.parser import parse_file, upload_pdf as upload_pdf_service, get_file as get_file_service
+# from doc_annotator.services.parser import parse_file, upload_pdf as upload_pdf_service, get_file as get_file_service
+import doc_annotator.services.parser
 from flask import flash, request, redirect, url_for
 import json
 from werkzeug.utils import secure_filename
@@ -10,7 +11,7 @@ import os
 @app.route("/parse/<string:hash>", methods=['GET'])
 def parse(hash: str):
     time.sleep(5)
-    return parse_file(hash)
+    return doc_annotator.services.parser.parse_file(hash)
     # vezi statusul si daca nu e parsat pune-l in coada pentru parsat
     # poate da eroare daca coada e plina
 
@@ -27,7 +28,7 @@ def upload_pdf():
     """
     PDF upload endpoint
     """
-    return json.dumps(upload_pdf_service(request))
+    return json.dumps(doc_annotator.services.parser.upload_pdf(request))
 
 
 @app.route("/parse/download/<string:hash>", methods=['GET'])
@@ -35,4 +36,4 @@ def get_file(hash):
     """
         PDF download endpoint
     """
-    return get_file_service(hash)
+    return doc_annotator.services.parser.get_file(hash)
