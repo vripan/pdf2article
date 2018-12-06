@@ -1,10 +1,9 @@
-import time
-from doc_annotator import app
-# from doc_annotator.services.parser import parse_file, upload_pdf as upload_pdf_service, get_file as get_file_service
-import doc_annotator.services.parser
 from flask import flash, request, redirect, url_for
-import json
 from werkzeug.utils import secure_filename
+import doc_annotator.services.parser
+from doc_annotator import app
+import time
+import json
 import os
 
 
@@ -19,8 +18,8 @@ import os
 @app.route("/parse/results/<string:hash>", methods=['GET'])
 def get_results(hash: str):
     return "True"
-    # returneaza un obiect cu statusl false sau true daca a fost sau nu parsat
-    # si lista de chenare dupa format deja discutat
+    # intoarce rezultatul din baza de date daca exista
+    # daca nu exista se seteaza statusl ParsePhase.Invalid
 
 
 @app.route("/parse/upload", methods=['POST'])

@@ -10,19 +10,31 @@ class Worker(threading.Thread):
 
     def run(self):
         """
-        Function calls page segmentation algorithm and NN
+        Working...
+        """
+        pass
+
+
+class Parser(Worker):
+    def __init__(self, jobs):
+        Worker.__init__(self, jobs)
+
+    def run(self):
+        """
+        NN and page segmentation
         """
         pass
 
 
 class JobsQueue:
-    def __init__(self):
+    def __init__(self, worker_type):
         self.q = queue.Queue()
+        self.worker_type = worker_type
         self.worker = None
         self.lock = threading.Lock()
 
     def new_worker(self):
-        self.worker = Worker(self)
+        self.worker = self.worker_type(self)
 
     def push(self, element):
         result = self.q.put(element)
