@@ -1,6 +1,7 @@
 import os
 import json
 from doc_annotator import app
+from flask import request
 import doc_annotator.services.training
 
 
@@ -33,4 +34,4 @@ def update_metadata(file_name):
     """
     Overwrites metadata for specified file.
     """
-    return "True"
+    return json.dumps(doc_annotator.services.training.update_metadata(file_name, request))
