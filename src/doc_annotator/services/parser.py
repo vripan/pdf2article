@@ -1,9 +1,10 @@
 import os
 
 from PyPDF2 import PdfFileReader
-from doc_annotator import app
+from doc_annotator import app, parse_results_repository
 from flask import send_from_directory
 from werkzeug.utils import secure_filename
+from doc_annotator.utils.parse_phase import ParsePhase
 import uuid
 
 def parse_file(hash):
@@ -31,7 +32,7 @@ def upload_pdf(request):
 
     try:
         pdfFileObj = open(os.path.join(app.config['UPLOAD_FOLDER'], filename), 'rb')
-        mypdf = PdfFileReader(pdfFileObj)
+        PdfFileReader(pdfFileObj)
     except:
         pdfFileObj.close()
         response["message"] = request.files['file'].filename + " not a pdf file"
@@ -45,3 +46,7 @@ def upload_pdf(request):
 
 def get_file(hash):
     return send_from_directory(os.path.abspath(app.config['UPLOAD_FOLDER']), hash)
+
+def get_results(hash):
+    (status, result) = parse_results_repository.get_results(hash)
+    return {"status":ParsePhase.to_string(status), "result":result}

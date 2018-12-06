@@ -16,9 +16,11 @@ def parse(hash: str):
 
 @app.route("/parse/results/<string:hash>", methods=['GET'])
 def get_results(hash: str):
-    return "True"
-    # intoarce rezultatul din baza de date daca exista
-    # daca nu exista se seteaza statusl ParsePhase.Invalid
+    """
+    Intoarce rezultatul din baza de date daca exista
+    daca nu exista se seteaza statusl ParsePhase.Invalid
+    """
+    return json.dumps(doc_annotator.services.parser.get_results(hash))
 
 
 @app.route("/parse/upload", methods=['POST'])
