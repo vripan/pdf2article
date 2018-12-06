@@ -17,7 +17,7 @@ def get_training_files():
     """
     Returns a list with all training files.
     """
-    return doc_annotator.services.training.get_training_files()
+    return json.dumps(doc_annotator.services.training.get_training_files())
 
 
 @app.route("/training/metadata/<file_name>", methods=['GET'])

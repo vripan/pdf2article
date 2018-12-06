@@ -8,13 +8,13 @@ from werkzeug.utils import secure_filename
 import os
 
 
-@app.route("/parse/<string:hash>", methods=['GET'])
-def parse(hash: str):
-    time.sleep(5)
-    return doc_annotator.services.parser.parse_file(hash)
-    # vezi statusul si daca nu e parsat pune-l in coada pentru parsat
-    # poate da eroare daca coada e plina
-
+# @app.route("/parse/<string:hash>", methods=['GET'])
+# def parse(hash: str):
+#     time.sleep(5)
+#     return doc_annotator.services.parser.parse_file(hash)
+#     # vezi statusul si daca nu e parsat pune-l in coada pentru parsat
+#     # poate da eroare daca coada e plina
+#
 
 @app.route("/parse/results/<string:hash>", methods=['GET'])
 def get_results(hash: str):

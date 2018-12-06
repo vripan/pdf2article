@@ -27,6 +27,8 @@ class JobsQueue:
     def push(self, element):
         result = self.q.put(element)
 
+        # check if false
+
         self.lock.acquire()
         if self.worker is None:
             self.new_worker()
