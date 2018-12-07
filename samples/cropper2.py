@@ -85,4 +85,4 @@ if __name__ == '__main__':
     try:
         process_image(path)
     except Exception as e:
-        print '%s %s' % (path, e)
+        print ('%s %s' % (path, e))
