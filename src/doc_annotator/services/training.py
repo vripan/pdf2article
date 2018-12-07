@@ -11,19 +11,20 @@ def get_training_file(file_name):
 def get_training_files():
     return [file for file in os.listdir(os.path.abspath(app.config['TRAINING_FOLDER']))]
 
+
 def update_metadata(file_name, request):
     """
     The body of the request can be both form-data and application/json
     """
-    
-    if (len(request.form) > 0):
+
+    if len(request.form) > 0:
         training_metadata_repository.save_metadata(file_name, request.form)
-        return {"status":"true", "message":"Metadata updated"}
-    elif (len(request.data) > 0):
+        return {"status": "true", "message": "Metadata updated"}
+    elif len(request.data) > 0:
         try:
             training_metadata_repository.save_metadata(file_name, json.loads(request.data))
-            return {"status":"true", "message":"Metadata updated"}
+            return {"status": "true", "message": "Metadata updated"}
         except:
-            return {"status":"false", "message": "Invalid metadata"}
+            return {"status": "false", "message": "Invalid metadata"}
     else:
-        return {"status":"false", "message":"No metadata sent"}
+        return {"status": "false", "message": "No metadata sent"}

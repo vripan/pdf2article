@@ -14,6 +14,7 @@ def parse(hash: str):
     # vezi statusul si daca nu e parsat pune-l in coada pentru parsat
     # poate da eroare daca coada e plina
 
+
 @app.route("/parse/results/<string:hash>", methods=['GET'])
 def get_results(hash: str):
     """
@@ -34,6 +35,6 @@ def upload_pdf():
 @app.route("/parse/download/<string:hash>", methods=['GET'])
 def get_file(hash):
     """
-        PDF download endpoint
+    PDF download endpoint
     """
     return doc_annotator.services.parser.get_file(hash)
