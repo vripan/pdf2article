@@ -13,8 +13,6 @@ def get_training_files():
 
 def update_metadata(file_name, request):
     """
-    Checks if the given file exists (ex: fisier.pdf), and if it does it creates another file (ex: fisier) 
-    in which it stores its metadata
     The body of the request can be both form-data and application/json
     """
     
