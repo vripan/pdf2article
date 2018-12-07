@@ -8,7 +8,7 @@ import os
 
 
 @app.route("/parse/<string:hash>", methods=['GET'])
-def parse(hash: str):
+def parse(hash):
     time.sleep(5)
     return doc_annotator.services.parser.parse_file(hash)
     # vezi statusul si daca nu e parsat pune-l in coada pentru parsat
@@ -16,7 +16,7 @@ def parse(hash: str):
 
 
 @app.route("/parse/results/<string:hash>", methods=['GET'])
-def get_results(hash: str):
+def get_results(hash):
     """
     Intoarce rezultatul din baza de date daca exista
     daca nu exista se seteaza statusl ParsePhase.Invalid

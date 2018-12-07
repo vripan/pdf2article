@@ -1,4 +1,5 @@
 from doc_annotator import app
+from flask import send_from_directory
 
 
 @app.errorhandler(404)
@@ -9,4 +10,4 @@ def page_not_found(error):
 
 @app.route("/")
 def main_route():
-    return "Hello world!"
+    return send_from_directory('../../docs', 'index.html')

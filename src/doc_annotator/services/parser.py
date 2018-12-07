@@ -7,6 +7,7 @@ from werkzeug.utils import secure_filename
 from doc_annotator.utils.parse_phase import ParsePhase
 import uuid
 
+
 def parse_file(hash):
     return "dunno"
 
@@ -33,6 +34,7 @@ def upload_pdf(request):
     try:
         pdfFileObj = open(os.path.join(app.config['UPLOAD_FOLDER'], filename), 'rb')
         PdfFileReader(pdfFileObj)
+        parse_results_repository.save_status(filename, ParsePhase.Uploaded)
     except:
         pdfFileObj.close()
         response["message"] = request.files['file'].filename + " not a pdf file"

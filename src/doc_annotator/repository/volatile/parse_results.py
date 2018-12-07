@@ -15,10 +15,7 @@ from doc_annotator.utils.parse_phase import ParsePhase
 
 class ParseResultsRepo:
     def __init__(self):
-        self.dictionar = dict()
-        self.dictionar["1"] = (ParsePhase.Uploaded, None)
-        self.dictionar["2"] = (ParsePhase.Parsing, None)
-        self.dictionar["3"] = (ParsePhase.Done, {"file":"fisier.pdf", "articles":[]})
+        self.table = dict()
 
     def get_results(self, hash):
         """
@@ -26,8 +23,8 @@ class ParseResultsRepo:
         """
         # retunreaza un tuplu (status, results)
 
-        if hash in self.dictionar.keys():
-            return self.dictionar[hash]
+        if hash in self.table.keys():
+            return self.table[hash].copy()
         return (ParsePhase.Invalid, None)
 
     def save_results(self, hash, results):
@@ -36,8 +33,16 @@ class ParseResultsRepo:
         If there is already an entry with requested hash,
         old entry will be replaced by the new one
         """
-        pass
+        if hash not in self.table.keys():
+            self.table.update({hash: (ParsePhase.Uploaded, results)})
+        else:
+            self.table.update({hash: (self.table[hash][0], results)})
+
 
     def save_status(self, hash, status):
         # status must have a value define in parse_phase.py
-        pass
+        if hash not in self.table.keys():
+            self.table.update({hash: (status, None)})
+        else:
+            self.table.update({hash: (status, self.table[hash][1])})
+
