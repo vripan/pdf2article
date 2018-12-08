@@ -28,3 +28,6 @@ def update_metadata(file_name, request):
             return {"status": "false", "message": "Invalid metadata"}
     else:
         return {"status": "false", "message": "No metadata sent"}
+
+def get_existing_metadata(file_name):
+    return training_metadata_repository.get_metadata(file_name)
