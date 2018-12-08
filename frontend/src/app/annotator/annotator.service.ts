@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import * as PDFJS from 'pdfjs-dist';
-import { Subject } from 'rxjs';
 
 const pdflib = PDFJS as any;
 
