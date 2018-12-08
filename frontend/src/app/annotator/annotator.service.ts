@@ -19,6 +19,14 @@ export interface Annotation {
   tag?: string;
 }
 
+export interface ArticleArea {
+  area: Annotation;
+  page: number;
+  titles: Annotation[];
+  authors?: Annotation[];
+  content? : Annotation[];
+}
+
 @Injectable({
   providedIn: 'root'
 })

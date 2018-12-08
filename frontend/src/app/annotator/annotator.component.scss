@@ -12,7 +12,8 @@
 }
 
 .pdf-wrapper {
-  overflow-y: scroll;
+  background: #CCC;
+  overflow: auto;
   width: 920px;
   margin: 0 auto;
   position: relative;
