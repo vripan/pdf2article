@@ -1,0 +1,9 @@
+<mat-card>
+  <button mat-raised-button (click)="setAnnotation(AnnotationType.Article)">Set Article</button>
+  <button mat-raised-button (click)="setAnnotation(AnnotationType.Title)">Set title</button>
+  <button mat-raised-button (click)="setAnnotation(AnnotationType.Author)">Set authors</button>
+  <button mat-raised-button (click)="setAnnotation(AnnotationType.Content)">Set content</button>
+  <div class="divider"></div>
+  <button mat-raised-button color="primary" (click)="save()">Save</button>
+  <button mat-raised-button color="warn" (click)="discard()">Discard</button>
+</mat-card>

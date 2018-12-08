@@ -11,13 +11,17 @@ import {PageComponent} from './page/page.component';
 import {PdfCanvasComponent} from './page/pdf-canvas/pdf-canvas.component';
 import {AnnotatorCanvasComponent} from './page/annotator-canvas/annotator-canvas.component';
 import {AnnotatorRoutingModule} from './annotator-routing.module';
+import {MatStepperModule} from '@angular/material/stepper';
+import { AnnotatorStepperComponent } from './annotator-stepper/annotator-stepper.component';
+import {MatDividerModule} from '@angular/material/divider';
 
 @NgModule({
   declarations: [
     AnnotatorComponent,
     PageComponent,
     PdfCanvasComponent,
-    AnnotatorCanvasComponent
+    AnnotatorCanvasComponent,
+    AnnotatorStepperComponent
   ],
   imports: [
     CommonModule,
@@ -25,7 +29,9 @@ import {AnnotatorRoutingModule} from './annotator-routing.module';
     MatButtonModule,
     MatToolbarModule,
     MatCardModule,
-    MatIconModule
+    MatIconModule,
+    MatStepperModule,
+    MatDividerModule
   ]
 })
 export class AnnotatorModule { }

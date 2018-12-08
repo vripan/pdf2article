@@ -1,0 +1,18 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button {
+  margin-left: 8px;
+}
+
+.divider {
+  display: inline-block;
+  width: 2px;
+  height: 30px;
+  background: #CCC;
+  margin: 0 12px;
+  vertical-align: middle;
+}

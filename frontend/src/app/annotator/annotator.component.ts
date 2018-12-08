@@ -1,6 +1,6 @@
-import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 
-import { AnnotatorService, AnnotationType } from './annotator.service';
+import { AnnotatorService } from './annotator.service';
 
 @Component({
   selector: 'app-annotator',
@@ -11,21 +11,12 @@ export class AnnotatorComponent implements AfterViewInit {
 
   public pages: any[] = [];
 
-  public AnnotationType = AnnotationType;
-
-  public activeAnnotationType: AnnotationType;
-
   constructor(
     private pdfReaderService: AnnotatorService,
   ) { }
 
   ngOnInit() {
     this.pdfReaderService.render('./assets/dummy-data/example.pdf');
-  }
-
-  public setAnnotation(type: AnnotationType) {
-    this.activeAnnotationType = type;
-    this.pdfReaderService.setAnnotationType(type);
   }
 
   public ngAfterViewInit(): void {

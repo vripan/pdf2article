@@ -1,12 +1,15 @@
 <mat-toolbar  color="primary" role="toolbar">
-  <span>Annotate</span>
+  <a href="#">
+    <img class="logo" _ngcontent-c2="" class="logo" src="../../../assets/logo.png">
+  </a>
   <span class="spacer"></span>
   <button mat-icon-button  color="accent">
     <mat-icon class="example-icon">delete</mat-icon>
   </button>
 </mat-toolbar>
-<div class="pdf-wrapper">
+<annotator-stepper></annotator-stepper>
+<mat-card  class="pdf-wrapper">
   <div class="pdf-wrapper__content">
     <page class="pdf-canvas" *ngFor="let page of pages" [page]="page"></page>
   </div>
-</div>
+</mat-card>
