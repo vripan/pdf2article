@@ -1,11 +1,12 @@
-<header>
-  <div class="toolbar">
-    <button [ngClass]="{active: activeAnnotationType === AnnotationType.Article}" class="btn article" (click)="setAnnotation(AnnotationType.Article)">Article</button>
-    <button [ngClass]="{active: activeAnnotationType === AnnotationType.Title}" class="btn title" (click)="setAnnotation(AnnotationType.Title)">Title</button>
-    <button [ngClass]="{active: activeAnnotationType === AnnotationType.Author}" class="btn author" (click)="setAnnotation(AnnotationType.Author)">Author</button>
-    <button [ngClass]="{active: activeAnnotationType === AnnotationType.Content}" class="btn content" (click)="setAnnotation(AnnotationType.Content)">Content</button>
-  </div>
-</header>
+<mat-toolbar  color="primary" role="toolbar">
+  <span>Annotate</span>
+  <span class="spacer"></span>
+  <button mat-icon-button  color="accent">
+    <mat-icon class="example-icon">delete</mat-icon>
+  </button>
+</mat-toolbar>
 <div class="pdf-wrapper">
-  <page class="pdf-canvas" *ngFor="let page of pages" [page]="page"></page>
+  <div class="pdf-wrapper__content">
+    <page class="pdf-canvas" *ngFor="let page of pages" [page]="page"></page>
+  </div>
 </div>

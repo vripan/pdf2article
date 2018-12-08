@@ -1,38 +1,26 @@
 :host {
-  display: block;
-  background: #ccc;
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: 64px auto;
+  grid-row-gap: 16px;
 }
 
-.toolbar {
-  .btn {
-    margin-left: 10px;
-    color: white;
-    height: 32px;
-    padding: 0 8px;
-    justify-content: center;
-    align-items: center;
-    display: inline-flex;
-    font-weight: bold;
-    text-transform: uppercase;
+.pdf-wrapper {
+  overflow-y: scroll;
+  width: 920px;
+  margin: 0 auto;
+  border: 1px solid black;
+  position: relative;
 
-    &.active {
-      background: white;
-    }
-
-    &.article {
-      color: #b71c1c;
-    }
-
-    &.author {
-      color: #0d47a1;
-    }
-
-    &.content {
-      color: #1b5e20;
-    }
-
-    &.title {
-      color: #e65100;
-    }
+  &__content {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
   }
+}
+
+.spacer {
+  flex: 1 1 auto;
 }

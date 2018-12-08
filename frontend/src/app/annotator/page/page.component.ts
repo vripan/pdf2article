@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostBinding } from '@angular/core';
 
 @Component({
   selector: 'page',
@@ -13,6 +13,9 @@ export class PageComponent implements OnInit {
   @Input()
   public viewport: any;
 
+  @HostBinding('style.width')
+  public width: string;
+
   public index: number;
 
   private scale: number = 1;
@@ -22,6 +25,6 @@ export class PageComponent implements OnInit {
   public ngOnInit(): void {
     this.index = this.page.pageIndex;
     this.viewport = this.page.getViewport(this.scale);
+    this.width = `${this.viewport.width}px`;
   }
-
 }
