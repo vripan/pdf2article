@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AnnotatorService, AnnotationType } from '../../annotator.service';
+import { AnnotatorService, AnnotationType, WorkMode } from '../../annotator.service';
 
 @Component({
   selector: 'annotator-stepper',
@@ -22,11 +22,8 @@ export class AnnotatorStepperComponent implements OnInit {
     this.annotatorService.setAnnotationType(type);
   }
 
-  public save(): void {
-
-  }
-
-  public discard(): void {
-
+  public deleteAnnotation(): void {
+    this.annotatorService.setAnnotationType(null);
+    this.annotatorService.setWorkMode(WorkMode.Delete);
   }
 }

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 
 import * as PDFJS from 'pdfjs-dist';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 const pdflib = PDFJS as any;
 
@@ -19,15 +19,13 @@ export interface Annotation {
   xEnd: number;
   yEnd: number;
   page: number;
+  pairKey?: number;
   tag?: string;
 }
 
-export interface ArticleArea {
-  area: Annotation;
-  page: number;
-  titles: Annotation[];
-  authors?: Annotation[];
-  content? : Annotation[];
+export enum WorkMode {
+  Create = 'create',
+  Delete = 'delete'
 }
 
 @Injectable({
@@ -43,6 +41,10 @@ export class AnnotatorService {
 
   private annotationType: AnnotationType;
 
+  private articleID: number = 0;
+
+  private workMode: BehaviorSubject<WorkMode> = new BehaviorSubject<WorkMode>(WorkMode.Create);
+
   constructor(private http: HttpClient) {}
 
   public setAnnotation(annotation: Annotation): void {
@@ -56,6 +58,7 @@ export class AnnotatorService {
 
   public setAnnotationType(type: AnnotationType): void {
     this.annotationType = type;
+    this.workMode.next(WorkMode.Create);
   }
 
   public getAnnotationType(): AnnotationType {
@@ -74,7 +77,43 @@ export class AnnotatorService {
   }
 
   public saveMetadata(id) {
-    return this.http.post(`/api/training/metadata/${id}`, this.annotations);
+    const payload = this.annotations
+      .filter(annotation => annotation.tag !== AnnotationType.Article);
+
+    return this.http.post(`/api/training/metadata/${id}`, payload);
+  }
+
+  public getArticle(x: number, y: number, page: number) {
+    return this.getAnnotationFromCoords(x, y, page)
+      .filter(annotation => annotation.tag === AnnotationType.Article);
+  }
+
+  public getAnnotationFromCoords(x: number, y: number, page: number) {
+    return this.annotations.filter(annotation => this.hasAnnotation(x, y, page, annotation));
+  }
+
+  public remove(x: number, y: number, page) {
+    const annotations = this.getAnnotationFromCoords(x, y, page);
+    const article = annotations.find(annotation => annotation.tag === AnnotationType.Article);
+
+    if (article) {
+      this.removeArticle(article);
+    } else {
+      this.annotations = this.annotations.filter(annotation => !this.hasAnnotation(x, y, page, annotation));
+    }
+  }
+
+  public getNextArticleID(): number {
+    this.articleID++;
+    return this.articleID;
+  }
+
+  public setWorkMode(mode: WorkMode): void {
+    this.workMode.next(mode);
+  }
+
+  public getWorkMode(): Observable<WorkMode> {
+    return this.workMode.asObservable();
   }
 
   public async render(documentUrl: string){
@@ -90,5 +129,15 @@ export class AnnotatorService {
     } catch(error) {
       return error;
     }
+  }
+
+  private hasAnnotation(x: number, y: number, page: number, annotation: Annotation): boolean {
+    return (x >= annotation.x && x <= annotation.xEnd &&
+    y >= annotation.y && y <= annotation.yEnd &&
+    page === annotation.page);
+  }
+
+  private removeArticle(article) {
+    this.annotations = this.annotations.filter(annotation => annotation.pairKey !== article.pairKey);
   }
 }
