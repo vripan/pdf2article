@@ -1,4 +1,5 @@
 import { Component, AfterViewInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 
 import { AnnotatorService } from '../annotator.service';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -16,7 +17,8 @@ export class AnnotatorFrameComponent implements AfterViewInit {
 
   constructor(
     private pdfReaderService: AnnotatorService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit() {
@@ -35,6 +37,9 @@ export class AnnotatorFrameComponent implements AfterViewInit {
     this.pdfReaderService.saveMetadata(this.fileId)
       .subscribe((result) => {
         console.log(result);
+        this.toastr.success("Metadata saved with success", "Metadata");
+      }, (error) => {
+        this.toastr.error(error, "Metadata");
       });
   }
 
@@ -42,6 +47,9 @@ export class AnnotatorFrameComponent implements AfterViewInit {
     this.pdfReaderService.render(url)
       .then(pages =>  {
         this.pages = pages;
+      })
+      .catch((error) => {
+        this.toastr.error(error, "PDF reader")
       });
   }
 

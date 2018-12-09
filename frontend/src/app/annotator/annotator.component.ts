@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AnnotatorService } from './annotator.service';
 import { Subscription } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -14,12 +15,17 @@ export class AnnotatorComponent implements OnInit, OnDestroy {
 
   private trainingSubscription: Subscription;
 
-  constructor(private annotatorService: AnnotatorService) { }
+  constructor (
+    private annotatorService: AnnotatorService,
+    private toastr: ToastrService
+  ) { }
 
   public ngOnInit(): void {
     this.trainingSubscription = this.annotatorService.getTrainingData()
       .subscribe((files: string[]) => {
         this.trainingFiles = files;
+      }, (error) => {
+        this.toastr.error(error, "Training");
       });
   }
 
