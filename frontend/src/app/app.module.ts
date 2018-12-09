@@ -1,5 +1,8 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { CommonModule } from '@angular/common';
+import { ToastrModule } from 'ngx-toastr';
+
 import {NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
@@ -10,6 +13,8 @@ import {Error404Component} from './components/shared/error404/error404.component
 import {HeaderComponent} from './components/header/header.component';
 import {UploadMainComponent} from './components/upload-main/upload-main.component';
 import {FooterComponent} from './components/footer/footer.component';
+import { AlertsService } from './components/alerts/alerts.service';
+import { AlertsComponent } from './components/alerts/alerts.component';
 
 @NgModule({
   declarations: [
@@ -18,14 +23,18 @@ import {FooterComponent} from './components/footer/footer.component';
     Error404Component,
     HeaderComponent,
     UploadMainComponent,
-    FooterComponent
+    FooterComponent,
+    AlertsComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    CommonModule,
+    ToastrModule.forRoot() 
+
   ],
-  providers: [],
+  providers: [AlertsService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
