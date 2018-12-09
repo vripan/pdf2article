@@ -1,33 +1,30 @@
-import { Component, AfterViewInit } from '@angular/core';
-
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AnnotatorService } from './annotator.service';
+import { Subscription } from 'rxjs';
+
 
 @Component({
   selector: 'app-annotator',
   templateUrl: './annotator.component.html',
   styleUrls: ['./annotator.component.scss']
 })
-export class AnnotatorComponent implements AfterViewInit {
+export class AnnotatorComponent implements OnInit, OnDestroy {
 
-  public pages: any[] = [];
+  public trainingFiles: string[];
 
-  constructor(
-    private pdfReaderService: AnnotatorService,
-  ) { }
+  private trainingSubscription: Subscription;
 
-  ngOnInit() {
-    this.pdfReaderService.render('./assets/dummy-data/example.pdf');
-  }
+  constructor(private annotatorService: AnnotatorService) { }
 
-  public ngAfterViewInit(): void {
-    this.renderPDF('./assets/dummy-data/example.pdf');
-  }
-
-  private renderPDF(url: string): void {
-    this.pdfReaderService.render(url)
-      .then(pages =>  {
-        this.pages = pages;
+  public ngOnInit(): void {
+    this.trainingSubscription = this.annotatorService.getTrainingData()
+      .subscribe((files: string[]) => {
+        this.trainingFiles = files;
       });
+  }
+
+  public ngOnDestroy(): void {
+    this.trainingSubscription.unsubscribe();
   }
 
 }

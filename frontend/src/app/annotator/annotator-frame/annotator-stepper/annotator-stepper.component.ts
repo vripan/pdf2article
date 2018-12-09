@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AnnotatorService, AnnotationType } from '../annotator.service';
+import { AnnotatorService, AnnotationType } from '../../annotator.service';
 
 @Component({
   selector: 'annotator-stepper',

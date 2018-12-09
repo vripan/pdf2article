@@ -1,6 +1,6 @@
 import { Component, AfterViewInit, ElementRef, Input, HostListener } from '@angular/core';
 
-import { AnnotatorService, Annotation, AnnotationType } from '../../annotator.service';
+import { AnnotatorService, Annotation, AnnotationType } from '../../../annotator.service';
 
 @Component({
   selector: 'annotator-canvas',

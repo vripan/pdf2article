@@ -1,32 +1,10 @@
-:host {
-  min-height: 100vh;
-  display: grid;
-  grid-template-rows: 64px 64px auto;
-  grid-row-gap: 16px;
-  padding-bottom: 16px;
-}
-
 .logo {
   width: 150px;
   vertical-align: middle;
 }
 
-.pdf-wrapper {
-  background: #CCC;
-  overflow: auto;
-  width: 920px;
-  margin: 0 auto;
-  position: relative;
-
-  &__content {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-  }
+.files-container {
+  max-width: 920px;
+  margin: 16px auto;
 }
 
-.spacer {
-  flex: 1 1 auto;
-}

@@ -1,5 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {HttpClientModule} from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { ToastrModule } from 'ngx-toastr';
 
@@ -31,8 +32,8 @@ import { AlertsComponent } from './components/alerts/alerts.component';
     BrowserAnimationsModule,
     AppRoutingModule,
     CommonModule,
-    ToastrModule.forRoot() 
-
+    ToastrModule.forRoot(),
+    HttpClientModule
   ],
   providers: [AlertsService],
   bootstrap: [AppComponent]

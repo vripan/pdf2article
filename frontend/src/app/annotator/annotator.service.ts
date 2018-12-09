@@ -1,4 +1,7 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
 import * as PDFJS from 'pdfjs-dist';
 
 const pdflib = PDFJS as any;
@@ -40,7 +43,7 @@ export class AnnotatorService {
 
   private annotationType: AnnotationType;
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   public setAnnotation(annotation: Annotation): void {
     this.annotations.push(Object.assign({}, annotation));
@@ -64,6 +67,10 @@ export class AnnotatorService {
    */
   public flushAnnotations() {
 
+  }
+
+  public getTrainingData() {
+    return this.http.get('/api/training');
   }
 
   public async render(documentUrl: string){

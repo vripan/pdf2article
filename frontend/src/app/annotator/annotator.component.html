@@ -1,15 +1,18 @@
 <mat-toolbar  color="primary" role="toolbar">
   <a href="#">
-    <img class="logo" _ngcontent-c2="" class="logo" src="../../../assets/logo.png">
+    <img class="logo" _ngcontent-c2="" class="logo" src="/assets/logo.png">
   </a>
-  <span class="spacer"></span>
-  <button mat-icon-button  color="accent">
-    <mat-icon class="example-icon">delete</mat-icon>
-  </button>
 </mat-toolbar>
-<annotator-stepper></annotator-stepper>
-<mat-card class="pdf-wrapper">
-  <div class="pdf-wrapper__content">
-    <page class="pdf-canvas" *ngFor="let page of pages" [page]="page"></page>
-  </div>
+<mat-card class="files-container">
+  <mat-card-header>
+      <mat-card-title>Training files</mat-card-title>
+  </mat-card-header>
+  <mat-card-content >
+    <mat-list dense>
+      <mat-list-item *ngFor="let file of trainingFiles">
+        <a matLine routerLink="/annotator/train/{{file}}">{{file}}</a>
+        <mat-divider></mat-divider>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
 </mat-card>
