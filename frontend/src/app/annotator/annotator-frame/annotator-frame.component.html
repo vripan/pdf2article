@@ -3,7 +3,10 @@
     <img class="logo" _ngcontent-c2="" class="logo" src="../../../assets/logo.png">
   </a>
   <span class="spacer"></span>
-  <button mat-icon-button  color="accent">
+  <button mat-icon-button (click)="saveMetadata()">
+      <mat-icon class="example-icon">save</mat-icon>
+    </button>
+  <button mat-icon-button>
     <mat-icon class="example-icon">delete</mat-icon>
   </button>
 </mat-toolbar>

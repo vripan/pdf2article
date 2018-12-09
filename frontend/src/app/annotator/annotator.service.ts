@@ -66,11 +66,15 @@ export class AnnotatorService {
    * Return the annotations to match the server response
    */
   public flushAnnotations() {
-
+    this.annotations = [];
   }
 
   public getTrainingData() {
     return this.http.get('/api/training');
+  }
+
+  public saveMetadata(id) {
+    return this.http.post(`/api/training/metadata/${id}`, this.annotations);
   }
 
   public async render(documentUrl: string){
