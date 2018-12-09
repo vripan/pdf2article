@@ -26,7 +26,7 @@ def get_existing_metadata(file_name):
     """
     Returns existing metadata for specified file in specified format
     """
-    return {"articles": [('title', (1, 2,), (3, 4)), ('text', (1, 2,), (3, 4))]}
+    return json.dumps(doc_annotator.services.training.get_existing_metadata(file_name))
 
 
 @app.route("/training/metadata/<file_name>", methods=['POST'])
