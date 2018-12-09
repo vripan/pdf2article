@@ -9,7 +9,7 @@ import uuid
 
 
 def parse_file(hash):
-    return "dunno"
+    return {"status": False, "message": "not implemented"}
 
 
 def upload_pdf(request):
@@ -49,6 +49,7 @@ def upload_pdf(request):
 def get_file(hash):
     return send_from_directory(os.path.abspath(app.config['UPLOAD_FOLDER']), hash)
 
+
 def get_results(hash):
     (status, result) = parse_results_repository.get_results(hash)
-    return {"status":ParsePhase.to_string(status), "result":result}
+    return {"status": ParsePhase.to_string(status), "result": result}

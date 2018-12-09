@@ -36,7 +36,7 @@ def find_components(im, max_components=16):
     """Dilate the image until there are just a few connected components.
     Returns contours for these components."""
     kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
-    dilation = dilate(im, kernel, 2)
+    dilation = dilate(im, kernel, 6)
 
     count = 21
     n = 0
@@ -153,14 +153,8 @@ def find_final_crop(im, rects):
     return current
 
 
-def erode(ary, N, iterations):
-    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (N, N))
-    return cv2.erode(ary, kernel, iterations=iterations)
-
-
-def dilate_impovized(im):
+def dilate_wrapper(im):
     kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (10, 10))
-    # dilation = erode(im, 3, 2)
     dilation = dilate(im, kernel, 2)
     return dilation
 
@@ -169,16 +163,14 @@ def process_image(orig_im):
     # scale, im = downscale_image(orig_im)
     scale = 1
 
-    blur = reduce_noise_raw(im.copy())
+    blur = reduce_noise_raw(orig_im.copy())
 
     edges = auto_canny(blur.copy())
     edges = cv2.Canny(np.asarray(blur), 150, 200)
 
-    dilation = dilate_impovized(edges)
-    dilation = erode(dilation, 3, 6)
-
-    dbg(dilation)
-
+    # dilation = dilate_wrapper(edges)
+    dilation, rrr, _ = find_components(edges)
+    show_image_contours(orig_im,rrr)
     bw = dilation
     ########################
     _, contours, hierarchy = cv2.findContours(bw, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
@@ -207,9 +199,9 @@ def process_image(orig_im):
     # borders = list(filter(lambda b: rect_area(b) > mean, borders))
 
     ####################
-    show_image_contours(dilation, borders)
+    show_image_contours(orig_im, borders)
 
-    return ()
+    return borders
 
 
 def rad_to_deg(theta):
@@ -268,8 +260,8 @@ def process_skewed_crop(image):
 
 
 def segment(image):
-    # if not isinstance(image, Image):
-    #     raise ValueError
+    if not isinstance(image, np.ndarray):
+        raise TypeError
 
     return process_image(image)
 
@@ -279,14 +271,20 @@ def dbg(im):
 
 
 def show_image_contours(bw, borders):
-    img = cv2.merge((bw, bw, bw))
+    # img = cv2.merge((bw, bw, bw))
+    img = np.array(np.frombuffer(bw))
     borders = sorted(borders, key=lambda box: rect_area(box), reverse=True)
     for b in borders:
-        if b[4] != -1:
-            generate_color()
-            cv2.rectangle(img, (b[0], b[1]), (b[2], b[3]), color, -1)
+        if len(b)>=5:
+            if b[4] != -1:
+                generate_color()
+                cv2.rectangle(img, (b[0], b[1]), (b[2], b[3]), color, 2)
         else:
-            cv2.rectangle(img, (b[0], b[1]), (b[2], b[3]), (255, 0, 0), 2)
+            generate_color()
+            cv2.rectangle(img, (b[0], b[1]), (b[2], b[3]), color, 2)
+
+        # else:
+        #     cv2.rectangle(img, (b[0], b[1]), (b[2], b[3]), (255, 0, 0), 2)
     Image.fromarray(img).show()
 
 
@@ -312,9 +310,13 @@ def generate_color():
     color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
 
 
-if __name__ == '__main__':
-    path = r'D:\UAIC\3.1\IA\pdf2article\samples\images\3.jpg'
-    im = np.array(Image.open(path))
-    im, numtries = segment(im)
+import os, time
 
-    Image.fromarray(im).show()
+if __name__ == '__main__':
+    p = r'D:\UAIC\3.1\IA\pdf2article\samples\images'
+
+    for d in os.listdir(p):
+        path = os.path.join(p, d)
+        im = np.array(Image.open(path))
+        rects = segment(im)
+        time.sleep(5)

@@ -2,7 +2,6 @@
 # operatiile trebuie sa fie thread-safe
 # se returneaza o copie a rezultatlui din dictionar, nu o referinta la acesta (vezi deep_clone, clone, copy)
 
-
 # structura
 # | hash  | status   |     results     |
 # +-------+----------+-----------------+
