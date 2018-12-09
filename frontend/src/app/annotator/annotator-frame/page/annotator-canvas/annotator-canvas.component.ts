@@ -1,5 +1,5 @@
 import { Component, AfterViewInit, ElementRef, Input, HostListener } from '@angular/core';
-
+import { ToastrService } from 'ngx-toastr';
 import { AnnotatorService, Annotation, AnnotationType } from '../../../annotator.service';
 
 @Component({
@@ -23,7 +23,8 @@ export class AnnotatorCanvasComponent implements AfterViewInit {
 
   constructor(
     private element: ElementRef,
-    private annotatorService: AnnotatorService
+    private annotatorService: AnnotatorService,
+    private toastr: ToastrService
   ) {
     this.resetAnnotation();
   }
@@ -37,11 +38,24 @@ export class AnnotatorCanvasComponent implements AfterViewInit {
 
   @HostListener('mousedown', ['$event'])
   public onMouseDown($event) {
+    const { offsetX, offsetY } = $event;
     const tag = this.annotatorService.getAnnotationType();
     if (!tag) return;
 
-    this.currentAnnotation.x = $event.offsetX;
-    this.currentAnnotation.y = $event.offsetY;
+    const articles = this.annotatorService.getArticle(offsetX, offsetY, this.pageIndex);
+    if (tag !== AnnotationType.Article && articles.length === 0) {
+      this.toastr.warning("You need to set up an article area first", "Annotation");
+      return;
+    }
+
+    if (tag === AnnotationType.Article) {
+      this.currentAnnotation.pairKey = this.annotatorService.getNextArticleID();
+    } else {
+      this.currentAnnotation.pairKey = articles[0].pairKey;
+    }
+
+    this.currentAnnotation.x = offsetX;
+    this.currentAnnotation.y = offsetY;
     this.currentAnnotation.tag = tag;
     this.draw = true;
   }
@@ -66,6 +80,13 @@ export class AnnotatorCanvasComponent implements AfterViewInit {
     }
 
     this.draw = false;
+  }
+
+  @HostListener('click', ['$event'])
+  public onClick($event): void {
+    const { offsetX, offsetY } = $event;
+    const annotations = this.annotatorService.getAnnotationFromCoords(offsetX, offsetY, this.pageIndex);
+    console.log(annotations);
   }
 
   private resetAnnotation() {

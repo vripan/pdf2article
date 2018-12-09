@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 
 import * as PDFJS from 'pdfjs-dist';
 
@@ -19,15 +18,8 @@ export interface Annotation {
   xEnd: number;
   yEnd: number;
   page: number;
+  pairKey?: number;
   tag?: string;
-}
-
-export interface ArticleArea {
-  area: Annotation;
-  page: number;
-  titles: Annotation[];
-  authors?: Annotation[];
-  content? : Annotation[];
 }
 
 @Injectable({
@@ -42,6 +34,8 @@ export class AnnotatorService {
   private annotations: Annotation[] = [];
 
   private annotationType: AnnotationType;
+
+  private articleID: number = 0;
 
   constructor(private http: HttpClient) {}
 
@@ -74,7 +68,28 @@ export class AnnotatorService {
   }
 
   public saveMetadata(id) {
-    return this.http.post(`/api/training/metadata/${id}`, this.annotations);
+    const payload = this.annotations
+      .filter(annotation => annotation.tag !== AnnotationType.Article);
+
+    return this.http.post(`/api/training/metadata/${id}`, payload);
+  }
+
+  public getArticle(x: number, y: number, page: number) {
+    return this.getAnnotationFromCoords(x, y, page)
+      .filter(annotation => annotation.tag === AnnotationType.Article);
+  }
+
+  public getAnnotationFromCoords(x: number, y: number, page: number) {
+    return this.annotations.filter(annotation =>
+      x >= annotation.x && x <= annotation.xEnd &&
+      y >= annotation.y && y <= annotation.yEnd &&
+      page === annotation.page
+    );
+  }
+
+  public getNextArticleID(): number {
+    this.articleID++;
+    return this.articleID;
   }
 
   public async render(documentUrl: string){
@@ -91,4 +106,6 @@ export class AnnotatorService {
       return error;
     }
   }
+
+
 }
