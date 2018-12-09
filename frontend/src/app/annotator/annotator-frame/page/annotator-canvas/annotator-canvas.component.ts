@@ -1,6 +1,6 @@
 import { Component, AfterViewInit, ElementRef, Input, HostListener } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { AnnotatorService, Annotation, AnnotationType } from '../../../annotator.service';
+import { AnnotatorService, Annotation, AnnotationType, WorkMode } from '../../../annotator.service';
 
 @Component({
   selector: 'annotator-canvas',
@@ -21,6 +21,8 @@ export class AnnotatorCanvasComponent implements AfterViewInit {
 
   private currentAnnotation: Annotation;
 
+  private workMode: WorkMode;
+
   constructor(
     private element: ElementRef,
     private annotatorService: AnnotatorService,
@@ -33,6 +35,11 @@ export class AnnotatorCanvasComponent implements AfterViewInit {
     const $canvas = this.createAnnotationCanvas(this.viewport);
     this.ctx = $canvas.getContext('2d');
     this.element.nativeElement.appendChild($canvas);
+
+    this.annotatorService.getWorkMode()
+      .subscribe((mode: WorkMode) => {
+        this.workMode = mode;
+      })
     this.drawAnnotations();
   }
 
@@ -85,8 +92,10 @@ export class AnnotatorCanvasComponent implements AfterViewInit {
   @HostListener('click', ['$event'])
   public onClick($event): void {
     const { offsetX, offsetY } = $event;
-    const annotations = this.annotatorService.getAnnotationFromCoords(offsetX, offsetY, this.pageIndex);
-    console.log(annotations);
+    if (this.workMode === WorkMode.Delete) {
+      this.annotatorService.remove(offsetX, offsetY, this.pageIndex);
+      this.drawAnnotations();
+    }
   }
 
   private resetAnnotation() {

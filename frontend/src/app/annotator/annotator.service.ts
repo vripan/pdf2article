@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import * as PDFJS from 'pdfjs-dist';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 const pdflib = PDFJS as any;
 
@@ -22,6 +23,11 @@ export interface Annotation {
   tag?: string;
 }
 
+export enum WorkMode {
+  Create = 'create',
+  Delete = 'delete'
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -37,6 +43,8 @@ export class AnnotatorService {
 
   private articleID: number = 0;
 
+  private workMode: BehaviorSubject<WorkMode> = new BehaviorSubject<WorkMode>(WorkMode.Create);
+
   constructor(private http: HttpClient) {}
 
   public setAnnotation(annotation: Annotation): void {
@@ -50,6 +58,7 @@ export class AnnotatorService {
 
   public setAnnotationType(type: AnnotationType): void {
     this.annotationType = type;
+    this.workMode.next(WorkMode.Create);
   }
 
   public getAnnotationType(): AnnotationType {
@@ -80,16 +89,31 @@ export class AnnotatorService {
   }
 
   public getAnnotationFromCoords(x: number, y: number, page: number) {
-    return this.annotations.filter(annotation =>
-      x >= annotation.x && x <= annotation.xEnd &&
-      y >= annotation.y && y <= annotation.yEnd &&
-      page === annotation.page
-    );
+    return this.annotations.filter(annotation => this.hasAnnotation(x, y, page, annotation));
+  }
+
+  public remove(x: number, y: number, page) {
+    const annotations = this.getAnnotationFromCoords(x, y, page);
+    const article = annotations.find(annotation => annotation.tag === AnnotationType.Article);
+
+    if (article) {
+      this.removeArticle(article);
+    } else {
+      this.annotations = this.annotations.filter(annotation => !this.hasAnnotation(x, y, page, annotation));
+    }
   }
 
   public getNextArticleID(): number {
     this.articleID++;
     return this.articleID;
+  }
+
+  public setWorkMode(mode: WorkMode): void {
+    this.workMode.next(mode);
+  }
+
+  public getWorkMode(): Observable<WorkMode> {
+    return this.workMode.asObservable();
   }
 
   public async render(documentUrl: string){
@@ -107,5 +131,13 @@ export class AnnotatorService {
     }
   }
 
+  private hasAnnotation(x: number, y: number, page: number, annotation: Annotation): boolean {
+    return (x >= annotation.x && x <= annotation.xEnd &&
+    y >= annotation.y && y <= annotation.yEnd &&
+    page === annotation.page);
+  }
 
+  private removeArticle(article) {
+    this.annotations = this.annotations.filter(annotation => annotation.pairKey !== article.pairKey);
+  }
 }
