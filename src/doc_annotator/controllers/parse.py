@@ -9,7 +9,7 @@ import os
 
 @app.route("/parse/<string:hash>", methods=['GET'])
 def parse(hash):
-    time.sleep(5)
+    # time.sleep(5)
     return json.dumps(doc_annotator.services.parser.parse_file(hash))
     # vezi statusul si daca nu e parsat pune-l in coada pentru parsat
     # poate da eroare daca coada e plina
