@@ -1,7 +1,7 @@
 import os
 
 from PyPDF2 import PdfFileReader
-from doc_annotator import app, parse_results_repository
+from doc_annotator import app, parse_results_repository, jobs_queue
 from flask import send_from_directory
 from werkzeug.utils import secure_filename
 from doc_annotator.utils.parse_phase import ParsePhase
@@ -9,7 +9,19 @@ import uuid
 
 
 def parse_file(hash):
-    return {"status": False, "message": "not implemented"}
+    (status, result) = parse_results_repository.get_results(hash)
+
+    if status == ParsePhase.Done:
+        return {"status": True, "message": "the file was already processed"}
+    elif status == ParsePhase.Parsing:
+        return {"status": True, "message": "the file is in processing"}
+    else:
+        try:
+            jobs_queue.push(hash)
+        except Exception as e:
+            return {"status": False, "message": "the file could not be processed"}
+
+        return {"status": True, "message": "the file will be processed"}
 
 
 def upload_pdf(request):
