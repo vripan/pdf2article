@@ -9,8 +9,13 @@ class TestParseResults(unittest.TestCase):
     def setUp(self):
         self.parseResultRepo = ParseResultsRepo()
 
-    # def test_get_results(self):
-    #     print(self.parseResultRepo.table)
+    def test_get_results(self):
+        results = self.parseResultRepo.get_results('testHash')
+        self.assertEqual(results, (ParsePhase.Invalid, None))
+
+        self.parseResultRepo.table['testHash'] = (ParsePhase.Uploaded, 'testValue')
+        results = self.parseResultRepo.get_results('testHash')
+        self.assertEqual(results, (ParsePhase.Uploaded, 'testValue'))
 
     def test_save_results(self):
         self.parseResultRepo.save_results('testHash', 'testValue')
