@@ -1,5 +1,6 @@
 pdf_files/
-training_data/
+training_data/*.pdf
 .idea/
 __pycache__/
 *.egg-info
+*.jpg

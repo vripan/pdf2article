@@ -1,12 +1,9 @@
 import unittest
 
-from doc_annotator import TrainingMetadataRepo
-
 
 class TestTrainingMetadata(unittest.TestCase):
-
     def setUp(self):
-        self.trainingMetadataRepo = TrainingMetadataRepo()
+        pass
 
     def tearDown(self):
-        self.trainingMetadataRepo = None
+        pass

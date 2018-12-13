@@ -9,7 +9,7 @@ def get_training_file(file_name):
 
 
 def get_training_files():
-    return [file for file in os.listdir(os.path.abspath(app.config['TRAINING_FOLDER']))]
+    return [file for file in os.listdir(os.path.abspath(app.config['TRAINING_FOLDER'])) if file.split('.')[-1] == '.pdf']
 
 
 def update_metadata(file_name, request):
@@ -28,6 +28,7 @@ def update_metadata(file_name, request):
             return {"status": "false", "message": "Invalid metadata"}
     else:
         return {"status": "false", "message": "No metadata sent"}
+
 
 def get_existing_metadata(file_name):
     return training_metadata_repository.get_metadata(file_name)

@@ -1,10 +1,7 @@
 from flask import flash, request, redirect, url_for
-from werkzeug.utils import secure_filename
 import doc_annotator.services.parser
 from doc_annotator import app
-import time
 import json
-import os
 
 
 @app.route("/parse/<string:hash>", methods=['GET'])

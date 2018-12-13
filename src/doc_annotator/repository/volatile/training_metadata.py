@@ -11,8 +11,8 @@ class TrainingMetadataRepo:
         self.dictionary = dict()
         self.serialize_location = app.config['TRAINING_FOLDER']
 
-        if os.environ.get("WERKZEUG_RUN_MAIN") == "true":
-            self.__deserialize__()
+        # if os.environ.get("WERKZEUG_RUN_MAIN") == "true":
+        self.__deserialize__()
 
     def get_metadata(self, file_name):
         """

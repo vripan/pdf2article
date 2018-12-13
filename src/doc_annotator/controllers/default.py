@@ -10,4 +10,4 @@ def page_not_found(error):
 
 @app.route("/")
 def main_route():
-    return send_from_directory('../../docs', 'index.html')
+    return "Hello world!"
