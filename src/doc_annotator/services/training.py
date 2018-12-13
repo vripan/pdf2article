@@ -9,7 +9,8 @@ def get_training_file(file_name):
 
 
 def get_training_files():
-    return [file for file in os.listdir(os.path.abspath(app.config['TRAINING_FOLDER'])) if file.split('.')[-1] == '.pdf']
+    files =[file for file in os.listdir(os.path.abspath(app.config['TRAINING_FOLDER'])) if file.split('.')[-1] == 'pdf']
+    return files
 
 
 def update_metadata(file_name, request):
