@@ -10,10 +10,12 @@
 # | "asd" | done     |  resultse here" |
 # indexarea se face dupa hash
 
+import threading
 from doc_annotator.utils.parse_phase import ParsePhase
 
 class ParseResultsRepo:
     def __init__(self):
+        self.lock = threading.Lock()
         self.table = dict()
 
     def get_results(self, hash):
@@ -22,9 +24,13 @@ class ParseResultsRepo:
         """
         # retunreaza un tuplu (status, results)
 
-        if hash in self.table.keys():
-            return self.table[hash].copy()
-        return (ParsePhase.Invalid, None)
+        self.lock.acquire()
+        try:
+            if hash in self.table.keys():
+                return self.table[hash].copy()
+            return (ParsePhase.Invalid, None)
+        finally:
+            self.lock.release()
 
     def save_results(self, hash, results):
         """
@@ -32,16 +38,24 @@ class ParseResultsRepo:
         If there is already an entry with requested hash,
         old entry will be replaced by the new one
         """
-        if hash not in self.table.keys():
-            self.table.update({hash: (ParsePhase.Uploaded, results)})
-        else:
-            self.table.update({hash: (self.table[hash][0], results)})
+        self.lock.acquire()
+        try:
+            if hash not in self.table.keys():
+                self.table.update({hash: (ParsePhase.Uploaded, results)})
+            else:
+                self.table.update({hash: (self.table[hash][0], results)})
+        finally:
+            self.lock.release()
 
 
     def save_status(self, hash, status):
         # status must have a value define in parse_phase.py
-        if hash not in self.table.keys():
-            self.table.update({hash: (status, None)})
-        else:
-            self.table.update({hash: (status, self.table[hash][1])})
+        self.lock.acquire()
+        try:
+            if hash not in self.table.keys():
+                self.table.update({hash: (status, None)})
+            else:
+                self.table.update({hash: (status, self.table[hash][1])})
+        finally:
+            self.lock.release()
 
