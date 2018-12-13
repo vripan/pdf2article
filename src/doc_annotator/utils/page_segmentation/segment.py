@@ -38,6 +38,8 @@ def find_components(im, max_components=16):
     kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
     dilation = dilate(im, kernel, 6)
 
+    dbg(dilation)
+
     count = 21
     n = 0
     sigma = 0.000
@@ -168,10 +170,13 @@ def process_image(orig_im):
     edges = auto_canny(blur.copy())
     edges = cv2.Canny(np.asarray(blur), 150, 200)
 
+    dbg(edges)
+
     # dilation = dilate_wrapper(edges)
-    dilation, rrr, _ = find_components(edges)
-    show_image_contours(orig_im,rrr)
-    bw = dilation
+    # dilation, rrr, _ = find_components(edges)
+    # show_image_contours(orig_im, rrr)
+    # bw = dilation
+    bw = edges
     ########################
     _, contours, hierarchy = cv2.findContours(bw, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     borders = []
@@ -272,16 +277,18 @@ def dbg(im):
 
 def show_image_contours(bw, borders):
     # img = cv2.merge((bw, bw, bw))
-    img = np.array(np.frombuffer(bw))
+    # img = np.array(np.frombuffer(bw))
+    # bw = img
+    img = bw
     borders = sorted(borders, key=lambda box: rect_area(box), reverse=True)
     for b in borders:
-        if len(b)>=5:
+        if len(b) >= 5:
             if b[4] != -1:
                 generate_color()
-                cv2.rectangle(img, (b[0], b[1]), (b[2], b[3]), color, 2)
+                cv2.rectangle(img, (b[0], b[1]), (b[2], b[3]), color, -1)
         else:
             generate_color()
-            cv2.rectangle(img, (b[0], b[1]), (b[2], b[3]), color, 2)
+            cv2.rectangle(img, (b[0], b[1]), (b[2], b[3]), color, -1)
 
         # else:
         #     cv2.rectangle(img, (b[0], b[1]), (b[2], b[3]), (255, 0, 0), 2)
@@ -314,6 +321,11 @@ import os, time
 
 if __name__ == '__main__':
     p = r'D:\UAIC\3.1\IA\pdf2article\samples\images'
+
+    # path = os.path.join(p, "alecart A4.pdf")
+    # im = np.array(Image.open(path))
+    # rects = segment(im)
+    # time.sleep(5)
 
     for d in os.listdir(p):
         path = os.path.join(p, d)

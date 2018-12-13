@@ -1,17 +1,12 @@
-# la fel ca la parse_results
-# la inchiderea serverlui datele din acest bd trebuie salvate pe disk, folosind orice metoda de serializare
-# la pornirea serverlui dataele trebuie citiet de pe disc, deserializate si aduse in memorie
-# contine un dictionar de forma {file_name, metadata}
-
 import json
 import threading
 import os
 from doc_annotator import app
+from doc_annotator.repository.volatile.training_previewer import show
+
 
 class TrainingMetadataRepo:
-
     def __init__(self):
-        # aici se verifcia deserializarea si serializarea
         self.lock = threading.Lock()
         self.dictionary = dict()
         self.serialize_location = app.config['TRAINING_FOLDER']
@@ -28,6 +23,8 @@ class TrainingMetadataRepo:
             if hash in self.dictionary:
                 return self.dictionary[file_name].copy()
             return None
+        except Exception as exception:
+            raise exception
         finally:
             self.lock.release()
 
@@ -41,6 +38,9 @@ class TrainingMetadataRepo:
         try:
             self.dictionary.update({file_name: metadata})
             self.__serialize_one__(file_name)
+            show(file_name, metadata)
+        except Exception as exception:
+            raise exception
         finally:
             self.lock.release()
 
@@ -49,22 +49,14 @@ class TrainingMetadataRepo:
         Creates a file in serialize_location with the name 'key', without an extension 
         and writes to it the metadata of the key from the dictionary.
         """
-        self.lock.acquire()
-        try:
-            metadata_file_name = file_name.replace(".pdf", "")
-            metadataFileObj = open(os.path.join(self.serialize_location, metadata_file_name), 'wb')
-            metadataFileObj.write(json.dumps(self.dictionary[file_name]).encode())
-            print("Serialized " + file_name)
-        finally:
-            self.lock.release()
+        metadata_file_name = file_name.replace(".pdf", "")
+        metadataFileObj = open(os.path.join(self.serialize_location, metadata_file_name), 'wb')
+        metadataFileObj.write(json.dumps(self.dictionary[file_name]).encode())
+        print("Serialized " + file_name)
 
     def __serialize__(self):
-        self.lock.acquire()
-        try:
-            for key in self.dictionary:
-                self.__serialize_one__(key)
-        finally:
-            self.lock.release()
+        for key in self.dictionary:
+            self.__serialize_one__(key)
 
     def __deserialize__(self):
         """
@@ -72,17 +64,11 @@ class TrainingMetadataRepo:
         For example for file 'fisier' it adds to the dictionary the entry 
         {'fisier.pdf', content_of_fisier}.
         """
-        self.lock.acquire()
-        try:
-            for metadata_file_name in os.listdir(os.path.abspath(self.serialize_location)):
-                if len(os.path.splitext(metadata_file_name)[1]) == 0:
-                    full_file_name = os.path.join(self.serialize_location, metadata_file_name)
-                    file_name = metadata_file_name + ".pdf"
-
-                    metadataFileObj = open(full_file_name, 'rb')
-                    metadata = json.loads(metadataFileObj.read().decode())
-                    self.dictionary.update({file_name: metadata})
-                    print("Deserialized: " + metadata_file_name)
-
-        finally:
-            self.lock.release()
+        for metadata_file_name in os.listdir(os.path.abspath(self.serialize_location)):
+            if len(os.path.splitext(metadata_file_name)[1]) == 0:
+                full_file_name = os.path.join(self.serialize_location, metadata_file_name)
+                file_name = metadata_file_name + ".pdf"
+                metadataFileObj = open(full_file_name, 'rb')
+                metadata = json.loads(metadataFileObj.read().decode())
+                self.dictionary.update({file_name: metadata})
+                print("Deserialized: " + metadata_file_name)
