@@ -2,7 +2,7 @@ import json
 import threading
 import os
 from doc_annotator import app
-from doc_annotator.repository.volatile.training_previewer import show
+from doc_annotator.utils.training_previewer import preview
 
 
 class TrainingMetadataRepo:
@@ -38,7 +38,7 @@ class TrainingMetadataRepo:
         try:
             self.dictionary.update({file_name: metadata})
             self.__serialize_one__(file_name)
-            show(file_name, metadata)
+            preview(file_name, metadata)
         except Exception as exception:
             raise exception
         finally:
