@@ -21,6 +21,7 @@ pip install flask
 ```
 pip install PyPDF2
 ```
+2.3. Install pdf2image [here](https://github.com/Belval/pdf2image). Read section `How to install`
 3. Add the following environment variables
 
 | Name | Value |
