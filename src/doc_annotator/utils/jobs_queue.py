@@ -1,5 +1,8 @@
 import queue
 import threading
+import time
+from doc_annotator.utils.parse_phase import ParsePhase
+from doc_annotator import parse_results_repository
 
 
 class Worker(threading.Thread):
@@ -19,44 +22,44 @@ class Parser(Worker):
     def __init__(self, jobs):
         Worker.__init__(self, jobs)
 
+    def task(self, file_name):
+        parse_results_repository.save_status(file_name, ParsePhase.Parsing)
+        print("working on " + str(file_name))
+        for i in range(16):
+            print("still working on [" + str(i) + ']: ' + str(file_name))
+            time.sleep(1)
+        print("end working on " + str(file_name))
+        parse_results_repository.save_status(file_name, ParsePhase.Done)
+        parse_results_repository.save_results(file_name, "rezultate aici si restu")
+
     def run(self):
-        """
-        NN and page segmentation
-        """
-        pass
+        file_name = self.jobs.pop()
+        print("starting worker")
+        while file_name is not None:
+            print("[" + str(threading.get_ident()) + "] working on " + str(file_name))
+            self.task(file_name)
+            file_name = self.jobs.pop()
 
 
 class JobsQueue:
     def __init__(self, worker_type):
         self.q = queue.Queue()
         self.worker_type = worker_type
-        self.worker = None
+        self.worker = self.worker_type(self)
         self.lock = threading.Lock()
 
-    def new_worker(self):
-        self.worker = self.worker_type(self)
+        self.worker.start()
 
     def push(self, element):
-        result = self.q.put(element)
-
-        # check if false
-
-        self.lock.acquire()
-        if self.worker is None:
-            self.new_worker()
-        self.lock.release()
-
-        return result
+        print("push " + str(element))
+        self.q.put(element)
 
     def pop(self):
-        result = None
+        print("pop")
+        return self.q.get()
 
-        if not self.q.empty():
-            result = self.q.get()
-
+    def release_worker(self):
+        print("worker killed")
         self.lock.acquire()
-        if self.q.empty():
-            self.worker = None
+        self.worker = None
         self.lock.release()
-
-        return result

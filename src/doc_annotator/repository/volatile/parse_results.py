@@ -14,7 +14,7 @@ class ParseResultsRepo:
         self.lock.acquire()
         try:
             if hash in self.table.keys():
-                return self.table[hash].copy()
+                return self.table[hash]
             return (ParsePhase.Invalid, None)
         finally:
             self.lock.release()

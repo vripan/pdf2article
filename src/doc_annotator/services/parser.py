@@ -15,10 +15,13 @@ def parse_file(hash):
         return {"status": True, "message": "the file was already processed"}
     elif status == ParsePhase.Parsing:
         return {"status": True, "message": "the file is in processing"}
+    elif status == ParsePhase.Invalid:
+        return {"status": False, "message": "invalid file hash"}
     else:
         try:
             jobs_queue.push(hash)
         except Exception as e:
+            print("JobsQueue error: " + str(e))
             return {"status": False, "message": "the file could not be processed"}
 
         return {"status": True, "message": "the file will be processed"}
@@ -43,18 +46,24 @@ def upload_pdf(request):
     filename = str(uuid.uuid1())
     file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
+    pdfFileObj = None
+
     try:
         pdfFileObj = open(os.path.join(app.config['UPLOAD_FOLDER'], filename), 'rb')
         PdfFileReader(pdfFileObj)
         parse_results_repository.save_status(filename, ParsePhase.Uploaded)
     except:
-        pdfFileObj.close()
+        if pdfFileObj is not None:
+            pdfFileObj.close()
         response["message"] = request.files['file'].filename + " not a pdf file"
         os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         return response
 
     response["status"] = True
     response["hash"] = filename
+
+    parse_results_repository.save_status(filename, ParsePhase.Uploaded)
+
     return response
 
 

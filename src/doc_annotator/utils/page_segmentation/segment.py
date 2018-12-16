@@ -279,6 +279,8 @@ def show_image_contours(bw, borders):
     # img = cv2.merge((bw, bw, bw))
     # img = np.array(np.frombuffer(bw))
     # bw = img
+    scale = 0.4
+    bw = cv2.resize(bw, (0, 0), fx=scale, fy=scale)
     img = bw
     borders = sorted(borders, key=lambda box: rect_area(box), reverse=True)
     for b in borders:

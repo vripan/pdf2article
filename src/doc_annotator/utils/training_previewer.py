@@ -16,14 +16,16 @@ def get_image(file_path, page):
 def parse_metadata(metadata):
     p = {}
 
+    # scale = 3.4890756302521008403361344537815
+    scale = 1
     for t in metadata:
-        x = (t['x'], t['y'], t['xEnd'], t['yEnd'])
+        x = (t['x'], t['y'], t['x']+t['xEnd'], t['y'] + t['yEnd'])
         page = t['page']
         if page in p:
             p[page].append(x)
         else:
             p[page] = [x]
-
+    p[0].append((0, 0, 10, 10))
     return p
 
 
