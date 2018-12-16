@@ -1,4 +1,3 @@
-from wand.image import Image
 import PyPDF2
 import io
 import numpy
