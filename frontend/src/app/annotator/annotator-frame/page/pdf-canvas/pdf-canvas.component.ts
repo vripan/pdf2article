@@ -13,9 +13,7 @@ export class PdfCanvasComponent implements AfterViewInit {
   @Input()
   private viewport: any;
 
-  constructor(
-    private element: ElementRef
-  ) { }
+  constructor(private element: ElementRef) { }
 
   public ngAfterViewInit(): void {
     const $canvas: HTMLCanvasElement = this.createPDFCanvas(this.viewport);
@@ -38,5 +36,4 @@ export class PdfCanvasComponent implements AfterViewInit {
 
     return $canvas;
   }
-
 }

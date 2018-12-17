@@ -24,9 +24,9 @@ export class AnnotatorCanvasComponent implements AfterViewInit {
   private workMode: WorkMode;
 
   constructor(
+    private toastr: ToastrService,
     private element: ElementRef,
-    private annotatorService: AnnotatorService,
-    private toastr: ToastrService
+    private annotatorService: AnnotatorService
   ) {
     this.resetAnnotation();
   }
@@ -39,7 +39,7 @@ export class AnnotatorCanvasComponent implements AfterViewInit {
     this.annotatorService.getWorkMode()
       .subscribe((mode: WorkMode) => {
         this.workMode = mode;
-      })
+      });
     this.drawAnnotations();
   }
 
@@ -47,11 +47,13 @@ export class AnnotatorCanvasComponent implements AfterViewInit {
   public onMouseDown($event) {
     const { offsetX, offsetY } = $event;
     const tag = this.annotatorService.getAnnotationType();
-    if (!tag) return;
+    if (!tag) {
+      return;
+    }
 
     const articles = this.annotatorService.getArticle(offsetX, offsetY, this.pageIndex);
     if (tag !== AnnotationType.Article && articles.length === 0) {
-      this.toastr.warning("You need to set up an article area first", "Annotation");
+      this.toastr.warning('You need to set up an article area first', 'Annotation');
       return;
     }
 
@@ -69,7 +71,9 @@ export class AnnotatorCanvasComponent implements AfterViewInit {
 
   @HostListener('mousemove', ['$event'])
   public onMouseMove($event) {
-    if (!this.draw) return;
+    if (!this.draw) {
+      return;
+    }
 
     const { offsetX, offsetY } = $event;
     this.currentAnnotation.xEnd = offsetX - this.currentAnnotation.x;
@@ -105,7 +109,7 @@ export class AnnotatorCanvasComponent implements AfterViewInit {
       xEnd: 0,
       yEnd: 0,
       page: 0
-    }
+    };
   }
 
   private createAnnotationCanvas(viewport): HTMLCanvasElement {
@@ -124,7 +128,7 @@ export class AnnotatorCanvasComponent implements AfterViewInit {
     this.ctx.beginPath();
     this.ctx.rect(x, y, xEnd, yEnd);
 
-    switch(annotation.tag) {
+    switch (annotation.tag) {
       case AnnotationType.Article:
         this.ctx.strokeStyle = '#b71c1c';
         break;
@@ -149,5 +153,4 @@ export class AnnotatorCanvasComponent implements AfterViewInit {
     const annotations: Annotation[] = this.annotatorService.getAnnotations(this.pageIndex);
     annotations.forEach(annotation => this.drawAnnotation(annotation));
   }
-
 }

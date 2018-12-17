@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, HostBinding } from '@angular/core';
+import { AnnotatorService, IPageProperties } from '../../annotator.service';
 
 @Component({
   selector: 'page',
@@ -20,11 +21,24 @@ export class PageComponent implements OnInit {
 
   private scale: number = 1;
 
-  constructor() { }
+  constructor(private pageProperties: AnnotatorService) { }
 
   public ngOnInit(): void {
     this.index = this.page.pageIndex;
     this.viewport = this.page.getViewport(this.scale);
     this.width = `${this.viewport.width}px`;
+
+    const pageProps: IPageProperties = {
+      pageIndex: this.index,
+      pageDimensions: {
+        width: this.viewport.width,
+        height: this.viewport.height
+      }
+    };
+    this.setPageProperties(pageProps);
+  }
+
+  private setPageProperties(pageProperties: IPageProperties) {
+    this.pageProperties.setPagesProperties(pageProperties);
   }
 }

@@ -3,7 +3,6 @@ import { AnnotatorService } from './annotator.service';
 import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 
-
 @Component({
   selector: 'app-annotator',
   templateUrl: './annotator.component.html',
@@ -16,8 +15,8 @@ export class AnnotatorComponent implements OnInit, OnDestroy {
   private trainingSubscription: Subscription;
 
   constructor (
-    private annotatorService: AnnotatorService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private annotatorService: AnnotatorService
   ) { }
 
   public ngOnInit(): void {
@@ -25,12 +24,11 @@ export class AnnotatorComponent implements OnInit, OnDestroy {
       .subscribe((files: string[]) => {
         this.trainingFiles = files;
       }, (error) => {
-        this.toastr.error(error, "Training");
+        this.toastr.error(error, 'Training');
       });
   }
 
   public ngOnDestroy(): void {
     this.trainingSubscription.unsubscribe();
   }
-
 }
