@@ -5,14 +5,17 @@ app = Flask(__name__)
 
 app.config['UPLOAD_FOLDER'] = './pdf_files'
 app.config['TRAINING_FOLDER'] = './training_data'
+app.config['NETWORK_DATA'] = './network_data'
 
 from doc_annotator.repository.volatile.parse_results import ParseResultsRepo
 from doc_annotator.repository.volatile.training_metadata import TrainingMetadataRepo
+from doc_annotator.utils.neural_network.network import Network
 
 print(sys.version_info)
 
 parse_results_repository = ParseResultsRepo()
 training_metadata_repository = TrainingMetadataRepo()
+training_network = Network(app.config['NETWORK_DATA'])
 
 from doc_annotator.utils.jobs_queue import JobsQueue, Parser
 
