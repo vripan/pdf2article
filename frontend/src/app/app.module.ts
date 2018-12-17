@@ -19,6 +19,8 @@ import { FooterComponent } from './components/footer/footer.component';
 import { AlertsService } from './components/alerts/alerts.service';
 import { AlertsComponent } from './components/alerts/alerts.component';
 import { ModalComponent } from './components/modal/modal.component';
+import { HistoryService } from './components/history/history.service';
+import { HistoryComponent } from './components/history/history.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import { ModalComponent } from './components/modal/modal.component';
     UploadMainComponent,
     FooterComponent,
     AlertsComponent,
-    ModalComponent
+    ModalComponent,
+    HistoryComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +45,7 @@ import { ModalComponent } from './components/modal/modal.component';
     NgxSmartModalModule.forChild()
 
   ],
-  providers: [AlertsService],
+  providers: [AlertsService, HistoryService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

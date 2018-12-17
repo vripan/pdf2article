@@ -1,0 +1,15 @@
+
+<h3>YOU UPLOADED:</h3>
+<mat-list>
+  <mat-list-item *ngFor="let doc of analyzedDocs">
+    <img matListAvatar src="..." alt="doc_preview_img">
+    <h3 matLine> {{doc}} </h3>
+    <p matLine>
+      <span class="doc__name"> {{doc.name}}} </span>
+      <span class="doc__size"> -- {{doc.size}} </span>
+      <span class="doc__otherdetails"> -- {{doc.author}} </span>
+      <span class="doc__otherdetails"> -- {{doc.uploadTime}} </span>
+    </p>
+  </mat-list-item>
+</mat-list>
+<app-footer></app-footer>
