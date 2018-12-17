@@ -49,3 +49,29 @@ C:\Users\username\AppData\Local\Programs\Python\Python36\python.exe -m flask run
  * Debug mode: off
  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
 ```
+
+7. Using Tesseract OCR with Python
+  1. if you don't have tesseract already installed please follow this link to get the executable file
+  ```
+https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-v4.0.0.20181030.exe
+```
+  2. edit the PATH(System variables) adding this new path for tesseract
+   ```
+C:\Program Files (x86)\Tesseract-OCR
+```
+to test that you actually installed tesseract, open a command prompt and type ``` "tesseract <path_to_image_with_text>" stdout ```
+  3. Install pillow (administrator)
+```
+pip install pillow
+```
+  4. Install pytesseract (administrator)
+  ```
+pip install pytesseract
+```
+  5. See the 'tesseract-python' directory from repository
+to test that you can use tesseract with python open a command prompt inside 'tesseract-python' directory and type:
+
+```
+python ocr.py --image images/example_02.png --preprocess blur
+```
+see that ocr.py is a python script that allows you to extract text from an image using tesseract
