@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { GenericService } from '../services/generic.service';
 
-import * as PDFJS from 'pdfjs-dist';
 import { BehaviorSubject, Observable } from 'rxjs';
+import * as PDFJS from 'pdfjs-dist';
 
 const pdflib = PDFJS as any;
 
@@ -23,6 +23,16 @@ export interface Annotation {
   tag?: string;
 }
 
+interface IPageDimensions {
+  width: number;
+  height: number;
+}
+
+export interface IPageProperties {
+  pageIndex: number;
+  pageDimensions: IPageDimensions;
+}
+
 export enum WorkMode {
   Create = 'create',
   Delete = 'delete'
@@ -38,22 +48,28 @@ export class AnnotatorService {
   private pages: HTMLElement[] = [];
 
   private annotations: Annotation[] = [];
-
   private annotationType: AnnotationType;
 
   private articleID: number = 0;
 
+  private pagesProperties: IPageProperties[] = [];
+
   private workMode: BehaviorSubject<WorkMode> = new BehaviorSubject<WorkMode>(WorkMode.Create);
 
-  constructor(private http: HttpClient) {}
+  constructor(private genericService: GenericService) { }
 
   public setAnnotation(annotation: Annotation): void {
     this.annotations.push(Object.assign({}, annotation));
   }
 
   public getAnnotations(page: number) {
-    return this.annotations.filter(annotation => annotation.page === page)
-      .map(annotation => Object.assign({}, annotation));
+    return this.annotations
+               .filter(annotation => annotation.page === page)
+               .map(annotation => Object.assign({}, annotation));
+  }
+
+  public getAnnotationType(): AnnotationType {
+    return this.annotationType;
   }
 
   public setAnnotationType(type: AnnotationType): void {
@@ -61,8 +77,10 @@ export class AnnotatorService {
     this.workMode.next(WorkMode.Create);
   }
 
-  public getAnnotationType(): AnnotationType {
-    return this.annotationType;
+  public setPagesProperties(pageProperties: IPageProperties): void {
+    if (this.pagesProperties.findIndex(page => page.pageIndex === pageProperties.pageIndex) === -1) {
+      this.pagesProperties.push(pageProperties);
+    }
   }
 
   /**
@@ -73,14 +91,15 @@ export class AnnotatorService {
   }
 
   public getTrainingData() {
-    return this.http.get('/api/training');
+    return this.genericService.Get('training');
   }
 
-  public saveMetadata(id) {
+  public saveMetadata(id: string) {
     const payload = this.annotations
       .filter(annotation => annotation.tag !== AnnotationType.Article);
+    const pagesProperties = this.pagesProperties;
 
-    return this.http.post(`/api/training/metadata/${id}`, payload);
+    return this.genericService.Post(`training/metadata/${id}`, { payload, pagesProperties });
   }
 
   public getArticle(x: number, y: number, page: number) {
@@ -92,7 +111,7 @@ export class AnnotatorService {
     return this.annotations.filter(annotation => this.hasAnnotation(x, y, page, annotation));
   }
 
-  public remove(x: number, y: number, page) {
+  public remove(x: number, y: number, page: number) {
     const annotations = this.getAnnotationFromCoords(x, y, page);
     const article = annotations.find(annotation => annotation.tag === AnnotationType.Article);
 
@@ -116,7 +135,7 @@ export class AnnotatorService {
     return this.workMode.asObservable();
   }
 
-  public async render(documentUrl: string){
+  public async render(documentUrl: string) {
     try {
       this.pdf = await pdflib.getDocument(documentUrl);
       const { numPages } = this.pdf._pdfInfo;
@@ -126,7 +145,7 @@ export class AnnotatorService {
       }
 
       return this.pages;
-    } catch(error) {
+    } catch (error) {
       return error;
     }
   }
@@ -137,7 +156,7 @@ export class AnnotatorService {
     page === annotation.page);
   }
 
-  private removeArticle(article) {
+  private removeArticle(article: Annotation) {
     this.annotations = this.annotations.filter(annotation => annotation.pairKey !== article.pairKey);
   }
 }
