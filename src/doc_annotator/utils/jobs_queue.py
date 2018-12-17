@@ -3,7 +3,9 @@ import threading
 import time
 from doc_annotator.utils.parse_phase import ParsePhase
 from doc_annotator import parse_results_repository
-
+from doc_annotator.utils.page_segmentation.page_segmentation import segment_pdf
+from doc_annotator.utils.neural_network.network import predict
+from doc_annotator.utils.ocr.optical import ocr_file
 
 class Worker(threading.Thread):
     def __init__(self, jobs):
@@ -24,13 +26,18 @@ class Parser(Worker):
 
     def task(self, file_name):
         parse_results_repository.save_status(file_name, ParsePhase.Parsing)
-        print("working on " + str(file_name))
-        for i in range(16):
-            print("still working on [" + str(i) + ']: ' + str(file_name))
-            time.sleep(1)
-        print("end working on " + str(file_name))
+        borders = segment_pdf(file_name)
+        characteristics = ocr_file(borders, file_name)
+        results = predict(characteristics)
         parse_results_repository.save_status(file_name, ParsePhase.Done)
-        parse_results_repository.save_results(file_name, "rezultate aici si restu")
+        parse_results_repository.save_results(file_name, results)
+
+
+        # iau fisierul
+        # segmentare -> obtii un aray de chenare
+        # ocr pe fisiere -> scot caracteristici
+        # dau la reatea caracteristicile
+        # centralizez rezultaetle si le trimit pe front
 
     def run(self):
         file_name = self.jobs.pop()

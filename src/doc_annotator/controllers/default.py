@@ -10,4 +10,5 @@ def page_not_found(error):
 
 @app.route("/")
 def main_route():
+    print("ana")
     return "Hello world!"
