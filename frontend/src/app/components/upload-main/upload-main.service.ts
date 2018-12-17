@@ -10,8 +10,10 @@ export class UploadMainService {
     private service: GenericService
   ) { }
   
-  public postPDF(object: any) : string {
-    this.service.Post('PLACE HOLDER', object)
+  public postPDF(object: any) : any {
+    let formData: FormData = new FormData();
+    formData.append('file', object);
+    this.service.Post('parse/upload', formData)
                 .subscribe((result) => {
                   return "PDF uploaded"
                 },
