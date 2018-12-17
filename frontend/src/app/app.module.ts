@@ -4,6 +4,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { ToastrModule } from 'ngx-toastr';
 import { FileDropModule } from 'ngx-file-drop';
+import { NgxSmartModalModule } from 'ngx-smart-modal';
 
 import {NgModule} from '@angular/core';
 
@@ -17,6 +18,7 @@ import {UploadMainComponent} from './components/upload-main/upload-main.componen
 import {FooterComponent} from './components/footer/footer.component';
 import { AlertsService } from './components/alerts/alerts.service';
 import { AlertsComponent } from './components/alerts/alerts.component';
+import { ModalComponent } from './components/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { AlertsComponent } from './components/alerts/alerts.component';
     HeaderComponent,
     UploadMainComponent,
     FooterComponent,
-    AlertsComponent
+    AlertsComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +38,9 @@ import { AlertsComponent } from './components/alerts/alerts.component';
     CommonModule,
     ToastrModule.forRoot(),
     FileDropModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxSmartModalModule.forChild()
+
   ],
   providers: [AlertsService],
   bootstrap: [AppComponent]

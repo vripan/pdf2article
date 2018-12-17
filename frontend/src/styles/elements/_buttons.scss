@@ -28,6 +28,14 @@ button, *[type=button] {
     color: $color-green;
     background-color: $color-green-faded;
   }
+
+  &--primary-menu
+  { 
+    width: 20px;
+    height: 3px;
+    background-color: white;
+    margin: 2px 0;
+  }
 }
 
 ul,

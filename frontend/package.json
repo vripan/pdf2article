@@ -23,6 +23,7 @@
     "@angular/router": "~7.1.0",
     "core-js": "^2.5.4",
     "ngx-file-drop": "^5.0.0",
+    "ngx-smart-modal": "^7.1.0",
     "ngx-toastr": "^9.1.1",
     "pdfjs-dist": "^2.0.943",
     "rxjs": "~6.3.3",
