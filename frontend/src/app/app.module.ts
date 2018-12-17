@@ -6,6 +6,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { FileDropModule } from 'ngx-file-drop';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
 
+import { MatListModule } from '@angular/material/list';
+
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -41,11 +43,12 @@ import { HistoryComponent } from './components/history/history.component';
     CommonModule,
     ToastrModule.forRoot(),
     FileDropModule,
+    MatListModule,
     HttpClientModule,
     NgxSmartModalModule.forChild()
 
   ],
-  providers: [AlertsService, HistoryService],
+  providers: [AlertsService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
