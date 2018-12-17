@@ -3,6 +3,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientModule} from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { ToastrModule } from 'ngx-toastr';
+import { FileDropModule } from 'ngx-file-drop';
 
 import {NgModule} from '@angular/core';
 
@@ -33,6 +34,7 @@ import { AlertsComponent } from './components/alerts/alerts.component';
     AppRoutingModule,
     CommonModule,
     ToastrModule.forRoot(),
+    FileDropModule,
     HttpClientModule
   ],
   providers: [AlertsService],
