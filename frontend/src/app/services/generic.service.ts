@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -12,11 +11,24 @@ export class GenericService {
 
   constructor(private http: HttpClient) { }
 
-  public Get<T>(url: string): Observable<T> {
-    return this.http.get<T>(this.api + url);
+  public Get<T>(url: string): Promise<T> {
+    return new Promise((resolve, reject) => {
+      this.http.get<T>("http://192.168.43.230:5000/" + url)
+        .toPromise()
+        .then((data) => {
+          return data;
+        })
+        .catch(err => console.log(err));
+    })
   }
 
-  public Post<T>(url: string, data: T): any {
-    return this.http.post<T>(this.api + url, data);
+  public Post<T>(url: string, data: T): Promise<T> {
+    return new Promise((resolve, reject) => {
+      this.http.post<T>("http://192.168.43.230:5000/" + url, data)
+      .toPromise()
+      .then(result => {
+        resolve(result);
+      })
+    });
   }
 }
