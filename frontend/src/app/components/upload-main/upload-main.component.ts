@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
-import { UploadEvent, UploadFile, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
+import { UploadEvent, UploadFile, FileSystemFileEntry } from 'ngx-file-drop';
 import { ToastrService } from 'ngx-toastr';
 
-import { UploadMainService } from './upload-main.service'
+import { UploadMainService } from './upload-main.service';
 
 @Component({
   selector: 'app-upload-main',
@@ -13,7 +13,7 @@ import { UploadMainService } from './upload-main.service'
 export class UploadMainComponent {
 
   fileToUpload: File = null;
-  fileName: String = "";
+  fileName: String = '';
   public files: UploadFile[] = [];
 
   constructor(
@@ -22,15 +22,14 @@ export class UploadMainComponent {
   ) { }
 
   async handleFileInput(file: File) {
-    if (file && file.type === "application/pdf") {
+    if (file && file.type === 'application/pdf') {
       this.fileToUpload = file;
       this.fileName = this.fileToUpload.name;
 
-      //TODO
-      this.toastr.info(this.uploadService.postPDF(file));      
-    }
-    else {
-      this.toastr.error("Invalid file");
+      // TODO
+      this.toastr.info(this.uploadService.postPDF(file));
+    } else {
+      this.toastr.error('Invalid file');
     }
   }
 

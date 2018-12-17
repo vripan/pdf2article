@@ -6,9 +6,9 @@ import { NgxSmartModalService } from 'ngx-smart-modal';
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.scss']
 })
-export class ModalComponent implements OnInit{
-  constructor(public ngxSmartModalService: NgxSmartModalService) {
-  }
-  ngOnInit() {
-  }
+export class ModalComponent implements OnInit {
+
+  constructor(public ngxSmartModalService: NgxSmartModalService) { }
+
+  ngOnInit() { }
 }
