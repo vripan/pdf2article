@@ -9,7 +9,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./history.component.scss']
 })
 export class HistoryComponent implements OnInit, OnDestroy {
-  private analyzedDocs: any;
+  public analyzedDocs: any;
   private historySubscription: Subscription;
 
   constructor (private toastr: ToastrService, private historyService: HistoryService) { }

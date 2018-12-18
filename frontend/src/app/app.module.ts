@@ -6,6 +6,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { FileDropModule } from 'ngx-file-drop';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
 
+import { MatListModule } from '@angular/material/list';
+
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -21,6 +23,12 @@ import { AlertsComponent } from './components/alerts/alerts.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { HistoryService } from './components/history/history.service';
 import { HistoryComponent } from './components/history/history.component';
+import { StatisticsComponent } from './components/statistics/statistics.component';
+import { ChartsModule } from 'ng2-charts';
+import { MatSelectModule } from '@angular/material';
+import { MatInputModule } from '@angular/material';
+import { MatTableModule } from '@angular/material';
+import { DoughnutChartComponent } from './components/doughnut-chart/doughnut-chart.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +40,9 @@ import { HistoryComponent } from './components/history/history.component';
     FooterComponent,
     AlertsComponent,
     ModalComponent,
-    HistoryComponent
+    HistoryComponent,
+    StatisticsComponent,
+    DoughnutChartComponent
   ],
   imports: [
     BrowserModule,
@@ -41,11 +51,16 @@ import { HistoryComponent } from './components/history/history.component';
     CommonModule,
     ToastrModule.forRoot(),
     FileDropModule,
+    MatListModule,
     HttpClientModule,
-    NgxSmartModalModule.forChild()
+    NgxSmartModalModule.forChild(),
+    ChartsModule,
+    MatSelectModule,
+    MatInputModule,
+    MatTableModule
 
   ],
-  providers: [AlertsService, HistoryService],
+  providers: [AlertsService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

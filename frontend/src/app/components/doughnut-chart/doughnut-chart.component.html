@@ -1,0 +1,18 @@
+<div class="donut__chart">
+  <div class="donut__chart-top">
+    <p>Dummy chart</p>
+    <mat-form-field>
+      <select matNativeControl required>
+        <option value="category1">Category1</option>
+        <option value="category2">Category2</option>
+        <option value="category3">Category3</option>
+      </select>
+    </mat-form-field>
+  </div>
+  <canvas baseChart 
+    [data]="chartData" 
+    [labels]="chartLabels" 
+    [chartType]="chartType"
+    [legend]="false" 
+    (chartHover)="chartHovered($event)" ></canvas>
+  </div>
