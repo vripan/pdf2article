@@ -18,5 +18,14 @@ mat-list{
         h4, p {
             color: $color-blue;
         }
+        .button {
+            &--primary {
+                &:hover {
+                    background-color: $color-green-faded;
+                    color: $color-green;
+                    border: 1px solid $color-green;
+                }
+            }
+        }
     }
 }
