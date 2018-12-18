@@ -39,9 +39,9 @@ export class HistoryComponent implements OnInit {
     // );
       
     this.analyzedDocs = [
-      {name: "ion_ion", size: 212396, author: "Ionescu Ion", upload_time: 4.4325},
-      {name: "johnpop", size: 8142, author: "Popescu John", upload_time: 4.4325},
-      {name: "johnynotdead", size: 1024333, author: "Ion Iliescu", upload_time: 4.4325},
+      {name: "Metamorphosis", size: 21, author: "Franz Kafka", upload_time: 4.4325},
+      {name: "The Stranger", size: 12, author: "Albert Camus", upload_time: 4.4325},
+      {name: "On The Road", size: 22, author: "Jack Kerouac", upload_time: 4.4325},
       // {name: "UserName", size: 212396, author: "AuthorName", upload_time: 4.4325},
       // {name: "UserName", size: 212396, author: "AuthorName", upload_time: 4.4325},
       // {name: "UserName", size: 212396, author: "AuthorName", upload_time: 4.4325},

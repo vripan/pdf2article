@@ -1,16 +1,22 @@
-h3, mat-list{
+@import '../../../styles/variables/colors';
+@import '../../../styles/typography/typography';
+h2 {
     margin-top: 5%;
-    margin-left: 15%;
+    margin-left: 15%
 }
 mat-list{
-    width:60%;
-}
-.doc__name{
-    font-size: 1em;
-}
-.doc__size{
-    font-size: 0.4em;
-}
-.doc__otherdetails{
-    font-size: 0.75em;
+    width:100%;
+    mat-list-item{
+        width: 70%;
+        margin: 1em auto 0 auto;
+        .regular {
+            color: $color-text;
+        }
+        h3 {
+            color: $color-green;
+        }
+        h4, p {
+            color: $color-blue;
+        }
+    }
 }
