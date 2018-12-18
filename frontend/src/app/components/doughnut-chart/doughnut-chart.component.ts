@@ -7,10 +7,11 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class DoughnutChartComponent implements OnInit {
 
-  @Input() chartType: string ="";
-  @Input() chartLabels: string[]=[];
-  @Input() chartData: number[]=[];
-  
+  @Input() chartType: string = "";
+  @Input() chartLabels: string[] = [];
+  @Input() chartData: number[] = [];
+  @Input() categories: string[] = []
+
   constructor() { }
 
   ngOnInit() {

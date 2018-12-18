@@ -3,9 +3,9 @@
     <p>Dummy chart</p>
     <mat-form-field>
       <select matNativeControl required>
-        <option value="category1">Category1</option>
-        <option value="category2">Category2</option>
-        <option value="category3">Category3</option>
+        <ng-container *ngFor="let category of categories">
+           <option value="category">{{category}}</option>
+        </ng-container>
       </select>
     </mat-form-field>
   </div>

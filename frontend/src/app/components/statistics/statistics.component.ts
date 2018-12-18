@@ -49,6 +49,8 @@ export class StatisticsComponent {
     { data: [65, 59, 80, 81, 56, 55, 40],label:'something'},
   ];
 
+  public categories: string[] = ['Category1','Category2','Category3'];
+
   public chartHovered(e: any): void {
   }
 

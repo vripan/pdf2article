@@ -13,6 +13,10 @@ def main_route():
     print("ana")
     return "Hello world!"
 
+@app.route("/history/latest", methods=['GET'])
+def show_history():
+    return "Here will be shown the history"
+
 
 @app.after_request
 def after_request(response):

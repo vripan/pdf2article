@@ -11,19 +11,27 @@
         padding-bottom: 80px;
     }
 
-    table {
-        width: 70%;
-        margin-bottom: 100px;
+    .table {
+        width: 60%;
+        table {
+        width: 100%;
+        margin-bottom: 100px;}
+    }
+
+    .bar__chart-wrapper {
+        width: 60%;
+        height: 60%;
+        margin-bottom:100px;
     }
 }
 
- .bar__chart-wrapper {
-     width: 60%;
-     height: 60%;
-     margin-bottom:100px;
+ h2 {
+     padding:100px 0 50px 110px;
+     font-weight:bold;
+     color:rgb(117, 116, 116)
  }
 
- h2 {
-     padding:40px 0 40px 70px;
-     font-weight:bold;
+ p {
+    padding-bottom: 30px;
+    font-size: 20px;
  }
