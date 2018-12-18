@@ -1,15 +1,20 @@
-
+<app-header></app-header>
 <h3>YOU UPLOADED:</h3>
 <mat-list>
+  <!-- <p>{{analyzedDocs}}</p> -->
   <mat-list-item *ngFor="let doc of analyzedDocs">
-    <img matListAvatar src="..." alt="doc_preview_img">
-    <h3 matLine> {{doc}} </h3>
-    <p matLine>
-      <span class="doc__name"> {{doc.name}}} </span>
-      <span class="doc__size"> -- {{doc.size}} </span>
-      <span class="doc__otherdetails"> -- {{doc.author}} </span>
-      <span class="doc__otherdetails"> -- {{doc.uploadTime}} </span>
-    </p>
+    <img matListAvatar src="https://thumbsplus.tutsplus.com/uploads/users/33/posts/27093/preview_image/folded-document-icon-large.png?height=300&width=300" alt="doc_preview_img">
+    <!-- <mat-icon>library_books</mat-icon>   -->
+    
+    <span matLine class="doc__name"> User | {{doc.name}} </span>
+    <span matLine class="doc__size"> Size | {{doc.size}} KB </span>
+    <span matLine class="doc__otherdetails">Author |  {{doc.author}} </span>
+    <span matLine class="doc__otherdetails"> Upload Time | {{doc.uploadTime}} </span>
+    
+    <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+      <mat-button-toggle value="Details">Details</mat-button-toggle>
+    </mat-button-toggle-group>
+    
   </mat-list-item>
 </mat-list>
 <app-footer></app-footer>

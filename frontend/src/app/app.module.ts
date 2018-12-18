@@ -7,6 +7,8 @@ import { FileDropModule } from 'ngx-file-drop';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
 
 import { MatListModule } from '@angular/material/list';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatIconModule } from '@angular/material/icon';
 
 import { NgModule } from '@angular/core';
 
@@ -21,7 +23,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { AlertsService } from './components/alerts/alerts.service';
 import { AlertsComponent } from './components/alerts/alerts.component';
 import { ModalComponent } from './components/modal/modal.component';
-import { HistoryService } from './components/history/history.service';
+// import { HistoryService } from './components/history/history.service';
 import { HistoryComponent } from './components/history/history.component';
 import { StatisticsComponent } from './components/statistics/statistics.component';
 import { ChartsModule } from 'ng2-charts';
@@ -52,6 +54,8 @@ import { DoughnutChartComponent } from './components/doughnut-chart/doughnut-cha
     ToastrModule.forRoot(),
     FileDropModule,
     MatListModule,
+    MatIconModule,
+    MatButtonToggleModule,
     HttpClientModule,
     NgxSmartModalModule.forChild(),
     ChartsModule,
