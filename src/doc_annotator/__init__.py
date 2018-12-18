@@ -1,7 +1,9 @@
 from flask import Flask
 import os, sys
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app,  resources={r"*": {"origins": "*"}})
 
 app.config['UPLOAD_FOLDER'] = './pdf_files'
 app.config['TRAINING_FOLDER'] = './training_data'
