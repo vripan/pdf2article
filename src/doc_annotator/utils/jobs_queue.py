@@ -4,8 +4,8 @@ import time
 from doc_annotator.utils.parse_phase import ParsePhase
 from doc_annotator import parse_results_repository
 from doc_annotator.utils.page_segmentation.page_segmentation import segment_pdf
-from doc_annotator.utils.neural_network.network import predict
 from doc_annotator.utils.ocr.optical import ocr_file
+from doc_annotator import training_network
 
 class Worker(threading.Thread):
     def __init__(self, jobs):
@@ -28,7 +28,7 @@ class Parser(Worker):
         parse_results_repository.save_status(file_name, ParsePhase.Parsing)
         borders = segment_pdf(file_name)
         characteristics = ocr_file(borders, file_name)
-        results = predict(characteristics)
+        results = training_network.predict(characteristics)
         parse_results_repository.save_status(file_name, ParsePhase.Done)
         parse_results_repository.save_results(file_name, results)
 

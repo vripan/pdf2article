@@ -4,6 +4,7 @@ import { UploadEvent, UploadFile, FileSystemFileEntry } from 'ngx-file-drop';
 import { ToastrService } from 'ngx-toastr';
 
 import { UploadMainService } from './upload-main.service';
+import { resolve } from 'url';
 
 @Component({
   selector: 'app-upload-main',
@@ -15,6 +16,7 @@ export class UploadMainComponent {
   fileToUpload: File = null;
   fileName: String = '';
   public files: UploadFile[] = [];
+  fileHash: string;
 
   constructor(
     private toastr: ToastrService,
@@ -23,11 +25,13 @@ export class UploadMainComponent {
 
   async handleFileInput(file: File) {
     if (file && file.type === 'application/pdf') {
-      this.fileToUpload = file;
-      this.fileName = this.fileToUpload.name;
-
-      // TODO
-      this.toastr.info(this.uploadService.postPDF(file));
+      this.fileName = file.name;
+      await this.uploadService.postPDF(file)
+      .then(result => {
+        this.fileHash = result.hash;
+        this.toastr.info(result.message);
+      });
+        
     } else {
       this.toastr.error('Invalid file');
     }
