@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { GenericService } from '../services/generic.service';
+import { HttpClient } from '@angular/common/http';
 
 import { BehaviorSubject, Observable } from 'rxjs';
 import * as PDFJS from 'pdfjs-dist';
@@ -56,7 +56,7 @@ export class AnnotatorService {
 
   private workMode: BehaviorSubject<WorkMode> = new BehaviorSubject<WorkMode>(WorkMode.Create);
 
-  constructor(private genericService: GenericService) { }
+  constructor(private http: HttpClient) { }
 
   public setAnnotation(annotation: Annotation): void {
     this.annotations.push(Object.assign({}, annotation));
@@ -91,7 +91,7 @@ export class AnnotatorService {
   }
 
   public getTrainingData() {
-    return this.genericService.Get('training');
+    return this.http.get('/api/training');
   }
 
   public saveMetadata(id: string) {
@@ -99,7 +99,7 @@ export class AnnotatorService {
       .filter(annotation => annotation.tag !== AnnotationType.Article);
     const pagesProperties = this.pagesProperties;
 
-    return this.genericService.Post(`training/metadata/${id}`, { payload, pagesProperties });
+    return this.http.post(`/api/training/metada/{$id}`, { payload, pagesProperties });
   }
 
   public getArticle(x: number, y: number, page: number) {
