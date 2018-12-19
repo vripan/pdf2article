@@ -1,19 +1,14 @@
 <h2>This is how powerful is our brain:</h2>
 <div class="charts-wrapper">
   <div class="donut__chart-wrapper">
-    <canvas #donutChart></canvas>
+   <canvas #accuracyChart data-id='accuracyChartData'></canvas>
+   <canvas #accuracyChart data-id='somethingChartData'></canvas>
+   <canvas #accuracyChart  data-id='somethingelseChartData'></canvas>
   </div>
 
   <div class="bar__chart-wrapper">
     <p>Data</p>
-    <!-- <canvas baseChart
-            [datasets]="barChartData"
-            [labels]="barChartLabels"
-            [options]="barChartOptions"
-            [legend]="barChartLegend"
-            [chartType]="barChartType"
-            (chartHover)="chartHovered($event)">
-    </canvas> -->
+    <canvas #barChart data-id='barChartData'></canvas>
  </div>
 
   <div class="table">
