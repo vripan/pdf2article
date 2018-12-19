@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { NgxSmartModalService } from 'ngx-smart-modal';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -8,9 +9,21 @@ import { NgxSmartModalService } from 'ngx-smart-modal';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(public ngxSmartModalService: NgxSmartModalService) { }
+  @Input() public appTitle: string;
 
-  ngOnInit() {
+  constructor(
+    private modalService: NgxSmartModalService,
+    private router: Router
+  ) { }
+
+  public ngOnInit(): void { }
+
+  public navigateHome(): void {
+    this.router.navigateByUrl('/');
   }
 
+  public triggerModal(route: string): void {
+    this.router.navigateByUrl(`/${route}`);
+    this.modalService.getModal(route).open();
+  }
 }

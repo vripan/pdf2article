@@ -1,0 +1,19 @@
+@import '../../../styles/variables/variables';
+
+.footer {
+    padding: map-get($spacing, tiny) 0;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+
+    & > small {
+      font-size: $s12px;
+      color: $color-black;
+      opacity: .5;
+    }
+
+    @media only screen and (max-width: $br-xs) {
+      text-align: center;
+    }
+  }

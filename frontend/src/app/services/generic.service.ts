@@ -13,22 +13,19 @@ export class GenericService {
 
   public Get<T>(url: string): Promise<T> {
     return new Promise((resolve, reject) => {
-      this.http.get<T>("http://192.168.43.230:5000/" + url)
+      this.http.get<T>(this.api + url)
         .toPromise()
-        .then((data) => {
-          return data;
-        })
+        .then(data => resolve(data))
         .catch(err => console.log(err));
-    })
+    });
   }
 
   public Post<T>(url: string, data: T): Promise<T> {
     return new Promise((resolve, reject) => {
-      this.http.post<T>("http://192.168.43.230:5000/" + url, data)
-      .toPromise()
-      .then(result => {
-        resolve(result);
-      })
+      this.http.post<T>(this.api + url, data)
+        .toPromise()
+        .then(result => resolve(result))
+        .catch(err => console.log(err));
     });
   }
 }

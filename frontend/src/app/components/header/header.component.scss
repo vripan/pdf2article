@@ -1,0 +1,55 @@
+@import '../../../styles/variables/variables';
+
+header {
+  margin: map-get($spacing, tiny) map-get($spacing, xxl);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-flow: row wrap;
+
+  .logo {
+    padding: map-get($spacing, xxs);
+    min-width: $s100px;
+    max-width: $s100px * 2;
+    width: 100%;
+
+    &:hover { cursor: pointer; }
+  }
+
+  nav {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    .btn:not(:last-child) {
+      margin-right: map-get($spacing, tiny);
+    }
+  }
+
+  .mobile-menu { display: none; }
+}
+
+@media only screen and (min-width: $br-sm) and (max-width: $br-md) {
+  header {
+    margin-right: map-get($spacing, extra-large);
+    margin-left: map-get($spacing, extra-large);
+  }
+}
+
+@media only screen and (min-width: $br-xs) and (max-width: $br-sm) {
+  header {
+    margin-right: map-get($spacing, large);
+    margin-left: map-get($spacing, large);
+  }
+}
+
+@media only screen and (max-width: $br-xs) {
+  header {
+    margin-right: map-get($spacing, normal);
+    margin-left: map-get($spacing, normal);
+    .logo { max-width: $s100px; }
+
+    nav { display: none; }
+    .mobile-menu { display: block; }
+  }
+}

@@ -14,7 +14,7 @@ export class AlertsComponent implements OnInit {
     this.toastr.success('File uploaded successfully!', 'Success!');
   }
   showError() {
-    this.toastr.error("There's been a problem uploading your file", 'Error!');
+    this.toastr.error('There\'s been a problem uploading your file', 'Error!');
   }
   showWarning() {
     this.toastr.warning('Warning regarding your file!', 'Warning!');

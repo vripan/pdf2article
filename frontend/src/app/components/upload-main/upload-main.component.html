@@ -3,10 +3,11 @@
     <div class="col-md-6 col-12 upload-main__upload">
       <div class="toggle">
         <span>
-          <input class="tgl tgl-light" id="cb1" type="checkbox" />
-          <label class="tgl-btn" for="cb1"></label>
+          <input type="checkbox" id="devModeToggle" class="tgl tgl-light" #devToggle/>
+          <label for="devModeToggle" class="tgl-btn"></label>
         </span>
         <small>developer</small>
+        <a routerLink="/annotator" class="btn btn--primary" *ngIf="devMode">Training</a>
       </div>
 
       <file-drop customstyle="drag-drop" (onFileDrop)="dropped($event)">
@@ -14,7 +15,7 @@
         <label class="custom-file-upload">
           <input type="file" id="file" (change)="handleFileInput($event.target.files.item(0))">
         </label>
-        <span *ngIf="fileToUpload">{{fileName}}</span>
+        <span *ngIf="fileToUpload">{{ fileName }}</span>
       </file-drop>
 
     </div>

@@ -1,7 +1,9 @@
 pdf_files/
-training_data/*.pdf
+src/training_data/*.pdf
+src/venv
+
 .idea/
+.vscode/
 __pycache__/
 *.egg-info
 *.jpg
-training_data/Constantin-Bogdan's Resume

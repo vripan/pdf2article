@@ -1,16 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+
 import { ToastrModule } from 'ngx-toastr';
 import { FileDropModule } from 'ngx-file-drop';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
-
-import { MatListModule } from '@angular/material/list';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatIconModule } from '@angular/material/icon';
-
-import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,14 +19,16 @@ import { FooterComponent } from './components/footer/footer.component';
 import { AlertsService } from './components/alerts/alerts.service';
 import { AlertsComponent } from './components/alerts/alerts.component';
 import { ModalComponent } from './components/modal/modal.component';
-// import { HistoryService } from './components/history/history.service';
 import { HistoryComponent } from './components/history/history.component';
-import { StatisticsComponent } from './components/statistics/statistics.component';
-import { ChartsModule } from 'ng2-charts';
-import { MatSelectModule } from '@angular/material';
-import { MatInputModule } from '@angular/material';
-import { MatTableModule } from '@angular/material';
-import { DoughnutChartComponent } from './components/doughnut-chart/doughnut-chart.component';
+
+import {
+  MatSelectModule,
+  MatInputModule,
+  MatListModule,
+  MatIconModule,
+  MatButtonToggleModule,
+  MatMenuModule
+} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -42,9 +40,7 @@ import { DoughnutChartComponent } from './components/doughnut-chart/doughnut-cha
     FooterComponent,
     AlertsComponent,
     ModalComponent,
-    HistoryComponent,
-    StatisticsComponent,
-    DoughnutChartComponent
+    HistoryComponent
   ],
   imports: [
     BrowserModule,
@@ -58,14 +54,11 @@ import { DoughnutChartComponent } from './components/doughnut-chart/doughnut-cha
     MatButtonToggleModule,
     HttpClientModule,
     NgxSmartModalModule.forChild(),
-    ChartsModule,
     MatSelectModule,
     MatInputModule,
-    MatTableModule
-
+    MatMenuModule
   ],
   providers: [AlertsService],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule { }

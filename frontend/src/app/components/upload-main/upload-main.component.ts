@@ -1,37 +1,42 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { UploadEvent, UploadFile, FileSystemFileEntry } from 'ngx-file-drop';
 import { ToastrService } from 'ngx-toastr';
 
-import { UploadMainService } from './upload-main.service';
-import { resolve } from 'url';
+import { UploadMainService } from './services/upload-main.service';
 
 @Component({
   selector: 'app-upload-main',
   templateUrl: './upload-main.component.html',
   styleUrls: ['./upload-main.component.scss']
 })
-export class UploadMainComponent {
+export class UploadMainComponent implements OnInit {
 
-  fileToUpload: File = null;
-  fileName: String = '';
+  @ViewChild('devToggle') public devToggle;
+  public devMode: boolean;
+
+  public fileToUpload: File = null;
+  public fileName: String = '';
   public files: UploadFile[] = [];
-  fileHash: string;
+  public fileHash: string;
 
   constructor(
     private toastr: ToastrService,
     private uploadService: UploadMainService
   ) { }
 
-  async handleFileInput(file: File) {
+  public ngOnInit(): void {
+    this.changeMode();
+  }
+
+  public async handleFileInput(file: File) {
     if (file && file.type === 'application/pdf') {
       this.fileName = file.name;
       await this.uploadService.postPDF(file)
-      .then(result => {
-        this.fileHash = result.hash;
-        this.toastr.info(result.message);
-      });
-        
+        .then(response => {
+          this.fileHash = response.hash;
+          this.toastr.info(response.message);
+        });
     } else {
       this.toastr.error('Invalid file');
     }
@@ -48,5 +53,10 @@ export class UploadMainComponent {
       }
     }
   }
-}
 
+  private changeMode() {
+    this.devToggle.nativeElement.addEventListener('click', () => {
+      this.devMode = this.devToggle.nativeElement.checked;
+    });
+  }
+}

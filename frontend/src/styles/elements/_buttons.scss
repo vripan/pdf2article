@@ -8,11 +8,9 @@ button, *[type=button] {
     &:hover { cursor: pointer !important; }
 }
 
-.button
-{
+.btn {
   &--primary,
-  &--primary-faded
-  {
+  &--primary-faded {
     font-size: $s14px;
     line-height: 18px;
     font-weight: bold;
@@ -23,26 +21,17 @@ button, *[type=button] {
     background-color: $color-green;
   }
 
-  &--primary-faded
-  {
+  &--primary-faded {
     color: $color-green;
     background-color: $color-green-faded;
   }
 
-  &--primary-menu
-  { 
+  &--primary-menu {
     width: 20px;
     height: 3px;
     background-color: white;
     margin: 2px 0;
   }
-}
-
-ul,
-li {
-  list-style: none;
-  margin: 0;
-  padding: 0;
 }
 
 .tg-list {

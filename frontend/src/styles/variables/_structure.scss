@@ -1,26 +1,24 @@
-$container-padding-max: 60px;
-$container-padding: $container-padding-max / 2;
-$container-padding-min: $container-padding / 2;
-
 // Text sizes
-$s56px: 3.5rem;
+$s100px: 6.25rem;
+$s60px: 3.75rem;
 $s36px: 2.25rem;
 $s32px: 2rem;
+$s30px: 1.875rem;
 $s28px: 1.75rem;
 $s24px: 1.5rem;
-$s22px: 1.375rem;
 $s20px: 1.25rem;
 $s18px: 1.125rem;
 $s16px: 1rem;
 $s14px: .875rem;
-$s13px: .8125rem;
 $s12px: .75rem;
+$s10px: .625rem;
+$s5px: .3125rem;
 
-//BR
-$br-xs: 575.98px;
-$br-sm: 767.98px;
-$br-md: 991.98px;
-$br-lg: 1199.98px;
+// Breakpoints
+$br-xs: 575.99px;
+$br-sm: 767.99px;
+$br-md: 991.99px;
+$br-lg: 1199.99px;
 
 // Borders
 $border-button: 1.5rem;
@@ -28,4 +26,15 @@ $border-container: .25rem;
 
 // Transitions
 $transition-general: ease .15s all;
-$transition-modal: ease-in-out .3s all;
+
+// Spacings
+$spacing: (
+    xxs: $s5px,
+    extra-tiny: $s10px,
+    tiny: $s30px / 2,
+    normal: $s30px,
+    large: $s60px,
+    extra-large: $s60px * 2,
+    xxl: $s60px * 3
+);
+$grid: -map-get($spacing, tiny);
