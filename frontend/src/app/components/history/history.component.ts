@@ -26,7 +26,7 @@ export class HistoryComponent implements OnInit {
 
   ngOnInit() {
     // this.historySubscription = this.historyService.getAnalyzedDocs()
-    //   .subscribe((history: string[]) => {
+    //   .subscribe((historyElements: Array<HistoryElement>[]) => {
     //     this.analyzedDocs = history;
     //   }, (error) => {
     //     this.toastr.error(error, 'History importing error');
@@ -44,7 +44,12 @@ export class HistoryComponent implements OnInit {
       {name: 'The Stranger', size: 12, author: 'Albert Camus', upload_time: 4.4325},
       {name: 'On The Road', size: 22, author: 'Jack Kerouac', upload_time: 4.4325},
     ];
+    this.analyzedDocs = [];
   }
+  
+  // public noDocumentsError() : void {
+  //   this.toastr.error('error', 'History importing error');
+  // }
 
   // public ngOnDestroy(): void {
   //   this.historySubscription.unsubscribe();
