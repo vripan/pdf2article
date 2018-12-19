@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit {
   }
 
   public triggerModal(route: string): void {
-    this.router.navigateByUrl(`/${route}`);
+    // this.router.navigateByUrl(`/${route}`);
     this.modalService.getModal(route).open();
   }
 }
