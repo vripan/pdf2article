@@ -3,6 +3,7 @@ import threading
 import os
 from doc_annotator import app
 from doc_annotator.utils.training_previewer import preview
+from doc_annotator.utils.debug import printd
 
 
 class TrainingMetadataRepo:
@@ -11,7 +12,6 @@ class TrainingMetadataRepo:
         self.dictionary = dict()
         self.serialize_location = app.config['TRAINING_FOLDER']
 
-        # if os.environ.get("WERKZEUG_RUN_MAIN") == "true":
         self.__deserialize__()
 
     def get_metadata(self, file_name):
@@ -20,7 +20,7 @@ class TrainingMetadataRepo:
         """
         self.lock.acquire()
         try:
-            if hash in self.dictionary:
+            if file_name in self.dictionary:
                 return self.dictionary[file_name].copy()
             return None
         except Exception as exception:
@@ -36,6 +36,7 @@ class TrainingMetadataRepo:
         """
         self.lock.acquire()
         try:
+            self.__check_filename__(file_name)
             self.dictionary.update({file_name: metadata})
             self.__serialize_one__(file_name)
             preview(file_name, metadata)
@@ -43,6 +44,10 @@ class TrainingMetadataRepo:
             raise exception
         finally:
             self.lock.release()
+
+    def __check_filename__(self, file_name):
+        if not os.path.exists(os.path.join(app.config['TRAINING_FOLDER'], file_name)):
+            raise Exception("Invalid metadata filename")
 
     def __serialize_one__(self, file_name):
         """
@@ -52,7 +57,7 @@ class TrainingMetadataRepo:
         metadata_file_name = file_name.replace(".pdf", "")
         metadataFileObj = open(os.path.join(self.serialize_location, metadata_file_name), 'wb')
         metadataFileObj.write(json.dumps(self.dictionary[file_name]).encode())
-        print("Serialized " + file_name)
+        printd("Serialized " + file_name)
 
     def __serialize__(self):
         for key in self.dictionary:
@@ -71,4 +76,4 @@ class TrainingMetadataRepo:
                 metadataFileObj = open(full_file_name, 'rb')
                 metadata = json.loads(metadataFileObj.read().decode())
                 self.dictionary.update({file_name: metadata})
-                print("Deserialized: " + metadata_file_name)
+                printd("Deserialized: " + metadata_file_name)

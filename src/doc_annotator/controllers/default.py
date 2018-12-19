@@ -8,10 +8,18 @@ def page_not_found(error):
     return 'This page does not exist', 404
 
 
+@app.errorhandler(Exception)
+def exception_handler(error):
+    """
+    If this handler is called, there is an internal server error
+    """
+    return "Exception: " + str(error), 500
+
+
 @app.route("/")
 def main_route():
-    print("ana")
     return "Hello world!"
+
 
 @app.route("/history/latest", methods=['GET'])
 def show_history():

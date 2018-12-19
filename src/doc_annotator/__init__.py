@@ -8,6 +8,7 @@ CORS(app,  resources={r"*": {"origins": "*"}})
 app.config['UPLOAD_FOLDER'] = './pdf_files'
 app.config['TRAINING_FOLDER'] = './training_data'
 app.config['NETWORK_DATA'] = './network_data'
+app.config['DEBUG'] = True
 
 from doc_annotator.repository.volatile.parse_results import ParseResultsRepo
 from doc_annotator.repository.volatile.training_metadata import TrainingMetadataRepo

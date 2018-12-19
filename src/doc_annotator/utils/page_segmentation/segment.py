@@ -264,25 +264,56 @@ def process_skewed_crop(image):
     return (rotated, theta)
 
 
+def filter_contours(contours, hierarchy, image_shape):
+    borders = []
+    for i, c in enumerate(contours):
+        x, y, w, h = cv2.boundingRect(c)
+        borders.append((x, y, x + w - 1, y + h - 1, i, hierarchy[0][i][3]))
+
+    def border_filter(border):
+        if (rect_area(border) * 100 / (image_shape[0] * image_shape[1])) > 0.9:
+            lst = list(border)
+            lst[4] = -1
+            border = tuple(lst)
+
+    for i, border in enumerate(borders):
+        if (rect_area(border) / (image_shape[0] * image_shape[1])) > 0.9:
+            lst = list(borders[i])
+            lst[4] = -1
+            borders[i] = tuple(lst)
+
+    borders = sorted(borders, key=lambda box: rect_area(box), reverse=True)
+    borders = list(filter(lambda b: b[5] == -1 or borders[b[5]][4] == -1, borders))
+
+    return borders
+
+
 def segment(image):
     if not isinstance(image, np.ndarray):
         raise TypeError
 
-    return process_image(image)
+    blur = reduce_noise_raw(image.copy())
+
+    edges = cv2.Canny(np.asarray(blur), 150, 200)
+
+    _, contours, hierarchy = cv2.findContours(edges, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    borders = filter_contours(contours, hierarchy, image.shape)
+
+    return borders
 
 
 def dbg(im):
     Image.fromarray(im).show()
 
 
-def show_image_contours(bw, borders):
+def show_image_contours(bw, borders, scale):
     # img = cv2.merge((bw, bw, bw))
     # img = np.array(np.frombuffer(bw))
     # bw = img
-    scale = 0.4
-    bw = cv2.resize(bw, (0, 0), fx=scale, fy=scale)
+    # scale = 0.4
+    # bw = cv2.resize(bw, (0, 0), fx=scale, fy=scale)
     img = bw
-    borders = sorted(borders, key=lambda box: rect_area(box), reverse=True)
+    # borders = sorted(borders, key=lambda box: rect_area(box), reverse=True)
     for b in borders:
         if len(b) >= 5:
             if b[4] != -1:
@@ -290,11 +321,11 @@ def show_image_contours(bw, borders):
                 cv2.rectangle(img, (b[0], b[1]), (b[2], b[3]), color, -1)
         else:
             generate_color()
-            cv2.rectangle(img, (b[0], b[1]), (b[2], b[3]), color, -1)
+            cv2.rectangle(img, (int(b[0] * scale), int(b[1] * scale)), (int(b[2] * scale), int(b[3] * scale)), color, -1)
 
-        # else:
-        #     cv2.rectangle(img, (b[0], b[1]), (b[2], b[3]), (255, 0, 0), 2)
-    Image.fromarray(img).show()
+            # else:
+            #     cv2.rectangle(img, (b[0], b[1]), (b[2], b[3]), (255, 0, 0), 2)
+            Image.fromarray(img).show()
 
 
 def show_image_contours2(bw, name=None):

@@ -7,6 +7,7 @@ from doc_annotator.utils.page_segmentation.page_segmentation import segment_pdf
 from doc_annotator.utils.ocr.optical import ocr_file
 from doc_annotator import training_network
 
+
 class Worker(threading.Thread):
     def __init__(self, jobs):
         threading.Thread.__init__(self)
@@ -32,7 +33,6 @@ class Parser(Worker):
         parse_results_repository.save_status(file_name, ParsePhase.Done)
         parse_results_repository.save_results(file_name, results)
 
-
         # iau fisierul
         # segmentare -> obtii un aray de chenare
         # ocr pe fisiere -> scot caracteristici
@@ -41,9 +41,7 @@ class Parser(Worker):
 
     def run(self):
         file_name = self.jobs.pop()
-        print("starting worker")
         while file_name is not None:
-            print("[" + str(threading.get_ident()) + "] working on " + str(file_name))
             self.task(file_name)
             file_name = self.jobs.pop()
 
@@ -58,15 +56,12 @@ class JobsQueue:
         self.worker.start()
 
     def push(self, element):
-        print("push " + str(element))
         self.q.put(element)
 
     def pop(self):
-        print("pop")
         return self.q.get()
 
     def release_worker(self):
-        print("worker killed")
         self.lock.acquire()
         self.worker = None
         self.lock.release()

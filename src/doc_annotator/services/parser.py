@@ -61,6 +61,7 @@ def upload_pdf(request):
 
     response["status"] = True
     response["hash"] = filename
+    response["message"] = "File successfully uploaded"
 
     parse_results_repository.save_status(filename, ParsePhase.Uploaded)
 
