@@ -15,9 +15,6 @@ class Worker(threading.Thread):
         self.jobs = jobs
 
     def run(self):
-        """
-        Working...
-        """
         pass
 
 
@@ -32,12 +29,6 @@ class Parser(Worker):
         results = training_network.predict(characteristics)
         parse_results_repository.save_status(file_name, ParsePhase.Done)
         parse_results_repository.save_results(file_name, results)
-
-        # iau fisierul
-        # segmentare -> obtii un aray de chenare
-        # ocr pe fisiere -> scot caracteristici
-        # dau la reatea caracteristicile
-        # centralizez rezultaetle si le trimit pe front
 
     def run(self):
         file_name = self.jobs.pop()

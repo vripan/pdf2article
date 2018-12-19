@@ -6,6 +6,7 @@ from PIL import Image as PILimg
 from doc_annotator import app
 import os
 import cv2
+import numpy as np
 
 
 def get_image(file_path, page):
@@ -52,3 +53,30 @@ def preview(filename, metadata):
         img = numpy.array(img)
 
         show_image_contours(img, metadata[page]['borders'], scale)
+
+
+if __name__ == '__main__':
+    import pytesseract
+
+    image = r'C:\Users\vripan\Desktop\453028a_Page_3.jpg'
+
+    img = PILimg.open(image)
+
+    data = pytesseract.image_to_data(img, output_type=pytesseract.Output.DICT)
+    print(pytesseract.image_to_data(img))
+
+    rectsLen = len(data['left'])
+
+    borders = []
+
+    m = max(data['level'])
+
+    for i in range(rectsLen):
+        if data['level'][i] == 2:
+            x = data['left'][i]
+            y = data['top'][i]
+            xE = x + data['width'][i]
+            yE = y + data['height'][i]
+            borders.append((x, y, xE, yE))
+
+    show_image_contours(np.array(PILimg.open(image)), borders, 1)

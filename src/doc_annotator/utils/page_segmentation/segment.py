@@ -268,7 +268,7 @@ def filter_contours(contours, hierarchy, image_shape):
     borders = []
     for i, c in enumerate(contours):
         x, y, w, h = cv2.boundingRect(c)
-        borders.append((x, y, x + w - 1, y + h - 1, i, hierarchy[0][i][3]))
+        borders.append((x, y, x + w - 1, y + h - 1)) #, i, hierarchy[0][i][3]))
 
     def border_filter(border):
         if (rect_area(border) * 100 / (image_shape[0] * image_shape[1])) > 0.9:
@@ -283,7 +283,7 @@ def filter_contours(contours, hierarchy, image_shape):
             borders[i] = tuple(lst)
 
     borders = sorted(borders, key=lambda box: rect_area(box), reverse=True)
-    borders = list(filter(lambda b: b[5] == -1 or borders[b[5]][4] == -1, borders))
+    # borders = list(filter(lambda b: b[5] == -1 or borders[b[5]][4] == -1, borders))
 
     return borders
 
