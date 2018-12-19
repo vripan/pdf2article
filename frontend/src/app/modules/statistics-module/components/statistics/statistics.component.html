@@ -1,20 +1,34 @@
-<h2>This is how powerful is our brain:</h2>
-<div class="charts-wrapper">
-  <div class="donut__chart-wrapper">
-   <canvas #accuracyChart data-id='accuracyChartData'></canvas>
-   <canvas #accuracyChart data-id='somethingChartData'></canvas>
-   <canvas #accuracyChart  data-id='somethingelseChartData'></canvas>
-  </div>
+<ng-template [ngIf]="noExistingData" [ngIfElse]="existingData">
+  <h3>There is no data for statistics.</h3>
+</ng-template>
 
-  <div class="bar__chart-wrapper">
-    <p>Data</p>
-    <canvas #barChart data-id='barChartData'></canvas>
- </div>
+<ng-template #existingData>
+  <h2>This is how powerful is our brain:</h2>
+  <div class="charts-wrapper">
+    <div class="donut__chart-wrapper">
+      <div class="donut__chart">
+        <p>Accuracy chart</p>
+        <canvas #donutChart data-id='accuracyChartData'></canvas>
+      </div>
+      <div class="donut__chart">
+        <p>Something chart</p>
+        <canvas #donutChart data-id='somethingChartData'></canvas>
+      </div>
+      <!-- <div class="donut__chart"> -->
+      <!-- <p>Something else chart</p>
+          <canvas #accuracyChart data-id='somethingelseChartData'></canvas>
+          </div> -->
+    </div>
 
-  <div class="table">
-    <p>Table</p>
+    <div class="bar__chart-wrapper">
+      <p>Data</p>
+      <canvas #barChart data-id="barChartData"></canvas>
+    </div>
 
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <div class="table">
+      <p>Table</p>
+
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
         <ng-container matColumnDef="position">
           <th mat-header-cell *matHeaderCellDef> No. </th>
@@ -49,5 +63,6 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
+    </div>
   </div>
-</div>
+</ng-template>

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit, ViewChildren } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, ViewChildren } from '@angular/core';
 import { Chart } from 'chart.js';
 
 
@@ -18,9 +18,12 @@ export interface DonutChartData {
 })
 export class StatisticsComponent implements AfterViewInit {
 
- // @ViewChildren('accuracyChart somethingChart somethingelseChart') private donutCharts;
-  @ViewChildren('accuracyChart') private donutCharts;
+  // @ViewChildren('accuracyChart somethingChart somethingelseChart') private donutCharts;
+  @ViewChildren('donutChart') private donutCharts;
   @ViewChild('barChart') private barChart;
+
+  public displayLegend: boolean = true;
+  public noExistingData: boolean = false;
 
   // Table data
   public displayedColumns: string[] = ['position', 'location', 'views', 'files', 'conversion', 'total'];
@@ -36,53 +39,79 @@ export class StatisticsComponent implements AfterViewInit {
     { position: 1, location: 'file1.pdf', views: 1.0079, files: 4.4325, conversion: '10%', total: 43.3425 },
   ];
 
+  //Donut charts data
   public accuracyChartData: DonutChartData = {
     name: 'accuracyChartData',
     datasets: [{
-      data: [122, 28, 33, 49, 53],
-      backgroundColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)']
+      data: [122, 28, 33, 49],
+      backgroundColor: []
     }], labels: ['PDF1', 'PDF2', 'PDF3', 'PDF4']
   };
 
   public somethingChartData: DonutChartData = {
     name: 'somethingChartData',
     datasets: [{
-      data: [22, 44, 3, 45, 5],
-      backgroundColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)']
+      data: [22, 44, 3, 45],
+      backgroundColor: []
     }], labels: ['PDF1', 'PDF2', 'PDF3', 'PDF4']
   };
 
   public somethingelseChartData: DonutChartData = {
     name: 'somethingelseChartData',
     datasets: [{
-      data: [1, 2, 33, 4, 55],
-      backgroundColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)']
+      data: [1, 2, 33, 44],
+      backgroundColor: []
     }], labels: ['PDF1', 'PDF2', 'PDF3', 'PDF4']
   };
 
+  //Bar char data
   public barChartData: DonutChartData = {
     name: 'barChartData',
     datasets: [{
-      data: [66, 84, 83, 45, 95],
-      backgroundColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)']
-    }], labels: ['PDF1', 'PDF2', 'PDF3', 'PDF4']
+      data: [66, 84, 83, 95, 75, 55, 77, 71, 99],
+      backgroundColor: []
+    }], labels: ['PDF1', 'PDF2', 'PDF3', 'PDF4', 'PDF5', 'PDF6', 'PDF7', 'PDF8']
   };
 
   private globalDataSource: DonutChartData[] = [
     this.accuracyChartData,
-    this.somethingChartData, this.somethingelseChartData
+    this.somethingChartData, this.somethingelseChartData, this.barChartData
   ];
+
 
   public ngAfterViewInit(): void {
     this.populateDonutCharts();
     this.populateChart(this.barChart, 'bar');
+
+  }
+
+  private getRandomColor() {
+    var color = "hsl(" + 360 * Math.random() + ',' +
+      (25 + 70 * Math.random()) + '%,' +
+      (85 + 10 * Math.random()) + '%)';
+    return color;
   }
 
   private populateChart(element, type) {
     const dataId = element.nativeElement.getAttribute('data-id');
+    const data = this.globalDataSource.find(x => x.name === dataId);
+    data.labels.forEach(x => {
+      var color = this.getRandomColor();
+      if (type === 'bar') {
+        color = 'lightblue';
+        this.displayLegend = false
+      };
+      data.datasets[0].backgroundColor.push(color);
+    })
     const chart = new Chart(element.nativeElement, {
       type: type,
-      data: this.globalDataSource.find(x => x.name === dataId),
+      data: data,
+      options: {
+        legend: {
+          display: this.displayLegend,
+          position: 'right',
+        }
+      }
     });
   }
 
@@ -90,6 +119,5 @@ export class StatisticsComponent implements AfterViewInit {
     this.donutCharts.forEach(element => {
       this.populateChart(element, 'doughnut');
     });
-
   }
 }
