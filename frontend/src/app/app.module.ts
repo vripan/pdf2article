@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
+import { StatisticsModule } from './modules/statistics-module/statistics.module';
+
 import { ToastrModule } from 'ngx-toastr';
 import { FileDropModule } from 'ngx-file-drop';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
@@ -49,6 +51,7 @@ import {
     CommonModule,
     ToastrModule.forRoot(),
     FileDropModule,
+    StatisticsModule,
     MatListModule,
     MatIconModule,
     MatButtonToggleModule,
