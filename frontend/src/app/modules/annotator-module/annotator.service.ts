@@ -99,7 +99,7 @@ export class AnnotatorService {
       .filter(annotation => annotation.tag !== AnnotationType.Article);
     const pagesProperties = this.pagesProperties;
 
-    return this.http.post(`/api/training/metada/{$id}`, { payload, pagesProperties });
+    return this.http.post(`/api/training/metadata/${id}`, { payload, pagesProperties });
   }
 
   public getArticle(x: number, y: number, page: number) {
