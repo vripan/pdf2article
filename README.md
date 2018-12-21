@@ -13,6 +13,8 @@ Because the size of the training data is over 2 GB, it will not be uploaded to r
 ### Windows
 
 1. Download and install python `3.x` from [here](https://www.python.org/downloads/). Tested verision `3.6.4`
+To auto install all requirements for python modules you can use: pip install -r requeriments.txt
+
 2.1. Install flask
 ```
 pip install flask
