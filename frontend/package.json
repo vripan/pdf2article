@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve -o --aot --proxy-config proxy.config.json",
+    "start": "npm run server & npm run client",
+    "client": "ng serve -o --aot --proxy-config proxy.config.json",
+    "server": "start cmd /k \"cd .. & flask run\"",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",

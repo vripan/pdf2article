@@ -1,0 +1,26 @@
+{
+  "name": "docannotator",
+  "version": "1.0.0",
+  "description": "Input: a file in .pdf format. Output: the articles from the given pdf, with metadata (text metadata, title, authors).",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "start": "npm run server & npm run client",
+    "start-newt": "npm run server & npm run client-newt",
+    "server": "start cmd /k flask run",
+    "client": "cd ./frontend/ & npm run start",
+    "client-newt": "start cmd /k npm run client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dinusergiuandrei/pdf2article.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dinusergiuandrei/pdf2article/issues"
+  },
+  "homepage": "https://github.com/dinusergiuandrei/pdf2article#readme"
+}
