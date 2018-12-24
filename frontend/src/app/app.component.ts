@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  public appTitle: string = 'docannotator';
+  public readonly appTitle: string = 'docannotator';
 }

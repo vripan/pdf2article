@@ -29,7 +29,7 @@ header {
   .mobile-menu { display: none; }
 }
 
-@media only screen and (min-width: $br-sm) and (max-width: $br-md) {
+@media only screen and (min-width: $br-sm) and (max-width: $br-lg) {
   header {
     margin-right: map-get($spacing, extra-large);
     margin-left: map-get($spacing, extra-large);
@@ -47,9 +47,9 @@ header {
   header {
     margin-right: map-get($spacing, normal);
     margin-left: map-get($spacing, normal);
-    .logo { max-width: $s100px; }
+    .logo { max-width: $s100px + $s100px / 2; }
 
     nav { display: none; }
-    .mobile-menu { display: block; }
+    .mobile-menu { display: flex; }
   }
 }

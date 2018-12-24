@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import { Router } from '@angular/router';
 
@@ -7,23 +7,20 @@ import { Router } from '@angular/router';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
 
-  @Input() public appTitle: string;
+  @Input() public readonly appTitle: string;
 
   constructor(
-    private modalService: NgxSmartModalService,
-    private router: Router
+    private router: Router,
+    private modalService: NgxSmartModalService
   ) { }
 
-  public ngOnInit(): void { }
-
-  public navigateHome(): void {
-    this.router.navigateByUrl('/');
+  public navigateTo(address: string): void {
+    this.router.navigateByUrl(address);
   }
 
   public triggerModal(route: string): void {
-    // this.router.navigateByUrl(`/${route}`);
     this.modalService.getModal(route).open();
   }
 }

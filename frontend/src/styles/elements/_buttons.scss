@@ -1,6 +1,7 @@
 button, *[type=button] {
     -webkit-appearance: none;
     -moz-appearance: none;
+    display: flex;
     background: none;
     border: none;
     user-select: none;
