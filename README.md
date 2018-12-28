@@ -28,14 +28,15 @@ C:\Program Files (x86)\Tesseract-OCR
 ## Run app
 
 Go to root directory and use one of the following commands to run the app:
-Command | Effect
---- | ---
-`npm run start` | Will start both client and server
-`npm run start-newt` | Will start both client and server in new terminals
-`npm run client` | Will start only the client
-`npm run client-newt` | Will start only the client in a new terminal
-`npm run server` | Will start only the server
-`npm run server-newt` | Will start only the server in a new terminal
+
+| Command               | Effect                                             |
+|-----------------------|----------------------------------------------------|
+| `npm run start`       | Will start both client and server                  |
+| `npm run start-newt`  | Will start both client and server in new terminals |
+| `npm run client`      | Will start only the client                         |
+| `npm run client-newt` | Will start only the client in a new terminal       |
+| `npm run server`      | Will start only the server                         |
+| `npm run server-newt` | Will start only the server in a new terminal       |
 
 You should get an output similar to this:
 
