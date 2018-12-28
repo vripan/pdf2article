@@ -6,74 +6,42 @@ Input: a file in .pdf format. Output: the articles from the given pdf, with meta
 
 ## Training data
 
-Because the size of the training data is over 2 GB, it will not be uploaded to repo, so you have to manually copy the training data to *training_data* folder. In order to avoid uploading by mistake the training data, the folder *training_data* is present in *.gitignore* file.
+Because the size of the training data is over 2 GB, it will not be uploaded to repository, so you have to manually download and copy the training data to *training_data* folder. In order to avoid uploading by mistake the training data, the folder *training_data* is present in *.gitignore* file.
+You can download all the training data from [here](https://goo.gl/hjN6kt).
 
 ## Prepare environment
 
 ### Windows
 
-1. Download and install python `3.x` from [here](https://www.python.org/downloads/). Tested verision `3.6.4`
-To auto install all requirements for python modules you can use: pip install -r requeriments.txt
+1. Download and install Node.js from [here](https://nodejs.org/en/download/).
 
-2.1. Install flask
-```
-pip install flask
-```
-2.2. Install PyPDF2
-```
-pip install PyPDF2
-```
-2.3. Install pdf2image [here](https://github.com/Belval/pdf2image). Read section `How to install`
-3. Add the following environment variables
+2. Download and install python `3.x` from [here](https://www.python.org/downloads/). Tested version `3.6.4` (please use the same python version).
 
-| Name | Value |
-| ------ | ------ |
-| FLASK_APP | doc_annotator |
-| FLASK_ENV | development |
+3. Download and install Tesseract OCR from [here](https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-v4.0.0.20181030.exe).
 
-4. Execute the following command in *src* folder as administrator
+4. To install all dependencies for both client and server you can use: `npm run install-all` or `npm run install-all-force` (**WARNING**: The install-all-force command will also edit the PATH System variables). We recommend the first option which means you'll need to edit the Environment variables by yourself adding a path for Tesseract-OCR to System variables -> Path:
+
+```cmd
+C:\Program Files (x86)\Tesseract-OCR
 ```
-pip install -e .
-```
-5. Go to *src* folder and run the command
-```
-flask run
-```
-6. You should get an output similiar to this
-```
-FLASK_APP = doc_annotator
-FLASK_ENV = development
-FLASK_DEBUG = 0
-In folder D:/UAIC/3.1/IA/pdf2article
-C:\Users\username\AppData\Local\Programs\Python\Python36\python.exe -m flask run
+
+## Run app
+
+Go to root directory and use one of the following commands to run the app:
+| Command               | Effect                                             |
+| --------------------- | -------------------------------------------------- |
+| `npm run start`       | Will start both client and server                  |
+| `npm run start-newt`  | Will start both client and server in new terminals |
+| `npm run client`      | Will start only the client                         |
+| `npm run client-newt` | Will start only the client in a new terminal       |
+| `npm run server`      | Will start only the server                         |
+| `npm run server-newt` | Will start only the server in a new terminal       |
+
+You should get an output similar to this:
+
+```bash
  * Serving Flask app "doc_annotator"
  * Environment: development
  * Debug mode: off
  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
 ```
-
-7. Using Tesseract OCR with Python
-  1. if you don't have tesseract already installed please follow this link to get the executable file
-  ```
-https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-v4.0.0.20181030.exe
-```
-  2. edit the PATH(System variables) adding this new path for tesseract
-   ```
-C:\Program Files (x86)\Tesseract-OCR
-```
-to test that you actually installed tesseract, open a command prompt and type ``` "tesseract <path_to_image_with_text>" stdout ```
-  3. Install pillow (administrator)
-```
-pip install pillow
-```
-  4. Install pytesseract (administrator)
-  ```
-pip install pytesseract
-```
-  5. See the 'tesseract-python' directory from repository
-to test that you can use tesseract with python open a command prompt inside 'tesseract-python' directory and type:
-
-```
-python ocr.py --image images/example_02.png --preprocess blur
-```
-see that ocr.py is a python script that allows you to extract text from an image using tesseract

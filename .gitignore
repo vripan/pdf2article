@@ -2,6 +2,9 @@ pdf_files/
 src/training_data/*.pdf
 src/venv
 
+training_data/*
+
+.history/
 .idea/
 .vscode/
 __pycache__/

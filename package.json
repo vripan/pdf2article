@@ -7,11 +7,19 @@
     "doc": "docs"
   },
   "scripts": {
-    "start": "npm run server & npm run client",
-    "start-newt": "npm run server & npm run client-newt",
-    "server": "start cmd /k flask run",
+    "start": "npm run server-newt & npm run client",
+    "start-newt": "npm run server-newt & npm run client-newt",
+    "server": "flask run",
+    "server-newt": "start cmd /k npm run server",
     "client": "cd ./frontend/ & npm run client",
-    "client-newt": "start cmd /k npm run client"
+    "client-newt": "start cmd /k npm run client",
+    "install-all": "npm run install-server-modules & npm run install-client-modules",
+    "install-all-force": "npm run install-server-modules-safe & npm run install-client-modules",
+    "install-client-modules": "cd ./frontend/ & npm install",
+    "install-server-modules": "powershell.exe -Command \"Start-Process cmd '/k cd /d %cd% && npm run add-env-vars && pip install -r requirements.txt && cd ./src/ & pip install -e . && exit' -Verb RunAs\"",
+    "install-server-modules-safe": "powershell.exe -Command \"Start-Process cmd '/k cd /d %cd% && npm run add-env-vars-safe && pip install -r requirements.txt && cd ./src/ & pip install -e . && exit' -Verb RunAs\"",
+    "add-env-vars": "setx FLASK_APP doc_annotator /M & setx FLASK_ENV development /M & setx /M PATH \"%PATH%;C:\\Program Files (x86)\\Tesseract-OCR\"",
+    "add-env-vars-safe": "setx FLASK_APP doc_annotator /M & setx FLASK_ENV development /M"
   },
   "repository": {
     "type": "git",
