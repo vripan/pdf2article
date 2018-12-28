@@ -1,19 +1,24 @@
 @import '../../../styles/variables/variables';
+@import '../../../styles/layout/layout';
 
-.footer {
-    padding: map-get($spacing, tiny) 0;
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
+footer {
+  @include responsive-container();
+  padding: map-get($spacing, xxs) 0;
+}
 
-    & > small {
-      font-size: $s12px;
-      color: $color-black;
-      opacity: .5;
-    }
-
-    @media only screen and (max-width: $br-xs) {
-      text-align: center;
+.copyrights {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  span {
+    &:not(:last-of-type) {
+      padding-right: map-get($spacing, xxs);
     }
   }
+}
+
+@media only screen and (max-width: $br-xs) {
+  .copyrights {
+    flex-flow: column-reverse;
+  }
+}

@@ -1,17 +1,15 @@
-<!-- <ngx-smart-modal #history identifier="history"> -->
-  <h2>YOU UPLOADED:</h2>
-  <mat-list layout="column" layout-align="start center" *ngIf="analyzedDocs.length>0; else noDocumentsCase">
-    <mat-list-item *ngFor="let doc of analyzedDocs">
-      <img matListAvatar src="https://thumbsplus.tutsplus.com/uploads/users/33/posts/27093/preview_image/folded-document-icon-large.png?height=300&width=300" alt="doc_preview_img">
-      <h3 matLine>{{doc.name}}</h3>
-      <h4 matLine>Author: <span class="regular">{{doc.author}}</span></h4>
-      <p matLine>Size: <span class="regular">{{doc.size}} MB</span></p>
-      <button class="button button--primary" href="">Details</button>
-    </mat-list-item>
-  </mat-list>
-  <ng-template #noDocumentsCase>
-    <!-- <h3 matLine>{{noDocumentsError()}}</h3> -->
-    <h3 matLine>No documents uploaded</h3>
-  </ng-template>
-  <app-footer></app-footer>
-<!-- </ngx-smart-modal> -->
+<h2>YOU UPLOADED:</h2>
+<mat-list layout="column" layout-align="start center" *ngIf="analyzedDocs.length>0; else noDocumentsCase">
+  <mat-list-item *ngFor="let doc of analyzedDocs">
+    <img matListAvatar src="https://thumbsplus.tutsplus.com/uploads/users/33/posts/27093/preview_image/folded-document-icon-large.png?height=300&width=300"
+      alt="doc_preview_img">
+    <h3 matLine>{{doc.name}}</h3>
+    <h4 matLine>Author: <span class="regular">{{doc.author}}</span></h4>
+    <p matLine>Size: <span class="regular">{{doc.size}} MB</span></p>
+    <button class="button button--primary">Details</button>
+  </mat-list-item>
+</mat-list>
+<ng-template #noDocumentsCase>
+  <!-- <h3 matLine>{{noDocumentsError()}}</h3> -->
+  <h3 matLine>No documents uploaded</h3>
+</ng-template>
