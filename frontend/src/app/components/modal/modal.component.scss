@@ -1,3 +1,5 @@
+@import 'node_modules/ngx-smart-modal/ngx-smart-modal.scss';
+
 // Color of overlay background
 $color-overlay: rgba(0, 0, 0, .5) !default;
 
@@ -42,6 +44,10 @@ body.dialog-open {
   background-color: transparent;
   z-index: 999;
 
+  &:not(.nsm-overlay-open) {
+    overflow: hidden;
+  }
+
   &.nsm-overlay-open {
     background-color: $color-overlay;
   }
@@ -82,7 +88,7 @@ body.dialog-open {
   background-color: #fff;
   border-radius: 2px;
   padding: 1rem;
-  margin: $dialog-position-top;
+  margin: 0;
   box-shadow: 0 7px 8px -4px rgba(0, 0, 0, .2), 0 13px 19px 2px rgba(0, 0, 0, .14), 0 5px 24px 4px rgba(0, 0, 0, .12);
   outline: 0;
   min-height: 100vh;
@@ -100,21 +106,9 @@ body.dialog-open {
 * Animations
 * *************************/
 
-.nsm-dialog[class*=nsm-dialog-animation-] {
+.nsm-dialog {
+  max-width: 100%;
   transition: transform $transition-duration $transition-timing-function, opacity $transition-duration;
-}
-
-// Left to right (ltr)
-.nsm-dialog-animation-ltr {
-  transform: translate3d(-50%, 0, 0);
-
-  &.nsm-dialog-open {
-    transform: translate3d(0, 0, 0);
-  }
-
-  &.nsm-dialog-close {
-    transform: translate3d(-50%, 0, 0);
-  }
 }
 
 // Right to left (ltr)
@@ -127,31 +121,5 @@ body.dialog-open {
 
   &.nsm-dialog-close {
     transform: translate3d(50%, 0, 0);
-  }
-}
-
-// Top to bottom (ttb)
-.nsm-dialog-animation-ttb {
-  transform: translate3d(0, -50%, 0);
-
-  &.nsm-dialog-open {
-    transform: translate3d(0, 0, 0);
-  }
-
-  &.nsm-dialog-close {
-    transform: translate3d(0, -50%, 0);
-  }
-}
-
-// Bottom to top (btt)
-.nsm-dialog-animation-btt {
-  transform: translate3d(0, 50%, 0);
-
-  &.nsm-dialog-open {
-    transform: translate3d(0, 0, 0);
-  }
-
-  &.nsm-dialog-close {
-    transform: translate3d(0, 50%, 0);
   }
 }

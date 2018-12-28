@@ -11,5 +11,5 @@ export class ModalComponent implements OnInit {
 
   constructor(public ngxSmartModalService: NgxSmartModalService) { }
 
-  ngOnInit() { }
+  public ngOnInit(): void { }
 }
