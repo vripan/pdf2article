@@ -1,8 +1,7 @@
 import { Component, ViewChild, AfterViewInit, ViewChildren } from '@angular/core';
 import { Chart } from 'chart.js';
 
-
-export interface DonutChartData {
+interface DonutChartData {
   name: string;
   datasets: [{
     data: number[];
@@ -36,10 +35,10 @@ export class StatisticsComponent implements AfterViewInit {
     { position: 1, location: 'file1.pdf', views: 1.0079, files: 4.4325, conversion: '10%', total: 43.3425 },
     { position: 1, location: 'file1.pdf', views: 1.0079, files: 4.4325, conversion: '10%', total: 43.3425 },
     { position: 1, location: 'file1.pdf', views: 1.0079, files: 4.4325, conversion: '10%', total: 43.3425 },
-    { position: 1, location: 'file1.pdf', views: 1.0079, files: 4.4325, conversion: '10%', total: 43.3425 },
+    { position: 1, location: 'file1.pdf', views: 1.0079, files: 4.4325, conversion: '10%', total: 43.3425 }
   ];
 
-  //Donut charts data
+  // Donut charts data
   public accuracyChartData: DonutChartData = {
     name: 'accuracyChartData',
     datasets: [{
@@ -53,7 +52,8 @@ export class StatisticsComponent implements AfterViewInit {
     datasets: [{
       data: [22, 44, 3, 45],
       backgroundColor: []
-    }], labels: ['PDF1', 'PDF2', 'PDF3', 'PDF4']
+    }],
+    labels: ['PDF1', 'PDF2', 'PDF3', 'PDF4']
   };
 
   public somethingelseChartData: DonutChartData = {
@@ -61,16 +61,18 @@ export class StatisticsComponent implements AfterViewInit {
     datasets: [{
       data: [1, 2, 33, 44],
       backgroundColor: []
-    }], labels: ['PDF1', 'PDF2', 'PDF3', 'PDF4']
+    }],
+    labels: ['PDF1', 'PDF2', 'PDF3', 'PDF4']
   };
 
-  //Bar char data
+  // Bar char data
   public barChartData: DonutChartData = {
     name: 'barChartData',
     datasets: [{
       data: [66, 84, 83, 95, 75, 55, 77, 71, 99],
       backgroundColor: []
-    }], labels: ['PDF1', 'PDF2', 'PDF3', 'PDF4', 'PDF5', 'PDF6', 'PDF7', 'PDF8']
+    }],
+    labels: ['PDF1', 'PDF2', 'PDF3', 'PDF4', 'PDF5', 'PDF6', 'PDF7', 'PDF8']
   };
 
   private globalDataSource: DonutChartData[] = [
@@ -78,15 +80,13 @@ export class StatisticsComponent implements AfterViewInit {
     this.somethingChartData, this.somethingelseChartData, this.barChartData
   ];
 
-
   public ngAfterViewInit(): void {
     this.populateDonutCharts();
     this.populateChart(this.barChart, 'bar');
-
   }
 
   private getRandomColor() {
-    var color = "hsl(" + 360 * Math.random() + ',' +
+    const color = 'hsl(' + 360 * Math.random() + ',' +
       (25 + 70 * Math.random()) + '%,' +
       (85 + 10 * Math.random()) + '%)';
     return color;
@@ -96,13 +96,15 @@ export class StatisticsComponent implements AfterViewInit {
     const dataId = element.nativeElement.getAttribute('data-id');
     const data = this.globalDataSource.find(x => x.name === dataId);
     data.labels.forEach(x => {
-      var color = this.getRandomColor();
+      let color = this.getRandomColor();
       if (type === 'bar') {
         color = 'lightblue';
-        this.displayLegend = false
-      };
+        this.displayLegend = false;
+      }
+
       data.datasets[0].backgroundColor.push(color);
-    })
+    });
+
     const chart = new Chart(element.nativeElement, {
       type: type,
       data: data,
@@ -116,7 +118,7 @@ export class StatisticsComponent implements AfterViewInit {
   }
 
   private populateDonutCharts(): void {
-    this.donutCharts.forEach(element => {
+    this.donutCharts.forEach((element: any) => {
       this.populateChart(element, 'doughnut');
     });
   }

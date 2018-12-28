@@ -1,8 +1,7 @@
 @import '../../../styles/variables/variables';
 
 header {
-  margin: map-get($spacing, tiny) map-get($spacing, xxl);
-  display: flex;
+  @include responsive-container();
   justify-content: space-between;
   align-items: center;
   flex-flow: row wrap;
@@ -29,27 +28,9 @@ header {
   .mobile-menu { display: none; }
 }
 
-@media only screen and (min-width: $br-sm) and (max-width: $br-lg) {
-  header {
-    margin-right: map-get($spacing, extra-large);
-    margin-left: map-get($spacing, extra-large);
-  }
-}
-
-@media only screen and (min-width: $br-xs) and (max-width: $br-sm) {
-  header {
-    margin-right: map-get($spacing, large);
-    margin-left: map-get($spacing, large);
-  }
-}
-
 @media only screen and (max-width: $br-xs) {
-  header {
-    margin-right: map-get($spacing, normal);
-    margin-left: map-get($spacing, normal);
-    .logo { max-width: $s100px + $s100px / 2; }
+  .logo { max-width: $s100px + $s100px / 2; }
 
-    nav { display: none; }
-    .mobile-menu { display: flex; }
-  }
+  nav { display: none; }
+  .mobile-menu { display: flex; }
 }

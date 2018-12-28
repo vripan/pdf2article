@@ -10,7 +10,7 @@
     "start": "npm run server & npm run client",
     "start-newt": "npm run server & npm run client-newt",
     "server": "start cmd /k flask run",
-    "client": "cd ./frontend/ & npm run start",
+    "client": "cd ./frontend/ & npm run client",
     "client-newt": "start cmd /k npm run client"
   },
   "repository": {

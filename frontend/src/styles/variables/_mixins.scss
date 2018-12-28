@@ -1,0 +1,27 @@
+@mixin responsive-container() {
+    margin-top: map-get($spacing, tiny);
+    margin-bottom: map-get($spacing, tiny);
+    display: flex;
+
+    @media only screen and (min-width: $br-lg) {
+        margin-right: map-get($spacing, xxl);
+        margin-left: map-get($spacing, xxl);
+    }
+
+    @media only screen and (min-width: $br-sm) and (max-width: $br-lg) {
+        margin-right: map-get($spacing, extra-large);
+        margin-left: map-get($spacing, extra-large);
+    }
+
+    @media only screen and (min-width: $br-xs) and (max-width: $br-sm) {
+        margin-right: map-get($spacing, large);
+        margin-left: map-get($spacing, large);
+    }
+
+    @media only screen and (max-width: $br-xs) {
+        margin-right: map-get($spacing, normal);
+        margin-left: map-get($spacing, normal);
+        justify-content: center;
+        text-align: center;
+    }
+}

@@ -10,19 +10,21 @@ export class AlertsComponent implements OnInit {
   @ViewChild(ToastContainerDirective) toastContainer: ToastContainerDirective;
 
   constructor(private toastr: ToastrService) {}
-  showSuccess() {
+
+  public ngOnInit(): void {
+    this.toastr.overlayContainer = this.toastContainer;
+  }
+
+  public showSuccess(): void {
     this.toastr.success('File uploaded successfully!', 'Success!');
   }
-  showError() {
+  public showError(): void {
     this.toastr.error('There\'s been a problem uploading your file', 'Error!');
   }
-  showWarning() {
+  public showWarning(): void {
     this.toastr.warning('Warning regarding your file!', 'Warning!');
   }
-  showInfo() {
+  public showInfo(): void {
     this.toastr.info('Here is some information for you.', 'Information');
-  }
-  ngOnInit() {
-    this.toastr.overlayContainer = this.toastContainer;
   }
 }
