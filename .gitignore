@@ -10,3 +10,4 @@ training_data/*
 __pycache__/
 *.egg-info
 *.jpg
+bins/

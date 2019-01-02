@@ -2,10 +2,12 @@ import queue
 import threading
 from doc_annotator.utils.parse_phase import ParsePhase
 from doc_annotator import parse_results_repository
-from doc_annotator.utils.page_segmentation.page_segmentation import segment_pdf
+# from doc_annotator.utils.page_segmentation.page_segmentation import segment_pdf
+from doc_annotator.utils.page_segmentation.PRImA_segmentation import segment_pdf
 from doc_annotator.utils.ocr.optical import ocr_file
 from doc_annotator import training_network
 from doc_annotator.utils.debug import printd
+
 
 class Worker(threading.Thread):
     def __init__(self, jobs):

@@ -85,6 +85,19 @@ def make_box(poly):
     return (xmin, ymin, xmax, ymax)
 
 
+def make_box_from_points(points):
+    x = []
+    y = []
+    for p in points:
+        x.append(p[0])
+        y.append(p[1])
+    xmax = max(x)
+    ymax = max(y)
+    xmin = min(x)
+    ymin = min(y)
+    return xmin, ymin, xmax, ymax
+
+
 def rect_union(crop1, crop2):
     """Union two (x1, y1, x2, y2) rects."""
     x11, y11, x21, y21 = crop1
