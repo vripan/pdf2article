@@ -3,45 +3,53 @@ import os
 from doc_annotator import app
 import pytesseract
 import random
+from doc_annotator.utils.page_segmentation.PRImA_segmentation import get_page_as_image
+
+
+def get_number_of_words(string):
+    return 3
+
+
+def get_text_size(string):
+    return 20
+
+
+def get_number_of_capitalized_words(string, number_of_words):
+    return 0.15
+
+
+def get_number_of_upper_words(string, number_of_words):
+    return 0.20
+
+
+def get_position(data, all_data):
+    return 0.1
+
+
+def count_not_garbage(string):
+    return 0.87
 
 
 def ocr_file(borders, file_name):
     characteristics = borders
+    invalid_idxs = []
     for border_page in borders:
-        for idx, b in enumerate(borders[border_page]):
+        for idx, data in enumerate(borders[border_page]):
             chs = []
-            for i in range(app.config['NUMBER_OF_CHARACTERISTICS']):
-                chs.append(random.randint(0, 100))
-            val = list(b)
-            val.append(tuple(chs))
-            characteristics[border_page][idx] = tuple(val)
+            if data[1] >= 0.7:  # text confidence at least 70%
+                words = get_number_of_words(data[2])
+                text_size = get_text_size(data[2])  # remove garbage (multiple spaces, multiple punctuation marks) and compute text length
+                capitals = get_number_of_capitalized_words(data[2], words)  # as percent in [0,1] relative to words
+                complete_uppercase = get_number_of_upper_words(data[2], words)  # as percent in [0,1] relative to words
+                position = get_position(data, borders[border_page])  # position as percent relative to how many rectangles are above current rectangle eg.: 75% of rectangles are above current rectangle
+                garbage = count_not_garbage(data[2])  # number of characters not in ([a-z][A-Z][ ]) as percent relative to text size
+
+                val = list(data)
+                val.append(tuple([words, text_size, capitals, complete_uppercase, position, garbage]))
+                characteristics[border_page][idx] = tuple(val)
+            else:
+                invalid_idxs.append(idx)
+        for i, iidx in enumerate(invalid_idxs):
+            borders[border_page].pop(iidx - i)
 
     return characteristics
-
-    # trebuie discutat mai mult aici
-    # to do
-    file_path = os.path.join(app.config['UPLOAD_FOLDER'], file_name)
-    with open(file_path, "rb") as in_f:
-        input1 = PdfFileReader(in_f)
-        output = PdfFileWriter()
-
-        numPages = input1.getNumPages()
-        print("document has %s pages." % numPages)
-        for page in borders.keys():
-            page = input1.getPage(page)
-            boxes = borders[page]
-            for box in boxes:
-                print(page.mediaBox.getUpperRight_x(), page.mediaBox.getUpperRight_y())
-                page.trimBox.upperLeft = (box[0], box[1])
-                page.trimBox.upperRight = (box[2], box[1])
-                page.trimBox.lowerLeft = (box[0], box[3])
-                page.trimBox.lowerRight = (box[2], box[3])
-
-                output.addPage(page)
-
-        # with open("out.pdf", "wb") as out_f:
-        #     output.write(out_f)
-
-# ocr_file({1:[(0,0,100,100),(50,50,150,150)]},"pdf-test.pdf")
-
-# {1 : [(x1,y1,x2,y2), (x,y,x,y) ...]}

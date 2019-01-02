@@ -1,5 +1,5 @@
 from doc_annotator import app
-from flask import send_from_directory
+from flask import send_from_directory, request
 
 
 @app.errorhandler(404)

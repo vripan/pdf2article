@@ -47,7 +47,7 @@ class Network:
         results = characteristics
         for page in characteristics:
             for idx, characteristic in enumerate(characteristics[page]):
-                val = self.single_predict(characteristic[4])
+                val = self.single_predict(characteristic[3])
                 aux_val = list(results[page][idx])
                 aux_val.append(val)
                 results[page][idx] = tuple(aux_val)

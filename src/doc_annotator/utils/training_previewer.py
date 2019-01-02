@@ -42,7 +42,7 @@ def show_image_contours(img, borders, scale):
 
 
 def preview(filename, metadata):
-    if not app.config['DEBUG']: return
+    if not app.config['DBG']: return
 
     file_path = os.path.join(app.config['TRAINING_FOLDER'], filename)
 
@@ -53,6 +53,30 @@ def preview(filename, metadata):
         img = numpy.array(img)
 
         show_image_contours(img, metadata[page]['borders'], scale)
+
+
+def parse_metadata2(metadata):
+    for page in metadata:
+        r = []
+        for rectangle in metadata[page]:
+            r.append(tuple(rectangle[0]))
+        metadata[page] = r
+
+    return metadata
+
+
+def preview2(filename, metadata):
+    if not app.config['DBG']: return
+
+    file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+
+    metadata = parse_metadata2(metadata)
+    for page in metadata:
+        img = get_image(file_path, page)
+        scale = 1
+        img = numpy.array(img)
+
+        show_image_contours(img, metadata[page], scale)
 
 
 if __name__ == '__main__':

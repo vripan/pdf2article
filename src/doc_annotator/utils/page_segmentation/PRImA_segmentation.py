@@ -39,6 +39,7 @@ def run_segmentation(input_file, output_file, method='layout'):
                     "-rec-mode", method
                     ])
 
+    print(cmd)
     try:
         child = Popen(cmd, stdout=PIPE, stderr=PIPE)
     except FileNotFoundError:
@@ -63,7 +64,15 @@ def parse_result(result_file):
             pairs = coords.attrib["points"].split(' ')
             pairs = list(map(lambda pair: tuple(pair.split(',')), pairs))
             pairs = list(map(lambda pair: (int(pair[0]), int(pair[1])), pairs))
-            results.append(make_box_from_points(pairs))
+            textEquivTag = find(t, "TextEquiv")
+            confidence = textEquivTag.attrib["conf"].split()[0]
+            confidence = float(confidence)
+            unicodeTag = find(textEquivTag, "Unicode")
+            text = unicodeTag.text
+
+            box = make_box_from_points(pairs)
+
+            results.append((box, confidence, text))
 
     except Exception as exp:
         raise Exception('Failed to parse results from PRImA.\n' + str(exp))
@@ -81,7 +90,7 @@ def segment_page(file_path, page_num):
     disk_result_path = os.path.join(tempfile.gettempdir(), "doc_annotator_resu")
     open(disk_result_path, 'wb').close()
 
-    run_segmentation(disk_image_path, disk_result_path)
+    run_segmentation(disk_image_path, disk_result_path, 'ocr-regions')
 
     return parse_result(disk_result_path)
 

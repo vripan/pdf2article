@@ -8,8 +8,8 @@ CORS(app, resources={r"*": {"origins": "*"}})
 app.config['UPLOAD_FOLDER'] = './pdf_files'
 app.config['TRAINING_FOLDER'] = './training_data'
 app.config['NETWORK_DATA'] = './network_data'
-app.config['NUMBER_OF_CHARACTERISTICS'] = 5
-app.config['PRImA_EXE'] = './bins/PRImA_Tesseract-1-4-144.exe'
+app.config['NUMBER_OF_CHARACTERISTICS'] = 6
+app.config['PRImA_EXE'] = './bins/TesseractToPAGE 1.4/bin/PRImA_Tesseract-1-4-144.exe'
 app.config['DBG'] = True
 
 from doc_annotator.repository.volatile.parse_results import ParseResultsRepo
