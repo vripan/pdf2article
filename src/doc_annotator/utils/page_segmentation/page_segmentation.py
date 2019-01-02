@@ -30,5 +30,5 @@ def segment_pdf(file_name):
 
     for i in range(0, page_count):
         segment_page_mapping.update({i: segment_page(file_path, i)})  # { 1 : [(x1,y1,x2,y2),(x1,y1,x2,y2) ...]}
-
+        printd("Page %d --> %d boxes" % (i, len(segment_page_mapping[i])))
     return segment_page_mapping

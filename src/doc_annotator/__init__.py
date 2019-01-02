@@ -3,18 +3,17 @@ import os, sys
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app,  resources={r"*": {"origins": "*"}})
+CORS(app, resources={r"*": {"origins": "*"}})
 
 app.config['UPLOAD_FOLDER'] = './pdf_files'
 app.config['TRAINING_FOLDER'] = './training_data'
 app.config['NETWORK_DATA'] = './network_data'
 app.config['NUMBER_OF_CHARACTERISTICS'] = 5
-app.config['DEBUG'] = True
+app.config['DBG'] = True
 
 from doc_annotator.repository.volatile.parse_results import ParseResultsRepo
 from doc_annotator.repository.volatile.training_metadata import TrainingMetadataRepo
 from doc_annotator.utils.neural_network.network import Network
-
 
 parse_results_repository = ParseResultsRepo()
 training_metadata_repository = TrainingMetadataRepo()
@@ -29,3 +28,8 @@ import doc_annotator.controllers.parse
 import doc_annotator.controllers.training
 import doc_annotator.repository.volatile.parse_results
 import doc_annotator.repository.volatile.training_metadata
+
+if not os.path.exists(app.config['UPLOAD_FOLDER']) or not os.path.exists(app.config['TRAINING_FOLDER']) \
+        or not os.path.abspath(os.curdir).split(os.sep)[-1] == 'pdf2article':
+    raise Exception("Invalid current working directory! Your current working directory is"
+                    " '%s' and should be the pdf2article folder." % os.curdir)

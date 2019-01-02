@@ -5,5 +5,5 @@ def printd(string):
     if not isinstance(string, str):
         raise ValueError
 
-    if app.config['DEBUG']:
+    if app.config['DBG']:
         print(string)

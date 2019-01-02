@@ -155,9 +155,9 @@ def find_final_crop(im, rects):
     return current
 
 
-def dilate_wrapper(im):
-    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (10, 10))
-    dilation = dilate(im, kernel, 2)
+def dilate_wrapper(im, kernel_size, iters):
+    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (kernel_size, kernel_size))
+    dilation = dilate(im, kernel, iters)
     return dilation
 
 
@@ -268,7 +268,7 @@ def filter_contours(contours, hierarchy, image_shape):
     borders = []
     for i, c in enumerate(contours):
         x, y, w, h = cv2.boundingRect(c)
-        borders.append((x, y, x + w - 1, y + h - 1)) #, i, hierarchy[0][i][3]))
+        borders.append((x, y, x + w - 1, y + h - 1))  # , i, hierarchy[0][i][3]))
 
     def border_filter(border):
         if (rect_area(border) * 100 / (image_shape[0] * image_shape[1])) > 0.9:
@@ -295,8 +295,9 @@ def segment(image):
     blur = reduce_noise_raw(image.copy())
 
     edges = cv2.Canny(np.asarray(blur), 150, 200)
+    dilated = dilate_wrapper(edges, 3, 6)
 
-    _, contours, hierarchy = cv2.findContours(edges, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    _, contours, hierarchy = cv2.findContours(dilated, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     borders = filter_contours(contours, hierarchy, image.shape)
 
     return borders

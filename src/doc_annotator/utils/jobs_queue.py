@@ -1,12 +1,11 @@
 import queue
 import threading
-import time
 from doc_annotator.utils.parse_phase import ParsePhase
 from doc_annotator import parse_results_repository
 from doc_annotator.utils.page_segmentation.page_segmentation import segment_pdf
 from doc_annotator.utils.ocr.optical import ocr_file
 from doc_annotator import training_network
-
+from doc_annotator.utils.debug import printd
 
 class Worker(threading.Thread):
     def __init__(self, jobs):
@@ -23,12 +22,14 @@ class Parser(Worker):
         Worker.__init__(self, jobs)
 
     def task(self, file_name):
+        printd("Resolving %s" % file_name)
         parse_results_repository.save_status(file_name, ParsePhase.Parsing)
         borders = segment_pdf(file_name)
         characteristics = ocr_file(borders, file_name)
         results = training_network.predict(characteristics)
         parse_results_repository.save_status(file_name, ParsePhase.Done)
         parse_results_repository.save_results(file_name, results)
+        printd("Resolved %s" % file_name)
 
     def run(self):
         file_name = self.jobs.pop()
