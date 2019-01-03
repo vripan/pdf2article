@@ -4,7 +4,8 @@ from doc_annotator import app
 import pytesseract
 import random
 from doc_annotator.utils.page_segmentation.PRImA_segmentation import get_page_as_image
-
+from itertools import groupby
+import string
 
 def get_number_of_words(string):
     return 3
@@ -15,8 +16,11 @@ def get_text_size(string):
 
 
 def get_number_of_capitalized_words(string, number_of_words):
-    return 0.15
-
+counter=0;
+words = (word.strip(string.punctuation) for word in string.split() if word.istitle())
+for word, thewords in groupby(sorted(words)):
+	counter=counter+len(list(thewords))
+return counter;
 
 def get_number_of_upper_words(string, number_of_words):
     return 0.20
