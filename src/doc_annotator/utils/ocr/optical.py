@@ -14,7 +14,7 @@ def get_number_of_words(text):
 
 
 def get_text_size(text):
-    return len(text)
+    return len(text)-len(get_string_without_punc)
 
 # Get blank text
 def get_string_without_punc(text):
@@ -65,7 +65,6 @@ def ocr_file(borders, file_name):
             chs = []
             if data[1] >= 0.7:  # text confidence at least 70%
                 words = get_number_of_words(data[2])
-				#remove garbage use (get_string_without_punc) not same funk for len
                 text_size = get_text_size(data[2])  # remove garbage (multiple spaces, multiple punctuation marks) and compute text length
                 capitals = get_number_of_capitalized_words(data[2], words)  # as percent in [0,1] relative to words
                 complete_uppercase = get_number_of_upper_words(data[2], words) # as percent in [0,1] relative to words
