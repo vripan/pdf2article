@@ -6,6 +6,7 @@ import random
 from doc_annotator.utils.page_segmentation.PRImA_segmentation import get_page_as_image
 from itertools import groupby
 import string
+import re
 
 def get_number_of_words(string):
     return 3
@@ -16,14 +17,20 @@ def get_text_size(string):
 
 
 def get_number_of_capitalized_words(string, number_of_words):
-counter=0;
-words = (word.strip(string.punctuation) for word in string.split() if word.istitle())
-for word, thewords in groupby(sorted(words)):
-	counter=counter+len(list(thewords))
-return counter;
+	counter=0;
+	words = (word.strip(string.punctuation) for word in string.split() if word.istitle())
+	for word, thewords in groupby(sorted(words)):
+		counter=counter+len(list(thewords))
+	number_of_words=counter;
+	return counter;
 
 def get_number_of_upper_words(string, number_of_words):
-    return 0.20
+    wordList = re.sub("[^\w]", " ",  string).split()
+	test = [word for word in wordList if word.isupper()]
+	for word in test:
+		counter=counter+1
+	number_of_words=counter;
+	return counter;
 
 
 def get_position(data, all_data):
