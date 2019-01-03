@@ -9,7 +9,8 @@ import string
 import re
 
 def get_number_of_words(string):
-    return 3
+	wordList = re.sub("[^\w]", " ",  string).split()
+    return len(wordList)
 
 
 def get_text_size(string):
