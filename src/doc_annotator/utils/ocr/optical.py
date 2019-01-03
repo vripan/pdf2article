@@ -22,16 +22,16 @@ def get_number_of_capitalized_words(string, number_of_words):
     words = (word.strip(string.punctuation) for word in string.split() if word.istitle())
     for word, thewords in groupby(sorted(words)):
         counter=counter+len(list(thewords))
-    number_of_words=counter;
     return counter;
 
-def get_number_of_upper_words(string, number_of_words):
-    wordList = re.sub("[^\w]", " ",  string).split()
+	
+def get_number_of_upper_words(text, number_of_words): # as percent in [0,1] relative to words
+    wordList = re.sub("[^\w]", " ",  text).split()
+    counter=0
     test = [word for word in wordList if word.isupper()]
     for word in test:
         counter=counter+1
-    number_of_words=counter;
-    return counter;
+    return percentage(counter, number_of_words);
 
 
 def get_position(data, all_data):
@@ -59,7 +59,7 @@ def ocr_file(borders, file_name):
                 words = get_number_of_words(data[2])
                 text_size = get_text_size(data[2])  # remove garbage (multiple spaces, multiple punctuation marks) and compute text length
                 capitals = get_number_of_capitalized_words(data[2], words)  # as percent in [0,1] relative to words
-                complete_uppercase = get_number_of_upper_words(data[2], words)  # as percent in [0,1] relative to words
+                complete_uppercase = get_number_of_upper_words(data[2], words)
                 position = get_position(data, borders[border_page])  # position as percent relative to how many rectangles are above current rectangle eg.: 75% of rectangles are above current rectangle
                 garbage = count_not_garbage(data[2])  # number of characters not in ([a-z][A-Z][ ]) as percent relative to text size
 
