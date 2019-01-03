@@ -14,7 +14,7 @@ def get_number_of_words(string):
 
 
 def get_text_size(string):
-    return 20
+    return len(string)
 
 
 def get_number_of_capitalized_words(string, number_of_words):
