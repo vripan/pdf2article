@@ -9,37 +9,44 @@ import string
 import re
 
 def get_number_of_words(string):
-	wordList = re.sub("[^\w]", " ",  string).split()
+    wordList = re.sub("[^\w]", " ",  string).split()
     return len(wordList)
 
 
 def get_text_size(string):
     return len(string)
 
-
+    
 def get_number_of_capitalized_words(string, number_of_words):
-	counter=0;
-	words = (word.strip(string.punctuation) for word in string.split() if word.istitle())
-	for word, thewords in groupby(sorted(words)):
-		counter=counter+len(list(thewords))
-	number_of_words=counter;
-	return counter;
+    counter=0;
+    words = (word.strip(string.punctuation) for word in string.split() if word.istitle())
+    for word, thewords in groupby(sorted(words)):
+        counter=counter+len(list(thewords))
+    number_of_words=counter;
+    return counter;
 
 def get_number_of_upper_words(string, number_of_words):
     wordList = re.sub("[^\w]", " ",  string).split()
-	test = [word for word in wordList if word.isupper()]
-	for word in test:
-		counter=counter+1
-	number_of_words=counter;
-	return counter;
+    test = [word for word in wordList if word.isupper()]
+    for word in test:
+        counter=counter+1
+    number_of_words=counter;
+    return counter;
 
 
 def get_position(data, all_data):
     return 0.1
 
 
+def percentage(part, whole):
+    return 100 * float(part)/float(whole)
+
+
 def count_not_garbage(string):
-    return 0.87
+    numberOfCorectChars = len(re.findall('[a-z-A-Z ]', text))
+    numberOfChars = get_text_size(string)
+    numberOfIncorect = numberOfChars - numberOfCorectChars #The chars that can't be azAZ are too many to create a re, is optimal this way.
+    return percentage(numberOfIncorect, numberOfChars)
 
 
 def ocr_file(borders, file_name):
