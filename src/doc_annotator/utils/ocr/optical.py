@@ -42,7 +42,8 @@ def get_number_of_upper_words(text, number_of_words):
 
 # position as percent relative to how many rectangles are above current rectangle eg.: 75% of rectangles are above current rectangle
 def get_position(data, all_data):
-    return 0.1
+    counter = len([somedata for somedata in all_data if somedata[1] > data[1]])
+    return percentage(counter, len(all_data))
 
 
 def percentage(part, whole):
