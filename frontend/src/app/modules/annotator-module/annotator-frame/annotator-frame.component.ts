@@ -17,7 +17,7 @@ export class AnnotatorFrameComponent implements AfterViewInit {
 
   public totalPages: number = 0;
 
-  public pageSize: number = 5;
+  public pageSize: number = 1;
 
   public hasFetchPages: boolean = false;
 
@@ -80,7 +80,7 @@ export class AnnotatorFrameComponent implements AfterViewInit {
   private renderPDF(url: string): void {
     this.fetchPDF(url)
       .then(() => {
-        this.fetchPages([1, 2, 3, 4, 5])
+        this.fetchPages([1])
       })
       .catch((error) => {
         this.toastr.error(error, 'PDF reader');
