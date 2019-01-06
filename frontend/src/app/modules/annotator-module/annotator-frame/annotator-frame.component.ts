@@ -15,6 +15,12 @@ export class AnnotatorFrameComponent implements AfterViewInit {
 
   public fileId: string;
 
+  public totalPages: number = 0;
+
+  public pageSize: number = 5;
+
+  public hasFetchPages: boolean = false;
+
   constructor(
     private pdfReaderService: AnnotatorService,
     private route: ActivatedRoute,
@@ -29,10 +35,43 @@ export class AnnotatorFrameComponent implements AfterViewInit {
     });
   }
 
+  public onPageEvent(event) {
+    console.log(event);
+    const { pageIndex, length, pageSize } = event;
+
+    if (!this.hasFetchPages) return;
+
+    const pages = Array(pageSize).fill(0).map((i, index) => (index + 1) + pageIndex * pageSize)
+      .filter(page => page <= length);
+
+    this.fetchPages(pages)
+  }
+
+  private fetchPages(pages: number[]) {
+    this.pdfReaderService.fetchPages(pages)
+      .then(pdfPages => {
+        this.pages = pdfPages;
+      })
+      .catch(error => {
+        this.toastr.error(error, 'PDF reader Fetch Pages');
+      });
+  }
+
+  private fetchPDF(url: string) {
+    return this.pdfReaderService.fetchPDF(url)
+      .then(() => {
+        this.totalPages = this.pdfReaderService.getPDFInfo().numPages;
+        return this.hasFetchPages = true;
+      })
+      .catch(error => {
+        this.toastr.error(error, 'PDF reader Fetch Doc');
+      });
+  }
+
   private renderPDF(url: string): void {
-    this.pdfReaderService.render(url)
-      .then(pages =>  {
-        this.pages = pages;
+    this.fetchPDF(url)
+      .then(() => {
+        this.fetchPages([1, 2, 3, 4, 5])
       })
       .catch((error) => {
         this.toastr.error(error, 'PDF reader');
