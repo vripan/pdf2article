@@ -138,6 +138,7 @@ export class AnnotatorService {
   public async render(documentUrl: string) {
     try {
       this.pdf = await pdflib.getDocument(documentUrl);
+
       const { numPages } = this.pdf._pdfInfo;
       for (let i = 1; i <= numPages; i++) {
         const page = await this.pdf.getPage(i);
@@ -146,7 +147,7 @@ export class AnnotatorService {
 
       return this.pages;
     } catch (error) {
-      return error;
+      throw new Error(error.message);;
     }
   }
 
