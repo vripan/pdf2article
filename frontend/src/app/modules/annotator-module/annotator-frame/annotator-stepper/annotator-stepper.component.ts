@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { AnnotatorService, AnnotationType, WorkMode } from '../../annotator.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'annotator-stepper',
@@ -12,7 +13,13 @@ export class AnnotatorStepperComponent implements OnInit {
 
   public activeAnnotationType: AnnotationType;
 
-  constructor(private annotatorService: AnnotatorService) { }
+  @Input()
+  public fieldId: string;
+
+  constructor(
+    private annotatorService: AnnotatorService,
+    private toastr: ToastrService
+  ) { }
 
   ngOnInit() {
   }
@@ -25,5 +32,16 @@ export class AnnotatorStepperComponent implements OnInit {
   public deleteAnnotation(): void {
     this.annotatorService.setAnnotationType(null);
     this.annotatorService.setWorkMode(WorkMode.Delete);
+  }
+
+  public saveMetadata(): void {
+    this.annotatorService
+      .saveMetadata(this.fieldId)
+      .subscribe((result) => {
+        console.log(result);
+        this.toastr.success('Metadata saved with success', 'Metadata');
+      }, (error) => {
+        this.toastr.error(error, 'Metadata');
+      });
   }
 }
