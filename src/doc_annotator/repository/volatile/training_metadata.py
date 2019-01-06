@@ -21,7 +21,7 @@ class TrainingMetadataRepo:
         self.lock.acquire()
         try:
             if file_name in self.dictionary:
-                return self.dictionary[file_name].copy()
+                return self.dictionary[file_name]
             return None
         except Exception as exception:
             raise exception

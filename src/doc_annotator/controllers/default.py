@@ -1,11 +1,10 @@
 from doc_annotator import app
-from flask import send_from_directory, request
 
 
 @app.errorhandler(404)
 def page_not_found(error):
     """Function returns a message and the status code"""
-    return 'This page does not exist', 404
+    return 'This page does not exist\n%s' % str(error), 404
 
 
 @app.errorhandler(Exception)
@@ -13,7 +12,7 @@ def exception_handler(error):
     """
     If this handler is called, there is an internal server error
     """
-    return "Exception: " + str(error), 500
+    return "Internal server error:\n " + str(error), 500
 
 
 @app.route("/")
@@ -23,7 +22,7 @@ def main_route():
 
 @app.route("/history/latest", methods=['GET'])
 def show_history():
-    return "Here will be shown the history"
+    return "Here will be shown the history\nNot implemented", 501
 
 
 @app.after_request
