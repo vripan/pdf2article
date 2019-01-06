@@ -13,7 +13,7 @@ export class AnnotatorFrameComponent implements AfterViewInit {
 
   public pages: any[] = [];
 
-  public fileId: string;
+  public fieldId: string;
 
   public totalPages: number = 0;
 
@@ -30,7 +30,7 @@ export class AnnotatorFrameComponent implements AfterViewInit {
   public ngAfterViewInit(): void {
     this.route.params.subscribe((value: Params) => {
       const { id } = value;
-      this.fileId = id;
+      this.fieldId = id;
       this.renderPDF(`/api/training/${id}`); // TODO remove after fix
       this.pdfReaderService.getAnnotationMetadata(id)
         .subscribe(annotations => {
