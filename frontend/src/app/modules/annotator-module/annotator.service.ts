@@ -135,6 +135,23 @@ export class AnnotatorService {
     return this.workMode.asObservable();
   }
 
+  public fetchPDF(documentUrl: string) {
+    return pdflib.getDocument(documentUrl)
+      .then((pdf) => {
+        this.pdf = pdf;
+        return this.getPDFInfo();
+      });
+  }
+
+  public getPDFInfo() {
+    return this.pdf._pdfInfo;
+  }
+
+  public fetchPages(pages: number[]) {
+    const pagePromises = pages.map(index => this.pdf.getPage(index));
+    return Promise.all(pagePromises);
+  }
+
   public async render(documentUrl: string) {
     try {
       this.pdf = await pdflib.getDocument(documentUrl);

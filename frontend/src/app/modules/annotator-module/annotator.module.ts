@@ -8,7 +8,8 @@ import {
   MatCardModule,
   MatIconModule,
   MatStepperModule,
-  MatDividerModule
+  MatDividerModule,
+  MatPaginatorModule
 } from '@angular/material';
 
 import { AnnotatorComponent } from './annotator.component';
@@ -37,7 +38,8 @@ import { AnnotatorRoutingModule } from './annotator-routing.module';
     MatIconModule,
     MatStepperModule,
     MatDividerModule,
-    MatListModule
+    MatListModule,
+    MatPaginatorModule
   ]
 })
 export class AnnotatorModule { }

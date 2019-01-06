@@ -4,3 +4,9 @@
     <page class="pdf-canvas" *ngFor="let page of pages" [page]="page"></page>
   </div>
 </mat-card>
+<mat-paginator
+  (page)="onPageEvent($event)"
+  [length]="totalPages"
+  [pageSizeOptions]="[1, 5, 10, 25, 100, 200]"
+  [pageSize]="pageSize">
+</mat-paginator>
