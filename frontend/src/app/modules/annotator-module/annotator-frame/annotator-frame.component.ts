@@ -1,15 +1,16 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 
 import { ActivatedRoute, Params } from '@angular/router';
 import { AnnotatorService } from '../annotator.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'annotator-frame',
   templateUrl: './annotator-frame.component.html',
   styleUrls: ['./annotator-frame.component.scss']
 })
-export class AnnotatorFrameComponent implements AfterViewInit {
+export class AnnotatorFrameComponent implements AfterViewInit, OnDestroy {
 
   public pages: any[] = [];
 
@@ -21,18 +22,29 @@ export class AnnotatorFrameComponent implements AfterViewInit {
 
   public hasFetchPages: boolean = false;
 
+  private pdfSubscription: Subscription;
+
+  private paramsSubscription: Subscription;
+
   constructor(
     private pdfReaderService: AnnotatorService,
     private route: ActivatedRoute,
     private toastr: ToastrService
   ) { }
 
+  public ngOnDestroy(): void {
+    this.pdfReaderService.clear();
+    this.pdfSubscription && this.pdfSubscription.unsubscribe();
+    this.paramsSubscription && this.paramsSubscription.unsubscribe();
+  }
+
   public ngAfterViewInit(): void {
-    this.route.params.subscribe((value: Params) => {
+    this.paramsSubscription = this.route.params.subscribe((value: Params) => {
+      this.pdfReaderService.clear();
       const { id } = value;
       this.fieldId = id;
       this.renderPDF(`/api/training/${id}`); // TODO remove after fix
-      this.pdfReaderService.getAnnotationMetadata(id)
+      this.pdfSubscription = this.pdfReaderService.getAnnotationMetadata(id)
         .subscribe(annotations => {
           const annotResp = annotations as any;
           if (annotResp.payload) {
@@ -45,7 +57,6 @@ export class AnnotatorFrameComponent implements AfterViewInit {
   }
 
   public onPageEvent(event) {
-    console.log(event);
     const { pageIndex, length, pageSize } = event;
 
     if (!this.hasFetchPages) return;

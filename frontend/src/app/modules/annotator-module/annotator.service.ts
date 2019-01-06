@@ -58,6 +58,15 @@ export class AnnotatorService {
 
   constructor(private http: HttpClient) { }
 
+  public clear() {
+    this.annotations = [];
+    this.articleID = 0;
+    this.annotationType = null;
+    this.workMode.next(WorkMode.Create);
+    this.pagesProperties = [];
+    this.pdf = null;
+  }
+
   public setServerAnnotations(annotations: Annotation[]) {
     annotations.forEach((annotation) => {
       this.setAnnotation(annotation);
