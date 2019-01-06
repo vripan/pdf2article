@@ -1,9 +1,7 @@
 :host {
-  min-height: 100vh;
-  display: grid;
-  grid-template-rows: 64px 64px auto;
-  grid-row-gap: 16px;
-  padding-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .logo {
@@ -17,6 +15,7 @@
   width: 920px;
   margin: 0 auto;
   position: relative;
+  flex: 1;
 
   &__content {
     position: absolute;
