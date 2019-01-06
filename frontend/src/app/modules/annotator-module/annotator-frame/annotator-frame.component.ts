@@ -29,17 +29,6 @@ export class AnnotatorFrameComponent implements AfterViewInit {
     });
   }
 
-  public saveMetadata(): void {
-    this.pdfReaderService
-      .saveMetadata(this.fileId)
-      .subscribe((result) => {
-        console.log(result);
-        this.toastr.success('Metadata saved with success', 'Metadata');
-      }, (error) => {
-        this.toastr.error(error, 'Metadata');
-      });
-  }
-
   private renderPDF(url: string): void {
     this.pdfReaderService.render(url)
       .then(pages =>  {

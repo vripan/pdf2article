@@ -1,13 +1,4 @@
-<mat-toolbar  color="primary" role="toolbar">
-  <a href="#">
-    <img class="logo" class="logo" src="../../../assets/logo.png">
-  </a>
-  <span class="spacer"></span>
-  <button mat-icon-button (click)="saveMetadata()">
-    <mat-icon class="example-icon">save</mat-icon>
-  </button>
-</mat-toolbar>
-<annotator-stepper></annotator-stepper>
+<annotator-stepper [fieldId]="fieldId"></annotator-stepper>
 <mat-card class="pdf-wrapper">
   <div class="pdf-wrapper__content">
     <page class="pdf-canvas" *ngFor="let page of pages" [page]="page"></page>
