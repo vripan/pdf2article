@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import * as PDFJS from 'pdfjs-dist';
 
 const pdflib = PDFJS as any;
@@ -58,6 +58,12 @@ export class AnnotatorService {
 
   constructor(private http: HttpClient) { }
 
+  public setServerAnnotations(annotations: Annotation[]) {
+    annotations.forEach((annotation) => {
+      this.setAnnotation(annotation);
+    });
+  }
+
   public setAnnotation(annotation: Annotation): void {
     this.annotations.push(Object.assign({}, annotation));
   }
@@ -90,8 +96,12 @@ export class AnnotatorService {
     this.annotations = [];
   }
 
-  public getTrainingData() {
+  public getTrainingData(): any {
     return this.http.get('/api/training');
+  }
+
+  public getAnnotationMetadata(id: string) {
+    return this.http.get(`/api/training/metadata/${id}`);
   }
 
   public saveMetadata(id: string) {

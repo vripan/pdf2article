@@ -31,7 +31,16 @@ export class AnnotatorFrameComponent implements AfterViewInit {
     this.route.params.subscribe((value: Params) => {
       const { id } = value;
       this.fileId = id;
-      this.renderPDF(`/api/training/${id}`);
+      this.renderPDF(`/api/training/${id}`); // TODO remove after fix
+      this.pdfReaderService.getAnnotationMetadata(id)
+        .subscribe(annotations => {
+          const annotResp = annotations as any;
+          if (annotResp.payload) {
+            this.pdfReaderService.setServerAnnotations(annotResp.payload);
+          }
+        }, (error) => {
+          this.toastr.error(error, 'Error on loading server adnotations');
+        });
     });
   }
 
