@@ -10,7 +10,7 @@ import numpy as np
 
 
 def get_image(file_path, page):
-    return pdf2image.convert_from_path(file_path, first_page=page, last_page=page)[0]
+    return pdf2image.convert_from_path(file_path, first_page=page+1, last_page=page+1)[0]
 
 
 def parse_metadata(metadata):
