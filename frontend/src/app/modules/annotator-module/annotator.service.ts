@@ -188,9 +188,11 @@ export class AnnotatorService {
   }
 
   private hasAnnotation(x: number, y: number, page: number, annotation: Annotation): boolean {
-    return (x >= annotation.x && x <= annotation.xEnd &&
-    y >= annotation.y && y <= annotation.yEnd &&
-    page === annotation.page);
+    return (
+      x >= annotation.x && x <= (annotation.xEnd + annotation.x ) &&
+      y >= annotation.y && y <= (annotation.yEnd + annotation.y) &&
+      page === annotation.page
+    );
   }
 
   private removeArticle(article: Annotation) {

@@ -43,7 +43,7 @@ export class AnnotatorFrameComponent implements AfterViewInit, OnDestroy {
       this.pdfReaderService.clear();
       const { id } = value;
       this.fieldId = id;
-      this.renderPDF(`/api/training/${id}`); // TODO remove after fix
+      this.renderPDF(`/api/training/${id}`);
       this.pdfSubscription = this.pdfReaderService.getAnnotationMetadata(id)
         .subscribe(annotations => {
           const annotResp = annotations as any;
