@@ -1,6 +1,6 @@
 import os, sys
 
-print('',end='')  # python version dumb check
+print('',end='')  # python version dumb check, if you get an error here it means you don't run this script using python 3
 
 from flask import Flask
 from flask_cors import CORS
@@ -31,3 +31,5 @@ if not os.path.exists(app.config['UPLOAD_FOLDER']) or not os.path.exists(app.con
 
 if not os.path.abspath(os.curdir).split(os.sep)[-1].startswith('pdf2article'):
     raise Exception("Invalid current working directory! Your current working directory is '%s' and should be the pdf2article folder.\nIf you are in the right folder then rename the folder to begin with pdf2article" % os.path.abspath(os.curdir))
+
+print('ad',end='')

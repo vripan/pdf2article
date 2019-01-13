@@ -1,0 +1,20 @@
+Pdf2Article - HOW TO RUN - TUTORIAL
+
+***
+
+1. Python environment(BE)
+    >> check python version with `python --version`
+    >> or check with command python, first line should be similar to
+      `Python 3.6.4 (v3.6.4:d48eceb, Dec 19 2017, 06:54:40) [MSC v.1900 64 bit (AMD64)] on win32`
+    >> if python version is not 3.6.4 x64, uninstal and install version 3.6.4
+    >> if you install python, on install, check `Add Python 3.6 to PATH`
+    >> Pyton 3.6.4 x64: https://www.python.org/ftp/python/3.6.4/python-3.6.4-amd64.exe
+    >> check python version again, this time you should get `Python 3.6.4`
+
+2. NPM Node environment(FE)
+    >> check if you have node.js installed with 'npm --version`
+    >> if you get an error, install node.js
+    >> Node.JS:  https://nodejs.org/dist/v10.15.0/node-v10.15.0-x64.msi
+
+3. Dependente proiect
+    >> ruleaza setup.bat --- doar Windows
