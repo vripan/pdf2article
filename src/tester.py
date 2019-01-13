@@ -1,14 +1,16 @@
 import unittest
 from doc_annotator.unit_testing.controllers.default import DefaultControllers
 from doc_annotator.unit_testing.utils.jobs_queue import TestJobsQueue
-from doc_annotator.unit_testing.repository.volatile.parse_results import TestParseResults
+# from doc_annotator.unit_testing.repository.volatile.parse_results import TestParseResults
 from doc_annotator.unit_testing.repository.volatile.training_metadata import TestTrainingMetadata
+from names_finder.unit_testing.name_utilis import TestNameUtils
 
 tests = [
     TestJobsQueue,
     DefaultControllers,
     TestTrainingMetadata,
-    TestParseResults
+    # TestParseResults,
+    TestNameUtils
 ]
 
 if __name__ == '__main__':

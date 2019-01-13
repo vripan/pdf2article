@@ -1,7 +1,8 @@
 import re
+import os
 
 class NamesUtils(object):
-    elems = set(line.strip() for line in open('finalDict.txt'))
+    elems = set(line.strip() for line in open(os.path.abspath('./src/names_finder/finalDict.txt')))
 
     @staticmethod
     def isName(name): #Checks if a string is a name
