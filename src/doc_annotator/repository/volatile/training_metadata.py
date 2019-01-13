@@ -2,7 +2,6 @@ import json
 import threading
 import os
 from doc_annotator import app
-from doc_annotator.utils.training_previewer import preview
 from doc_annotator.utils.debug import printd
 
 
@@ -39,7 +38,6 @@ class TrainingMetadataRepo:
             self.__check_filename__(file_name)
             self.dictionary.update({file_name: metadata})
             self.__serialize_one__(file_name)
-            preview(file_name, metadata)
         except Exception as exception:
             raise exception
         finally:
