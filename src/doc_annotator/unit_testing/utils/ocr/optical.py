@@ -2,7 +2,7 @@ import unittest
 
 from doc_annotator.utils.ocr.optical import get_number_of_words
 from doc_annotator.utils.ocr.optical import get_text_size
-from doc_annotator.utils.ocr.optical import test_get_string_without_punc
+from doc_annotator.utils.ocr.optical import get_string_without_punc
 from doc_annotator.utils.ocr.optical import get_number_of_capitalized_words
 
 
