@@ -5,6 +5,7 @@ from doc_annotator.utils.ocr.optical import get_text_size
 from doc_annotator.utils.ocr.optical import get_string_without_punc
 from doc_annotator.utils.ocr.optical import get_number_of_capitalized_words
 from doc_annotator.utils.ocr.optical import get_number_of_upper_words
+from doc_annotator.utils.ocr.optical import get_position
 
 class TestOptical(unittest.TestCase):
 
@@ -27,5 +28,11 @@ class TestOptical(unittest.TestCase):
     def test_get_number_of_upper_words(self):
         results = get_number_of_upper_words("HELLO to UPPER WORLD!",4)
         self.assertEqual(results, 75)
+
+    def test_get_position(self):
+        result = get_position (["245","2"],["234","123"])
+        self.assertEqual(result,50.0)
+
+
 
 
