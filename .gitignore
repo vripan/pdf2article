@@ -2,7 +2,7 @@ pdf_files/
 src/training_data/*.pdf
 src/venv
 
-training_data/*
+training_data/*.pdf
 
 .history/
 .idea/
