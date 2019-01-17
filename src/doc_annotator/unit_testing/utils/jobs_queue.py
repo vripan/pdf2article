@@ -1,5 +1,6 @@
 import unittest
 from doc_annotator.utils import JobsQueue
+from doc_annotator.utils import Parser
 
 
 class TestJobsQueue(unittest.TestCase):
@@ -31,3 +32,15 @@ class TestJobsQueue(unittest.TestCase):
     def test_given_queue_when_release_worker_then_worker_is_released(self):
         JobsQueue.release_worker()
         self.assertTrue(JobsQueue.worker is None)
+
+
+class TestParser(unittest.TestCase):
+    def test_given_invalid_file_name_task_throws_exception(self):
+        self.assertRaises(Exception, Parser.task(file_name="test"))
+
+    def test_given_parser_with_jobs_after_run_jobs_is_empty(self):
+        jobs = JobsQueue("worker_type")
+        parser = Parser(jobs)
+        parser.run()
+
+        self.assertTrue(len(parser.jobs) is 0)
