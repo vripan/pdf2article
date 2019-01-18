@@ -1,0 +1,122 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+body {
+    background-image: url('./images/body-bg.jpg');
+    background-color: #c2c2c2;
+}
+
+.header {
+    width: 100%;
+    height: 60vh;
+    background-color: #fff;
+    background-image: url('./images/header-wallpaper.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.header h1 {
+    text-align: center;
+    color: white;
+    font-size: 4rem;
+    font-weight: 400;
+    margin-bottom: 100px;
+}
+
+.header button {
+    padding: 0 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 200px;
+    height: 80px;
+    border: none;
+    background-color: #fff;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.header button:active {
+    border: none;
+}
+
+.header button img {
+    width: 50px;
+    height: 50px;
+}
+
+.infos {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+}
+
+.infos .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    height: 60%;
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 50px;
+    margin-top: 50px;
+
+}
+
+.infos .container:last-child{
+    margin-bottom: 50px;
+}
+
+.infos .container h3 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+.infos .container .container-logo {
+    width: 20%;
+}
+
+.infos .container .infos-text {
+    width: 70%;
+}
+
+.infos .container .infos-text p {
+    text-align: justify;
+}
+
+
+.example-images {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+ }
+
+.example-images .simple-image {
+    width: 350px;
+    height: 350px;
+    margin: 0px 35px 50px 35px;
+}
+
+
+footer {
+    width: 100%;
+    height: 40vh;
+    background-image: url('./images/header-wallpaper.jpg');
+}
